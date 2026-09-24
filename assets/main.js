@@ -8,7 +8,15 @@
   $$('[data-split]').forEach(h => {
     const text = h.textContent.trim();
     h.setAttribute('aria-label', text);
-    h.innerHTML = text.split(' ').map((w, i) => `<span class="w" aria-hidden="true"><span style="--i:${i}">${w}</span></span>`).join(' ');
+    h.replaceChildren(...text.split(' ').flatMap((w, i) => {
+      const outer = document.createElement('span'), inner = document.createElement('span');
+      outer.className = 'w';
+      outer.setAttribute('aria-hidden', 'true');
+      inner.style.setProperty('--i', i);
+      inner.textContent = w;
+      outer.append(inner);
+      return i ? [' ', outer] : [outer];
+    }));
   });
   requestAnimationFrame(() => requestAnimationFrame(() => document.documentElement.classList.add('loaded')));
 
