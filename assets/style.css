@@ -249,3 +249,35 @@ section{padding:112px 0}
   .js .reveal,.js .intro,.js [data-split] .w > span{opacity:1 !important;transform:none !important}
 }
 .card.plain:hover{transform:none;box-shadow:none}
+
+/* language switch */
+.nav .links{margin-left:auto}
+.lang{margin-left:12px;font-size:13px;font-weight:600;letter-spacing:.02em;color:var(--ink-2);min-height:32px;padding:0 12px;display:inline-flex;align-items:center;border-radius:980px;box-shadow:inset 0 0 0 1px var(--line);transition:color .25s,box-shadow .25s}
+.lang:hover{text-decoration:none;color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink-2)}
+.page-hero .ctas{justify-content:flex-start;margin-top:4px}
+
+/* degree page */
+.grades{width:100%;border-collapse:collapse;font-size:17px;line-height:1.4}
+.grades th{font-size:14px;font-weight:600;color:var(--muted);text-align:left;padding:0 16px 12px 0;border-bottom:1px solid var(--line)}
+.grades td{padding:14px 16px 14px 0;border-bottom:1px solid var(--line);color:var(--ink-2);vertical-align:top}
+.grades th:last-child,.grades td:last-child{padding-right:0}
+.grades .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.grades tfoot td{font-weight:600;color:var(--ink);border-bottom:0}
+.grades .vg{display:inline-block;font-size:14px;font-weight:600;color:var(--accent);background:rgba(0,113,227,.08);padding:2px 10px;border-radius:980px;white-space:nowrap}
+.block p.small{font-size:15px;color:var(--muted)}
+.cert{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.cert figure{margin:0;display:flex;flex-direction:column;gap:10px}
+.cert a{display:block;border-radius:14px;overflow:hidden;background:#fff;box-shadow:0 0 0 1px var(--line),0 18px 40px -24px rgba(0,0,0,.25);transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+.cert a:hover{transform:translateY(-3px);box-shadow:0 0 0 1px var(--line),0 24px 50px -24px rgba(0,0,0,.3)}
+.cert img{display:block;width:100%;height:auto}
+.cert figcaption{font-size:14px;color:var(--muted)}
+
+@media (max-width:760px){
+  .lang{margin-left:auto;margin-right:8px}
+  .grades{font-size:15px}
+  .grades td{padding:12px 12px 12px 0}
+  .cert{grid-template-columns:1fr 1fr;gap:12px}
+}
+@media (prefers-reduced-motion:reduce){
+  .cert a:hover{transform:none}
+}

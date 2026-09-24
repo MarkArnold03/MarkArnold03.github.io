@@ -2,6 +2,9 @@
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const t = document.documentElement.lang === 'sv'
+    ? { open: 'Öppna meny', close: 'Stäng meny', copied: 'E-postadressen har kopierats' }
+    : { open: 'Open menu', close: 'Close menu', copied: 'Email address copied' };
   $$('.year').forEach(el => el.textContent = new Date().getFullYear());
 
   /* split headline into words */
@@ -49,7 +52,7 @@
   const burger = $('.burger'), menu = $('#menu');
   const setMenu = open => {
     burger.setAttribute('aria-expanded', open);
-    burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    burger.setAttribute('aria-label', open ? t.close : t.open);
     menu.classList.toggle('open', open);
     menu.setAttribute('aria-hidden', !open);
     menu.inert = !open;
@@ -67,7 +70,7 @@
   let tt;
   const showToast = msg => { toast.textContent = msg; toast.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => toast.classList.remove('show'), 2200); };
   $$('[data-copy]').forEach(b => b.addEventListener('click', async () => {
-    try { await navigator.clipboard.writeText(b.dataset.copy); showToast('Email address copied'); }
+    try { await navigator.clipboard.writeText(b.dataset.copy); showToast(t.copied); }
     catch { showToast(b.dataset.copy); }
   }));
 })();
