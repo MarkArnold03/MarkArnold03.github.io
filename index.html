@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mark Walusimbi, fullstack developer</title>
+<meta name="description" content="Fullstack .NET and JavaScript developer in Stockholm.">
+<meta property="og:title" content="Mark Walusimbi, fullstack developer">
+<meta property="og:description" content="Fullstack .NET and JavaScript developer in Stockholm.">
+<meta name="theme-color" content="#f5f5f7">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231d1d1f'/%3E%3Ctext x='32' y='43' font-family='Helvetica,Arial,sans-serif' font-size='30' font-weight='700' fill='%23f5f5f7' text-anchor='middle'%3EMW%3C/text%3E%3C/svg%3E">
+<style>:root{
+  --bg:#f5f5f7; --card:#fff; --ink:#1d1d1f; --ink-2:#424245; --muted:#6e6e73;
+  --line:#d2d2d7; --dark:#000; --dark-card:#1d1d1f; --dark-muted:#a1a1a6;
+  --accent:#0071e3; --accent-hover:#0077ed; --link-dark:#2997ff;
+  --wrap:1080px; --pad:24px; --nav:56px; --ease:cubic-bezier(.22,1,.36,1);
+}
+@view-transition{navigation:auto}
+::view-transition-old(root),::view-transition-new(root){animation-duration:.35s;animation-timing-function:var(--ease)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav) + 12px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","SF Pro Text","Helvetica Neue",Helvetica,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.5}
+body.locked{overflow:hidden}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:8px}
+h1,h2,h3,p{margin:0}
+.wrap{width:100%;max-width:var(--wrap);margin:0 auto;padding:0 var(--pad)}
+.narrow{max-width:760px}
+.skip{position:fixed;left:16px;top:-60px;z-index:100;background:var(--ink);color:#fff;padding:10px 16px;border-radius:10px;transition:top .2s}
+.skip:focus{top:16px}
+.progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:60;background:var(--accent);transform-origin:0 50%;transform:scaleX(0)}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:50;background:rgba(245,245,247,.72);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid transparent;padding-top:env(safe-area-inset-top,0px);transition:border-color .3s,background .3s}
+.nav.scrolled{border-bottom-color:var(--line);background:rgba(245,245,247,.86)}
+.nav .wrap{height:var(--nav);display:flex;justify-content:space-between;align-items:center}
+.brand{color:var(--ink);font-weight:600;font-size:17px;letter-spacing:-.01em}
+.brand:hover{text-decoration:none}
+.links{display:flex;align-items:center;gap:4px;list-style:none;margin:0;padding:0}
+.links a{display:block;color:var(--ink-2);font-size:14px;padding:8px 14px;border-radius:980px;transition:color .25s,background .25s}
+.links a:hover{text-decoration:none;color:var(--ink);background:rgba(0,0,0,.04)}
+.links a[aria-current="page"]{color:var(--ink);background:rgba(0,0,0,.06)}
+.links .nav-cta{margin-left:10px;background:var(--ink);color:#fff}
+.links .nav-cta:hover,.links .nav-cta[aria-current="page"]{background:#000;color:#fff}
+.burger{display:none;width:44px;height:44px;margin-right:-10px;border-radius:12px;position:relative}
+.burger span{position:absolute;left:12px;right:12px;height:1.5px;background:var(--ink);border-radius:2px;transition:transform .4s var(--ease),top .4s var(--ease)}
+.burger span:nth-child(1){top:18px}.burger span:nth-child(2){top:25px}
+.burger[aria-expanded="true"] span:nth-child(1){top:21.5px;transform:rotate(45deg)}
+.burger[aria-expanded="true"] span:nth-child(2){top:21.5px;transform:rotate(-45deg)}
+.menu{position:fixed;inset:0;z-index:40;background:rgba(245,245,247,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);padding:calc(var(--nav) + env(safe-area-inset-top,0px) + 24px) 28px calc(40px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:6px;visibility:hidden;opacity:0;transition:opacity .35s var(--ease),visibility 0s .35s}
+.menu.open{visibility:visible;opacity:1;transition:opacity .35s var(--ease)}
+.menu a{font-size:34px;font-weight:600;letter-spacing:-.02em;color:var(--ink);padding:10px 0;opacity:0;transform:translateY(-8px);transition:opacity .4s var(--ease),transform .4s var(--ease)}
+.menu a[aria-current="page"]{color:var(--accent)}
+.menu.open a{opacity:1;transform:none;transition-delay:calc(var(--i) * 50ms + 80ms)}
+.menu a:hover{text-decoration:none}
+.menu-foot{margin-top:auto;display:flex;gap:24px}
+.menu .menu-foot a{font-size:17px;font-weight:400;color:var(--accent)}
+
+/* type + buttons */
+.kicker{font-size:21px;font-weight:600;color:var(--muted)}
+.lede{font-size:24px;line-height:1.4;color:var(--ink-2)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 28px;border-radius:980px;font-size:17px;text-align:center;transition:background .25s,transform .25s var(--ease),color .25s,box-shadow .25s}
+.btn:hover{text-decoration:none}
+.btn:active{transform:scale(.97)}
+.btn-fill{background:var(--accent);color:#fff}
+.btn-fill:hover{background:var(--accent-hover)}
+.btn-line{box-shadow:inset 0 0 0 1px var(--accent);color:var(--accent)}
+.btn-line:hover{background:var(--accent);color:#fff}
+.btn-ghost-dark{box-shadow:inset 0 0 0 1px #424245;color:var(--bg)}
+.btn-ghost-dark:hover{background:var(--bg);color:var(--ink)}
+.btn-light{background:var(--bg);color:var(--ink)}
+.btn-light:hover{background:#fff}
+.textlink{font-size:17px;display:inline-flex;align-items:center;gap:6px;min-height:44px}
+
+/* hero */
+.hero{text-align:center;padding:150px 0 130px}
+.hero .wrap{display:flex;flex-direction:column;align-items:center;gap:24px}
+.hero h1{font-size:clamp(44px,8vw,96px);line-height:1.04;font-weight:700;letter-spacing:-.035em;max-width:960px}
+.hero .lede{max-width:680px}
+.ctas{display:flex;gap:16px;margin-top:16px;flex-wrap:wrap;justify-content:center}
+.page-hero{padding:120px 0 72px}
+.page-hero .wrap{display:flex;flex-direction:column;gap:20px}
+.page-hero h1{font-size:clamp(44px,7vw,80px);line-height:1.05;font-weight:700;letter-spacing:-.035em;max-width:900px}
+.page-hero .lede{max-width:720px}
+.w{display:inline-block;overflow:hidden;vertical-align:top;padding-bottom:.08em;margin-bottom:-.08em}
+.w > span{display:inline-block}
+
+/* load + reveal */
+.js .intro{opacity:0;transform:translateY(14px)}
+.js [data-split] .w > span{transform:translateY(105%)}
+.loaded .intro{opacity:1;transform:none;transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:var(--d,0ms)}
+.loaded [data-split] .w > span{transform:none;transition:transform 1s var(--ease);transition-delay:calc(var(--i) * 55ms + 100ms)}
+.js .reveal{opacity:0;transform:translateY(32px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:var(--d,0ms)}
+.js .reveal.in{opacity:1;transform:none}
+.js .reveal.done{transition-delay:0ms}
+.js .card.reveal.done{transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+
+/* sections */
+section{padding:112px 0}
+.section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:48px}
+.section-title{font-size:clamp(36px,5vw,56px);line-height:1.07;font-weight:700;letter-spacing:-.03em}
+.dark{background:var(--dark);color:var(--bg)}
+.white{background:var(--card)}
+
+/* work cards */
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+.card{display:flex;flex-direction:column;background:var(--card);border-radius:28px;overflow:hidden;color:var(--ink);transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+.card:hover{text-decoration:none;transform:translateY(-4px);box-shadow:0 24px 60px -24px rgba(0,0,0,.22)}
+.card.wide{grid-column:span 2}
+.card .art{height:260px;position:relative;overflow:hidden}
+.card.wide .art{height:320px}
+.card .info{padding:32px 36px 36px;display:flex;flex-direction:column;gap:10px;flex-grow:1}
+.card .label{font-size:15px;font-weight:600;color:var(--muted)}
+.card h3{font-size:30px;line-height:1.12;font-weight:700;letter-spacing:-.02em}
+.card p{font-size:17px;line-height:1.55;color:var(--ink-2)}
+.card .go{margin-top:auto;padding-top:8px;font-size:17px;color:var(--accent);display:inline-flex;align-items:center;gap:8px}
+.card .go svg{transition:transform .4s var(--ease)}
+.card:hover .go svg{transform:translateX(4px)}
+.card.plain .info{padding:36px}
+
+/* card art */
+.art-lapx{background:#1d1d1f}
+.art-lapx .win{position:absolute;left:40px;right:-40px;top:44px;bottom:-40px;background:#2c2c2e;border-radius:16px;display:grid;grid-template-columns:120px 1fr;gap:16px;padding:18px;transition:transform .8s var(--ease)}
+.card:hover .art-lapx .win{transform:translate(-8px,-6px)}
+.art-lapx .side{display:flex;flex-direction:column;gap:10px}
+.art-lapx .side i,.art-lapx .rows i{display:block;height:10px;border-radius:5px;background:#3a3a3c}
+.art-lapx .side i:first-child{background:var(--link-dark);width:70%}
+.art-lapx .rows{display:flex;flex-direction:column;gap:12px}
+.art-lapx .rows i:nth-child(odd){width:86%}
+.art-lapx .rows i:nth-child(3n){width:62%}
+.art-lapx .phone{position:absolute;right:56px;top:28px;width:96px;height:190px;border-radius:22px;background:#f5f5f7;border:5px solid #3a3a3c;display:flex;flex-direction:column;gap:8px;padding:22px 10px;transition:transform .8s var(--ease)}
+.card:hover .art-lapx .phone{transform:translateY(-8px)}
+.art-lapx .phone i{display:block;height:8px;border-radius:4px;background:#d2d2d7}
+.art-lapx .phone b{display:block;height:34px;border-radius:10px;background:var(--accent);margin-top:auto}
+.art-bank{background:linear-gradient(#e8f0fb,#dce8f8)}
+.art-bank .acct{position:absolute;left:50%;width:62%;height:64px;border-radius:14px;background:#fff;box-shadow:0 10px 30px -12px rgba(0,40,100,.25);transform:translateX(-50%);display:flex;align-items:center;justify-content:space-between;padding:0 20px;font-size:14px;color:var(--ink-2);transition:transform .8s var(--ease)}
+.art-bank .acct b{font-size:17px;color:var(--ink)}
+.art-bank .a1{top:50px}.art-bank .a2{top:128px;width:56%;opacity:.85}.art-bank .a3{top:206px;width:50%;opacity:.6}
+.card:hover .art-bank .a1{transform:translate(-50%,-4px)}
+.art-rr{background:#e9e4dc;display:grid;place-items:center}
+.art-rr span{font-size:64px;font-weight:700;letter-spacing:-.04em;color:#1d1d1f;transition:letter-spacing .8s var(--ease)}
+.card:hover .art-rr span{letter-spacing:-.01em}
+
+/* case pages */
+.meta{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;padding:28px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-top:32px}
+.meta div{display:flex;flex-direction:column;gap:4px}
+.meta dt{font-size:14px;color:var(--muted)}
+.meta dd{margin:0;font-size:17px;line-height:1.45}
+.case-body{padding:40px 0 112px}
+.block{padding:48px 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;border-bottom:1px solid var(--line)}
+.block:last-of-type{border-bottom:0}
+.block h2{font-size:28px;line-height:1.15;font-weight:700;letter-spacing:-.02em}
+.block .txt{grid-column:span 2;display:flex;flex-direction:column;gap:16px}
+.block p{font-size:19px;line-height:1.6;color:var(--ink-2)}
+.block ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:14px}
+.block li{font-size:18px;line-height:1.55;color:var(--ink-2);padding-left:22px;position:relative}
+.block li::before{content:"";position:absolute;left:2px;top:.66em;width:7px;height:7px;border-radius:50%;background:var(--accent)}
+.block li b{color:var(--ink);font-weight:600}
+.notice{display:flex;gap:16px;align-items:flex-start;background:var(--card);border-radius:20px;padding:24px 28px;margin-top:8px}
+.notice svg{flex:none;margin-top:3px;color:var(--muted)}
+.notice p{font-size:16px;line-height:1.55;color:var(--ink-2)}
+.next{display:flex;flex-direction:column;gap:8px;padding:56px 0 0;color:var(--ink)}
+.next:hover{text-decoration:none}
+.next span{font-size:17px;color:var(--muted)}
+.next strong{font-size:clamp(32px,5vw,56px);line-height:1.07;font-weight:700;letter-spacing:-.03em;display:inline-flex;align-items:center;gap:16px}
+.next strong svg{transition:transform .5s var(--ease)}
+.next:hover strong svg{transform:translateX(8px)}
+
+/* tags, chips */
+.tags,.chips{display:flex;flex-wrap:wrap;gap:8px}
+.tag,.chip{font-size:14px;padding:6px 12px;border-radius:980px;background:var(--bg);color:var(--ink-2)}
+.white .chip{background:var(--bg)}
+
+/* about */
+.timeline{list-style:none;margin:0;padding:0}
+.timeline li{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;padding:32px 0;border-top:1px solid var(--line)}
+.timeline li:last-child{border-bottom:1px solid var(--line)}
+.timeline .when{font-size:17px;color:var(--muted)}
+.timeline .what{grid-column:span 2;display:flex;flex-direction:column;gap:8px}
+.timeline .role{font-size:24px;font-weight:600;line-height:1.25}
+.timeline .desc{font-size:17px;line-height:1.55;color:var(--ink-2)}
+.skills{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.skill{background:var(--card);border-radius:24px;padding:32px;display:flex;flex-direction:column;gap:14px}
+.skill h3{font-size:21px;font-weight:600}
+.story{display:flex;flex-direction:column;gap:20px}
+.story p{font-size:21px;line-height:1.6;color:var(--ink-2)}
+
+/* band + contact */
+.band{text-align:center}
+.band .wrap{display:flex;flex-direction:column;align-items:center;gap:24px}
+.band h2{font-size:clamp(40px,6vw,72px);line-height:1.05;font-weight:700;letter-spacing:-.035em}
+.band p{font-size:21px;color:var(--dark-muted)}
+.contact-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.cbox{background:var(--card);border-radius:24px;padding:32px;display:flex;flex-direction:column;gap:10px;min-height:190px}
+.cbox .label{font-size:15px;font-weight:600;color:var(--muted)}
+.cbox strong{font-size:21px;font-weight:600;word-break:break-word}
+.cbox .row{margin-top:auto;display:flex;gap:16px;flex-wrap:wrap}
+.cbox .row a,.cbox .row button{font-size:17px;color:var(--accent);min-height:44px;display:inline-flex;align-items:center}
+
+/* footer */
+.footer{background:var(--dark);color:var(--dark-muted);padding:56px 0 calc(40px + env(safe-area-inset-bottom,0px));font-size:14px}
+.footer .wrap{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
+.footer nav{display:flex;gap:24px;flex-wrap:wrap}
+.footer a{color:var(--dark-muted)}
+.footer a:hover{color:var(--bg)}
+
+/* floating */
+.totop{position:fixed;right:20px;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:30;width:48px;height:48px;border-radius:50%;background:rgba(29,29,31,.8);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:#fff;display:grid;place-items:center;opacity:0;transform:translateY(12px) scale(.9);pointer-events:none;transition:opacity .4s var(--ease),transform .4s var(--ease)}
+.totop.show{opacity:1;transform:none;pointer-events:auto}
+.toast{position:fixed;left:50%;bottom:calc(28px + env(safe-area-inset-bottom,0px));z-index:70;background:var(--ink);color:#fff;font-size:15px;padding:12px 20px;border-radius:980px;transform:translate(-50%,20px);opacity:0;transition:opacity .35s var(--ease),transform .35s var(--ease);pointer-events:none}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media (max-width:1000px){
+  .contact-grid{grid-template-columns:1fr 1fr}
+}
+@media (max-width:760px){
+  :root{--pad:20px;--nav:52px}
+  .links{display:none}
+  .burger{display:block}
+  .hero{padding:72px 0 64px}
+  .page-hero{padding:64px 0 40px}
+  .kicker{font-size:17px}
+  .lede{font-size:19px}
+  .ctas{flex-direction:column;width:100%;gap:12px}
+  .ctas .btn{width:100%}
+  section{padding:72px 0}
+  .section-head{margin-bottom:28px}
+  .cards{grid-template-columns:1fr;gap:16px}
+  .card.wide{grid-column:auto}
+  .card .art,.card.wide .art{height:210px}
+  .card .info,.card.plain .info{padding:24px 24px 28px}
+  .card h3{font-size:24px}
+  .card p{font-size:16px}
+  .card:hover{transform:none;box-shadow:none}
+  .art-lapx .win{left:20px;top:30px;grid-template-columns:70px 1fr}
+  .art-lapx .phone{right:24px;top:20px;width:80px;height:160px}
+  .art-bank .acct{width:80%}.art-bank .a2{width:72%}.art-bank .a3{width:64%}
+  .art-bank .a1{top:28px}.art-bank .a2{top:100px}.art-bank .a3{top:172px}
+  .meta{grid-template-columns:1fr;gap:16px}
+  .block{grid-template-columns:1fr;gap:16px;padding:36px 0}
+  .block .txt{grid-column:auto}
+  .block p{font-size:17px}
+  .block li{font-size:16px}
+  .timeline li{grid-template-columns:1fr;gap:8px;padding:24px 0}
+  .timeline .what{grid-column:auto}
+  .timeline .role{font-size:21px}
+  .timeline .desc{font-size:16px}
+  .skills,.contact-grid{grid-template-columns:1fr;gap:12px}
+  .skill,.cbox{padding:24px;border-radius:20px;min-height:0}
+  .story p{font-size:18px}
+  .band p{font-size:17px}
+  .footer .wrap{flex-direction:column}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  @view-transition{navigation:none}
+  *,*::before,*::after{animation-duration:.01ms !important;transition-duration:.01ms !important;transition-delay:0ms !important}
+  .js .reveal,.js .intro,.js [data-split] .w > span{opacity:1 !important;transform:none !important}
+}
+.card.plain:hover{transform:none;box-shadow:none}
+
+.view{min-height:60vh}</style>
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+<a class="skip" href="#/">Skip to content</a>
+<div class="progress" aria-hidden="true"></div>
+<nav class="nav" aria-label="Main">
+  <div class="wrap">
+    <a class="brand" href="#/" aria-current="page">Mark Walusimbi</a>
+    <ul class="links">
+      <li><a href="#/work">Work</a></li>
+      <li><a href="#/about">About</a></li>
+      <li><a class="nav-cta" href="#/contact">Contact</a></li>
+    </ul>
+    <button class="burger" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
+  </div>
+</nav>
+<div class="menu" id="menu" aria-hidden="true">
+  <a href="#/" style="--i:0" aria-current="page">Home</a>
+  <a href="#/work" style="--i:1">Work</a>
+  <a href="#/about" style="--i:2">About</a>
+  <a href="#/contact" style="--i:3">Contact</a>
+  <div class="menu-foot">
+    <a href="https://linkedin.com/in/mark-walusimbi" target="_blank" rel="noopener">LinkedIn</a>
+    <a href="https://github.com/MarkArnold03" target="_blank" rel="noopener">GitHub</a>
+  </div>
+</div>
+<main id="main" class="view"></main>
+<footer class="footer">
+  <div class="wrap">
+    <span>© <span class="year">2026</span> Mark Walusimbi</span>
+    <nav aria-label="Footer">
+      <a href="#/work">Work</a><a href="#/about">About</a><a href="#/contact">Contact</a>
+      <a href="https://linkedin.com/in/mark-walusimbi" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/MarkArnold03" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+  </div>
+</footer>
+<button class="totop" aria-label="Back to top"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+<div class="toast" role="status" aria-live="polite"></div>
+<script id="pages" type="application/json">{"home": {"t": "Mark Walusimbi, fullstack developer", "h": "\n<header class=\"hero\">\n  <div class=\"wrap\">\n    <p class=\"kicker intro\">Fullstack developer in Stockholm<\/p>\n    <h1 data-split>I build the systems companies run on.<\/h1>\n    <p class=\"lede intro\" style=\"--d:650ms\">C#, .NET and JavaScript. From the database to the app in a driver's pocket.<\/p>\n    <div class=\"ctas intro\" style=\"--d:780ms\">\n      <a class=\"btn btn-fill\" href=\"#/work\">See my work<\/a>\n      <a class=\"btn btn-line\" href=\"#/contact\">Get in touch<\/a>\n    <\/div>\n  <\/div>\n<\/header>\n<section style=\"padding-top:0\">\n  <div class=\"wrap\">\n    <div class=\"section-head reveal\"><h2 class=\"section-title\">Selected work.<\/h2><a class=\"textlink\" href=\"#/work\">All work <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14M13 6l6 6-6 6\"/><\/svg><\/a><\/div>\n    <div class=\"cards\" data-stagger>\n      <a class=\"card wide reveal\" href=\"#/work/lapx\">\n  <div class=\"art art-lapx\" aria-hidden=\"true\"><div class=\"win\"><div class=\"side\"><i><\/i><i><\/i><i><\/i><i><\/i><i><\/i><\/div><div class=\"rows\"><i><\/i><i><\/i><i><\/i><i><\/i><i><\/i><i><\/i><i><\/i><\/div><\/div><div class=\"phone\"><i><\/i><i><\/i><i><\/i><b><\/b><\/div><\/div>\n  <div class=\"info\"><p class=\"label\">LAPX AB, 2025 to 2026<\/p><h3>An in-house platform for a logistics business.<\/h3><p>Backend, frontend and a mobile app for field staff, used every day across transport, moving, warehouse and assembly.<\/p><span class=\"go\">Read the case <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14M13 6l6 6-6 6\"/><\/svg><\/span><\/div>\n<\/a>\n      <a class=\"card reveal\" href=\"#/work/bankwebapp\">\n  <div class=\"art art-bank\" aria-hidden=\"true\"><div class=\"acct a1\">Checking <b>12 480 kr<\/b><\/div><div class=\"acct a2\">Savings <b>54 200 kr<\/b><\/div><div class=\"acct a3\">Transfer <b>1 500 kr<\/b><\/div><\/div>\n  <div class=\"info\"><p class=\"label\">KYH project, 2023<\/p><h3>A banking app in ASP.NET Core MVC.<\/h3><p>Roles, customer search and transactions, built end to end in .NET.<\/p><span class=\"go\">Read the case <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14M13 6l6 6-6 6\"/><\/svg><\/span><\/div>\n<\/a>\n      <a class=\"card reveal\" href=\"#/work/rising-rock\">\n  <div class=\"art art-rr\" aria-hidden=\"true\"><span>Rising Rock<\/span><\/div>\n  <div class=\"info\"><p class=\"label\">Website for a friend<\/p><h3>A website for Rising Rock.<\/h3><p>The website for a friend's web design studio, designed and built by me.<\/p><span class=\"go\">Read the case <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14M13 6l6 6-6 6\"/><\/svg><\/span><\/div>\n<\/a>\n    <\/div>\n  <\/div>\n<\/section>\n<section class=\"white\">\n  <div class=\"wrap narrow story\">\n    <p class=\"kicker reveal\">About<\/p>\n    <p class=\"reveal\" style=\"font-size:clamp(26px,3.4vw,36px);line-height:1.3;color:var(--ink);font-weight:600;letter-spacing:-.015em\">I studied .NET development at KYH and spent the last year building a real business platform from the database up. Before that I worked roofs, deliveries and warehouses, so I build for the people who actually use the system.<\/p>\n    <a class=\"textlink reveal\" href=\"#/about\">More about me <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14M13 6l6 6-6 6\"/><\/svg><\/a>\n  <\/div>\n<\/section>\n<section class=\"dark band\">\n  <div class=\"wrap\">\n    <h2 class=\"reveal\">Let's build something.<\/h2>\n    <p class=\"reveal\">Open to developer roles in Stockholm and remote.<\/p>\n    <div class=\"ctas reveal\"><a class=\"btn btn-fill\" href=\"#/contact\">Contact me<\/a><\/div>\n  <\/div>\n<\/section>\n"}, "work": {"t": "Work | Mark Walusimbi", "h": "\n<header class=\"page-hero\">\n  <div class=\"wrap\">\n    <p class=\"kicker intro\">Work<\/p>\n    <h1 data-split>Things I've built.<\/h1>\n    <p class=\"lede intro\" style=\"--d:500ms\">Professional work, school projects and my own business. Pick one to read more.<\/p>\n  <\/div>\n<\/header>\n<section style=\"padding-top:0\">\n  <div class=\"wrap\">\n    <div class=\"cards\" data-stagger>\n      <a class=\"card wide reveal\" href=\"#/work/lapx\">\n  <div class=\"art art-lapx\" aria-hidden=\"true\"><div class=\"win\"><div class=\"side\"><i><\/i><i><\/i><i><\/i><i><\/i><i><\/i><\/div><div class=\"rows\"><i><\/i><i><\/i><i><\/i><i><\/i><i><\/i><i><\/i><i><\/i><\/div><\/div><div class=\"phone\"><i><\/i><i><\/i><i><\/i><b><\/b><\/div><\/div>\n  <div class=\"info\"><p class=\"label\">LAPX AB, 2025 to 2026<\/p><h3>An in-house platform for a logistics business.<\/h3><p>Backend, frontend and a mobile app for field staff, used every day across transport, moving, warehouse and assembly.<\/p><span class=\"go\">Read the case <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14M13 6l6 6-6 6\"/><\/svg><\/span><\/div>\n<\/a>\n      <a class=\"card reveal\" href=\"#/work/bankwebapp\">\n  <div class=\"art art-bank\" aria-hidden=\"true\"><div class=\"acct a1\">Checking <b>12 480 kr<\/b><\/div><div class=\"acct a2\">Savings <b>54 200 kr<\/b><\/div><div class=\"acct a3\">Transfer <b>1 500 kr<\/b><\/div><\/div>\n  <div class=\"info\"><p class=\"label\">KYH project, 2023<\/p><h3>A banking app in ASP.NET Core MVC.<\/h3><p>Roles, customer search and transactions, built end to end in .NET.<\/p><span class=\"go\">Read the case <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14M13 6l6 6-6 6\"/><\/svg><\/span><\/div>\n<\/a>\n      <a class=\"card reveal\" href=\"#/work/rising-rock\">\n  <div class=\"art art-rr\" aria-hidden=\"true\"><span>Rising Rock<\/span><\/div>\n  <div class=\"info\"><p class=\"label\">Website for a friend<\/p><h3>A website for Rising Rock.<\/h3><p>The website for a friend's web design studio, designed and built by me.<\/p><span class=\"go\">Read the case <svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14M13 6l6 6-6 6\"/><\/svg><\/span><\/div>\n<\/a>\n      <div class=\"card plain reveal\" style=\"grid-column:1/-1;cursor:default\"><div class=\"info\"><p class=\"label\">RedRiver internship, 2024<\/p><h3>Matching candidates to jobs with AI.<\/h3><p>REST APIs in .NET, plus a project that used the ChatGPT API to match candidates to job listings.<\/p><\/div><\/div>\n    <\/div>\n  <\/div>\n<\/section>\n"}, "about": {"t": "About | Mark Walusimbi", "h": "\n<header class=\"page-hero\">\n  <div class=\"wrap\">\n    <p class=\"kicker intro\">About<\/p>\n    <h1 data-split>Developer, by way of the warehouse floor.<\/h1>\n    <p class=\"lede intro\" style=\"--d:600ms\">I'm a fullstack .NET and JavaScript developer based in Stockholm. I like building things people use every day, and making them hold up when it matters.<\/p>\n  <\/div>\n<\/header>\n<section class=\"white\">\n  <div class=\"wrap\">\n    <div class=\"section-head reveal\"><h2 class=\"section-title\">Experience.<\/h2><\/div>\n    <ol class=\"timeline\" data-stagger>\n      <li class=\"reveal\"><span class=\"when\">2025 to 2026<\/span><div class=\"what\"><span class=\"role\">Developer, LAPX AB<\/span><span class=\"desc\">Backend and frontend on the company's internal platform, a field app for staff and the release chain. <a href=\"#/work/lapx\">Read more<\/a><\/span><\/div><\/li>\n      <li class=\"reveal\"><span class=\"when\">2024<\/span><div class=\"what\"><span class=\"role\">Backend intern, RedRiver Consulting and Software<\/span><span class=\"desc\">RESTful APIs in .NET, and a project using the ChatGPT API to match candidates to job listings.<\/span><\/div><\/li>\n      <li class=\"reveal\"><span class=\"when\">2022 to 2025<\/span><div class=\"what\"><span class=\"role\">Roofs, deliveries, warehouses, bars<\/span><span class=\"desc\">DHL Arlanda, Svea Takv\u00e5rd, Future Mobility, Kulturarenor and more. I've driven the routes and worked the shifts, so I know what people using these systems need.<\/span><\/div><\/li>\n    <\/ol>\n  <\/div>\n<\/section>\n<section>\n  <div class=\"wrap\">\n    <div class=\"section-head reveal\"><h2 class=\"section-title\">Education.<\/h2><\/div>\n    <ol class=\"timeline\">\n      <li class=\"reveal\"><span class=\"when\">YH<\/span><div class=\"what\"><span class=\"role\">.NET developer, KYH<\/span><span class=\"desc\">Vocational program in .NET development, with an internship at RedRiver.<\/span><\/div><\/li>\n      <li class=\"reveal\"><span class=\"when\">Gymnasium<\/span><div class=\"what\"><span class=\"role\">Teknikprogrammet, Fyrisskolan<\/span><span class=\"desc\">Media technology, with Programmering 1 and 2 in C#, web development and web server.<\/span><\/div><\/li>\n    <\/ol>\n  <\/div>\n<\/section>\n<section class=\"white\">\n  <div class=\"wrap\">\n    <div class=\"section-head reveal\"><h2 class=\"section-title\">Skills.<\/h2><\/div>\n    <div class=\"skills\" data-stagger>\n      <div class=\"skill reveal\" style=\"background:var(--bg)\"><h3>Backend<\/h3><div class=\"chips\"><span class=\"chip\" style=\"background:#fff\">C#<\/span><span class=\"chip\" style=\"background:#fff\">ASP.NET Core<\/span><span class=\"chip\" style=\"background:#fff\">EF Core<\/span><span class=\"chip\" style=\"background:#fff\">SQL Server<\/span><span class=\"chip\" style=\"background:#fff\">MySQL<\/span><span class=\"chip\" style=\"background:#fff\">SignalR<\/span><span class=\"chip\" style=\"background:#fff\">Node.js<\/span><span class=\"chip\" style=\"background:#fff\">xUnit<\/span><span class=\"chip\" style=\"background:#fff\">NUnit<\/span><\/div><\/div>\n      <div class=\"skill reveal\" style=\"background:var(--bg)\"><h3>Frontend<\/h3><div class=\"chips\"><span class=\"chip\" style=\"background:#fff\">JavaScript<\/span><span class=\"chip\" style=\"background:#fff\">TypeScript<\/span><span class=\"chip\" style=\"background:#fff\">React<\/span><span class=\"chip\" style=\"background:#fff\">PWA<\/span><span class=\"chip\" style=\"background:#fff\">Service workers<\/span><span class=\"chip\" style=\"background:#fff\">i18n<\/span><span class=\"chip\" style=\"background:#fff\">Tailwind<\/span><\/div><\/div>\n      <div class=\"skill reveal\" style=\"background:var(--bg)\"><h3>Shipping<\/h3><div class=\"chips\"><span class=\"chip\" style=\"background:#fff\">IIS<\/span><span class=\"chip\" style=\"background:#fff\">Azure DevOps<\/span><span class=\"chip\" style=\"background:#fff\">Azure<\/span><span class=\"chip\" style=\"background:#fff\">Docker<\/span><span class=\"chip\" style=\"background:#fff\">Git<\/span><span class=\"chip\" style=\"background:#fff\">Postman<\/span><span class=\"chip\" style=\"background:#fff\">OpenAPI<\/span><span class=\"chip\" style=\"background:#fff\">Scrum<\/span><\/div><\/div>\n      <div class=\"skill reveal\" style=\"background:var(--bg)\"><h3>Languages<\/h3><div class=\"chips\"><span class=\"chip\" style=\"background:#fff\">English, native<\/span><span class=\"chip\" style=\"background:#fff\">Luganda, native<\/span><span class=\"chip\" style=\"background:#fff\">Swedish, fluent<\/span><\/div><\/div>\n    <\/div>\n  <\/div>\n<\/section>\n<section class=\"dark band\">\n  <div class=\"wrap\">\n    <h2 class=\"reveal\">Want the full CV?<\/h2>\n    <p class=\"reveal\">Send me a message and I'll get it to you.<\/p>\n    <div class=\"ctas reveal\"><a class=\"btn btn-fill\" href=\"#/contact\">Contact me<\/a><\/div>\n  <\/div>\n<\/section>\n"}, "contact": {"t": "Contact | Mark Walusimbi", "h": "\n<header class=\"page-hero\">\n  <div class=\"wrap\">\n    <p class=\"kicker intro\">Contact<\/p>\n    <h1 data-split>Let's build something.<\/h1>\n    <p class=\"lede intro\" style=\"--d:500ms\">Open to developer roles in Stockholm and remote. The fastest way to reach me is email.<\/p>\n  <\/div>\n<\/header>\n<section style=\"padding-top:0\">\n  <div class=\"wrap\">\n    <div class=\"contact-grid\" data-stagger>\n      <div class=\"cbox reveal\"><p class=\"label\">Email<\/p><strong>markanorld0@gmail.com<\/strong><div class=\"row\"><a href=\"mailto:markanorld0@gmail.com\">Send email<\/a><button data-copy=\"markanorld0@gmail.com\">Copy<\/button><\/div><\/div>\n      <div class=\"cbox reveal\"><p class=\"label\">LinkedIn<\/p><strong>mark-walusimbi<\/strong><div class=\"row\"><a href=\"https://linkedin.com/in/mark-walusimbi\" target=\"_blank\" rel=\"noopener\">Open profile<\/a><\/div><\/div>\n      <div class=\"cbox reveal\"><p class=\"label\">GitHub<\/p><strong>MarkArnold03<\/strong><div class=\"row\"><a href=\"https://github.com/MarkArnold03\" target=\"_blank\" rel=\"noopener\">See my code<\/a><\/div><\/div>\n    <\/div>\n  <\/div>\n<\/section>\n"}, "work/lapx": {"t": "LAPX platform | Mark Walusimbi", "h": "\n<header class=\"page-hero\">\n  <div class=\"wrap\">\n    <a class=\"textlink intro\" href=\"#/work\" style=\"align-self:flex-start\">All work<\/a>\n    <p class=\"kicker intro\">LAPX AB, 2025 to 2026<\/p>\n    <h1 data-split>An in-house platform for a logistics business.<\/h1>\n    <p class=\"lede intro\" style=\"--d:550ms\">I built and ran LAPX's internal business platform together with the team, backend and frontend. Staff in transport, moving, warehouse and assembly use it every day.<\/p>\n    \n    <dl class=\"meta intro\" style=\"--d:700ms\"><div><dt>Role<\/dt><dd>Fullstack developer, hourly employment<\/dd><\/div><div><dt>Period<\/dt><dd>June 2025 to June 2026<\/dd><\/div><div><dt>Stack<\/dt><dd>C#, ASP.NET Core, EF Core, SQL Server, JavaScript, PWA, IIS<\/dd><\/div><\/dl>\n  <\/div>\n<\/header>\n<div class=\"case-body\"><div class=\"wrap\">\n<div class=\"block reveal\"><h2>What I did<\/h2><div class=\"txt\"><ul><li><b>Backend.<\/b> REST APIs in .NET with role based access, audit logging and automated tests.<\/li><li><b>Office app.<\/b> Staffing and scheduling views, and an HR module with time reporting and Excel export.<\/li><li><b>Field app.<\/b> A mobile web app for drivers, warehouse staff and installers. Clock in and out with location checks, offline support, damage reports with photos, in 9 languages.<\/li><li><b>Integrations.<\/b> Connected the platform to the external transport, warehouse and ERP systems the business relies on.<\/li><li><b>AI.<\/b> An in-app assistant built on a large language model API.<\/li><li><b>Releases.<\/b> Owned the backend release chain: build pipeline, versioning, verified deploys and production troubleshooting.<\/li><\/ul><\/div><\/div><div class=\"block reveal\"><h2>What I learned<\/h2><div class=\"txt\"><p>How to ship to people who depend on the system every morning. Offline has to really work, permissions have to be right the first time, and a release is only done when it is verified in production.<\/p><\/div><\/div><div class=\"block reveal\"><h2>About the details<\/h2><div class=\"txt\"><div class=\"notice\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><rect x=\"4\" y=\"10\" width=\"16\" height=\"11\" rx=\"2\"/><path d=\"M8 10V7a4 4 0 0 1 8 0v3\"/><\/svg><p>Code, screenshots and internal details belong to LAPX and stay private. I'm happy to talk about my role and how I work in an interview.<\/p><\/div><\/div><\/div>\n<a class=\"next reveal\" href=\"#/work/bankwebapp\"><span>Next project<\/span><strong>BankWebApp <svg width=\"40\" height=\"40\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14M13 6l6 6-6 6\"/><\/svg><\/strong><\/a>\n<\/div><\/div>\n"}, "work/bankwebapp": {"t": "BankWebApp | Mark Walusimbi", "h": "\n<header class=\"page-hero\">\n  <div class=\"wrap\">\n    <a class=\"textlink intro\" href=\"#/work\" style=\"align-self:flex-start\">All work<\/a>\n    <p class=\"kicker intro\">KYH project, 2023<\/p>\n    <h1 data-split>A banking app in ASP.NET Core MVC.<\/h1>\n    <p class=\"lede intro\" style=\"--d:550ms\">A school project at KYH where I built the core of a bank's internal system, from login and roles to customers and transactions.<\/p>\n    \n    <dl class=\"meta intro\" style=\"--d:700ms\"><div><dt>Role<\/dt><dd>Solo developer<\/dd><\/div><div><dt>Period<\/dt><dd>April to June 2023<\/dd><\/div><div><dt>Stack<\/dt><dd>C#, ASP.NET Core MVC, EF Core, Identity, SQL Server, AJAX<\/dd><\/div><\/dl>\n  <\/div>\n<\/header>\n<div class=\"case-body\"><div class=\"wrap\">\n<div class=\"block reveal\"><h2>What it does<\/h2><div class=\"txt\"><ul><li><b>Roles.<\/b> ASP.NET Core Identity with separate admin and cashier roles.<\/li><li><b>Customers.<\/b> Paginated customer search across the whole register.<\/li><li><b>Transactions.<\/b> Transaction handling, with account history loaded over AJAX so pages stay fast.<\/li><li><b>Data.<\/b> Entity Framework Core on SQL Server.<\/li><\/ul><\/div><\/div><div class=\"block reveal\"><h2>Code<\/h2><div class=\"txt\"><p>The full source is public on GitHub.<\/p><p><a class=\"btn btn-fill\" href=\"https://github.com/MarkArnold03/BankWebApp\" target=\"_blank\" rel=\"noopener\">View on GitHub<\/a><\/p><\/div><\/div>\n<a class=\"next reveal\" href=\"#/work/rising-rock\"><span>Next project<\/span><strong>Rising Rock <svg width=\"40\" height=\"40\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14M13 6l6 6-6 6\"/><\/svg><\/strong><\/a>\n<\/div><\/div>\n"}, "work/rising-rock": {"t": "Rising Rock | Mark Walusimbi", "h": "<header class=\"page-hero\">\n  <div class=\"wrap\">\n    <a class=\"textlink intro\" href=\"#/work\" style=\"align-self:flex-start\">All work<\/a>\n    <p class=\"kicker intro\">Client project<\/p>\n    <h1 data-split>A website for Rising Rock.<\/h1>\n    <p class=\"lede intro\" style=\"--d:550ms\">I designed and built the website for Rising Rock, a small web design studio run by a friend.<\/p>\n    \n    <dl class=\"meta intro\" style=\"--d:700ms\"><div><dt>Role<\/dt><dd>Designer and developer<\/dd><\/div><div><dt>Client<\/dt><dd>Rising Rock<\/dd><\/div><div><dt>Website<\/dt><dd><a href=\"https://risingrock.se\" target=\"_blank\" rel=\"noopener\">risingrock.se<\/a><\/dd><\/div><\/dl>\n  <\/div>\n<\/header>\n<div class=\"case-body\"><div class=\"wrap\">\n<div class=\"block reveal\"><h2>The brief<\/h2><div class=\"txt\"><p>Rising Rock builds websites for local businesses. Their own site had to explain the offer simply: see a finished demo first, and only pay if you like it.<\/p><\/div><\/div><div class=\"block reveal\"><h2>What I did<\/h2><div class=\"txt\"><p>Designed and built the whole site, from layout to launch.<\/p><\/div><\/div><div class=\"block reveal\"><h2>See it<\/h2><div class=\"txt\"><p><a class=\"btn btn-fill\" href=\"https://risingrock.se\" target=\"_blank\" rel=\"noopener\">Visit risingrock.se<\/a><\/p><\/div><\/div>\n<a class=\"next reveal\" href=\"#/work/lapx\"><span>Next project<\/span><strong>LAPX platform <svg width=\"40\" height=\"40\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M5 12h14M13 6l6 6-6 6\"/><\/svg><\/strong><\/a>\n<\/div><\/div>\n"}}</script>
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const PAGES = JSON.parse($('#pages').textContent);
+  const view = $('#main');
+  $$('.year').forEach(el => el.textContent = new Date().getFullYear());
+
+  const io = new IntersectionObserver(entries => entries.forEach(en => {
+    if (!en.isIntersecting) return;
+    const t = en.target;
+    t.classList.add('in');
+    setTimeout(() => t.classList.add('done'), 1000 + (parseInt(t.style.getPropertyValue('--d')) || 0));
+    io.unobserve(t);
+  }), { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  const toast = $('.toast'); let tt;
+  const showToast = m => { toast.textContent = m; toast.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => toast.classList.remove('show'), 2200); };
+
+  function initPage() {
+    $$('[data-split]', view).forEach(h => {
+      const text = h.textContent.trim();
+      h.setAttribute('aria-label', text);
+      h.innerHTML = text.split(' ').map((w, i) => `<span class="w" aria-hidden="true"><span style="--i:${i}">${w}</span></span>`).join(' ');
+    });
+    $$('[data-stagger]', view).forEach(g => $$('.reveal', g).forEach((el, i) => el.style.setProperty('--d', `${(i % 4) * 90}ms`)));
+    $$('.reveal', view).forEach(el => io.observe(el));
+    $$('[data-copy]', view).forEach(b => b.addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(b.dataset.copy); showToast('Email address copied'); } catch { showToast(b.dataset.copy); }
+    }));
+    document.documentElement.classList.remove('loaded');
+    requestAnimationFrame(() => requestAnimationFrame(() => document.documentElement.classList.add('loaded')));
+  }
+
+  function route() {
+    let key = location.hash.replace(/^#\/?/, '') || 'home';
+    if (!PAGES[key]) key = 'home';
+    const swap = () => {
+      view.innerHTML = PAGES[key].h;
+      document.title = PAGES[key].t;
+      const section = key.split('/')[0];
+      $$('.links a, .menu a, .brand').forEach(a => {
+        const target = (a.getAttribute('href') || '').replace(/^#\/?/, '') || 'home';
+        a.toggleAttribute('aria-current', target === section);
+        if (target === section) a.setAttribute('aria-current', 'page');
+      });
+      scrollTo(0, 0);
+      initPage();
+    };
+    if (document.startViewTransition && !reduce && view.childElementCount) document.startViewTransition(swap);
+    else swap();
+  }
+  addEventListener('hashchange', route);
+
+  const nav = $('.nav'), bar = $('.progress'), top = $('.totop'); let ticking = false;
+  const onScroll = () => {
+    const y = scrollY, max = document.documentElement.scrollHeight - innerHeight;
+    nav.classList.toggle('scrolled', y > 8);
+    bar.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
+    top.classList.toggle('show', y > innerHeight * 0.9);
+    ticking = false;
+  };
+  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(onScroll); } }, { passive: true });
+  top.addEventListener('click', () => scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' }));
+
+  const burger = $('.burger'), menu = $('#menu');
+  const setMenu = open => {
+    burger.setAttribute('aria-expanded', open);
+    burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    menu.classList.toggle('open', open); menu.setAttribute('aria-hidden', !open); menu.inert = !open;
+    document.body.classList.toggle('locked', open);
+    if (open) $('a', menu).focus();
+  };
+  menu.inert = true;
+  burger.addEventListener('click', () => setMenu(burger.getAttribute('aria-expanded') !== 'true'));
+  $$('a', menu).forEach(a => a.addEventListener('click', () => setMenu(false)));
+  addEventListener('keydown', e => { if (e.key === 'Escape' && menu.classList.contains('open')) { setMenu(false); burger.focus(); } });
+  matchMedia('(min-width: 761px)').addEventListener('change', e => e.matches && setMenu(false));
+
+  $('.skip').addEventListener('click', e => { e.preventDefault(); view.setAttribute('tabindex','-1'); view.focus(); });
+  route(); onScroll();
+})();
+</script>
+</body>
+</html>
