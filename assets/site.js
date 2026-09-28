@@ -96,6 +96,7 @@
     'MW-RDRV-24': ['REDRIVER', 'RED RIVER', 'RDRV', 'INTERN', 'PRAKTIK'],
     'MW-BANK-23': ['BANK', 'MVC'],
     'MW-RROCK': ['RISING', 'ROCK', 'RROCK'],
+    'MW-DEMO': ['DEMO', 'DISPATCH', 'SIMUL'],
     'MW-NEXT-26': ['NEXT', 'HIRE', 'YOU', 'JOB', 'TEAM', 'NÄSTA', 'ANSTÄLL', 'DITT', 'DIG'],
   };
   const find = raw => {
@@ -126,12 +127,12 @@
     return codes.includes(code) ? code : null;
   };
   const initial = fromHash();
-  select(initial || codes[0], { scroll: !!initial });
+  if (parcels.length) select(initial || codes[0], { scroll: !!initial });
 
   chips.forEach(c => c.addEventListener('click', e => { e.preventDefault(); go(c.dataset.code, { focus: true }); }));
   $$('.board .row').forEach(r => r.addEventListener('click', e => { e.preventDefault(); go(r.dataset.code, { scroll: true, focus: true }); }));
   addEventListener('hashchange', () => { const c = fromHash(); if (c) select(c, { scroll: true }); });
-  form.addEventListener('submit', e => {
+  form?.addEventListener('submit', e => {
     e.preventDefault();
     const code = find(input.value);
     if (code) {
@@ -143,7 +144,7 @@
     }
   });
   addEventListener('keydown', e => {
-    if (e.key !== '/' || e.ctrlKey || e.metaKey || e.altKey) return;
+    if (!input || e.key !== '/' || e.ctrlKey || e.metaKey || e.altKey) return;
     if (e.target.closest('input, textarea, select, [contenteditable="true"]')) return;
     e.preventDefault();
     $('#track').scrollIntoView({ behavior: smooth });
@@ -151,7 +152,7 @@
   });
 
   /* ---------- active section in nav ---------- */
-  const links = new Map($$('.nav a').map(a => [a.getAttribute('href').slice(1), a]));
+  const links = new Map($$('.nav a[href^="#"]').map(a => [a.getAttribute('href').slice(1), a]));
   const spy = new IntersectionObserver(entries => entries.forEach(en => {
     if (!en.isIntersecting) return;
     links.forEach(a => a.classList.remove('on'));
@@ -195,7 +196,7 @@
 
   /* ---------- booking email ---------- */
   const booking = $('.booking');
-  booking.addEventListener('submit', e => {
+  booking?.addEventListener('submit', e => {
     e.preventDefault();
     const f = new FormData(booking);
     const val = (k, fallback) => String(f.get(k) || '').trim() || fallback;
@@ -218,6 +219,6 @@
     if (location.hash) e.currentTarget.href = e.currentTarget.getAttribute('href').split('#')[0] + location.hash;
   });
 
-  console.log('%cMW TERMINAL%c\nLooking under the hood? Plain HTML, CSS and JS, built with a small Node script.\nLet\'s talk: ' + booking.dataset.email,
+  console.log('%cMW TERMINAL%c\nLooking under the hood? Plain HTML, CSS and JS, built with a small Node script.\nLet\'s talk: markanorld0@gmail.com',
     'background:#ff5a1f;color:#16150f;font:700 14px monospace;padding:4px 8px', 'font:12px monospace');
 })();

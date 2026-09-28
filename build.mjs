@@ -4,6 +4,7 @@ import { createHash } from 'node:crypto';
 import { dirname } from 'node:path';
 import { langs, site } from './src/content.mjs';
 import { page, notFound, redirect, INIT } from './src/page.mjs';
+import { dispatchPage } from './src/dispatch.mjs';
 
 const hash = createHash('sha256').update(INIT).digest('base64');
 const csp = [
@@ -34,6 +35,12 @@ out('404.html', notFound(langs, csp));
 // Extra pages add their files here so the service worker precaches them.
 const extraPrecache = {};
 const extraSitemap = [];
+
+// Dispatch demo.
+out('dispatch/index.html', dispatchPage(langs.en, csp));
+out('sv/dispatch/index.html', dispatchPage(langs.sv, csp));
+Object.assign(extraPrecache, { '/dispatch/': 'dispatch/index.html', '/sv/dispatch/': 'sv/dispatch/index.html', '/assets/dispatch.js': 'assets/dispatch.js' });
+extraSitemap.push(['dispatch/', 'sv/dispatch/']);
 
 // Old URLs from the previous version of the site point to their new place.
 const moved = {

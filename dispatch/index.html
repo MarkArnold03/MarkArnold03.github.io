@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-qW5B3SUaxur5yiWlqNiKy1WQGAbF+EV1A/P0nwrI6EQ='; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; manifest-src 'self'; worker-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Dispatch demo — Mark Walusimbi</title>
+<meta name="description" content="A live, simulated dispatch board: trucks, jobs and routing across Stockholm, with an offline outbox. Built from scratch in plain JavaScript.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Dispatch demo — Mark Walusimbi">
+<meta property="og:description" content="A live, simulated dispatch board: trucks, jobs and routing across Stockholm, with an offline outbox. Built from scratch in plain JavaScript.">
+<meta property="og:url" content="https://markarnold03.github.io/dispatch/">
+<meta property="og:site_name" content="Mark Walusimbi">
+<meta property="og:locale" content="en_GB">
+<meta property="og:image" content="https://markarnold03.github.io/assets/img/og-en.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Mark Walusimbi, fullstack developer in Stockholm: from the warehouse floor to production.">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+<meta name="theme-color" content="#efebe3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e0f0c" media="(prefers-color-scheme: dark)">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23ff5a1f'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='26' font-weight='700' fill='%2316150f' text-anchor='middle'%3EMW%3C/text%3E%3C/svg%3E">
+<link rel="canonical" href="https://markarnold03.github.io/dispatch/">
+<link rel="alternate" hreflang="en" href="https://markarnold03.github.io/dispatch/">
+<link rel="alternate" hreflang="sv" href="https://markarnold03.github.io/sv/dispatch/">
+<link rel="alternate" hreflang="x-default" href="https://markarnold03.github.io/dispatch/">
+<link rel="preload" href="../assets/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/jetbrains-mono-400.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/site.css">
+<script>(function(d){d.classList.add('js');try{var s=localStorage.getItem('mw-shift');if(s==='day'||s==='night')d.setAttribute('data-shift',s)}catch(e){}})(document.documentElement)</script>
+</head>
+<body class="demo-page">
+<a class="skip" href="#main">Skip to content</a>
+<header class="top">
+  <div class="top-in">
+    <a class="logo" href="../#board"><span class="logo-mark" aria-hidden="true">MW</span><span class="logo-text">Mark Walusimbi<small>Fullstack · .NET · JS</small></span></a>
+    <nav class="nav" aria-label="Sections">
+      <a href="../#board"><span aria-hidden="true">01</span>Board</a>
+      <a href="../#track"><span aria-hidden="true">02</span>Track</a>
+      <a href="../#route"><span aria-hidden="true">03</span>Route</a>
+      <a href="../#manifest"><span aria-hidden="true">04</span>Manifest</a>
+      <a href="../#docs"><span aria-hidden="true">05</span>Customs</a>
+      <a href="../#pickup"><span aria-hidden="true">06</span>Pickup</a>
+      <a href="../dispatch/" aria-current="page" class="on"><span aria-hidden="true">07</span>Demo</a>
+    </nav>
+    <div class="tools">
+      <span class="clock" title="Stockholm time"><span class="clock-tz" aria-hidden="true">STO</span> <time class="js-clock">--:--</time></span>
+      <a class="lang" href="../sv/dispatch/" hreflang="sv" lang="sv" aria-label="Svenska">SV</a>
+      <button class="shift" type="button" data-day="Day shift" data-night="Night shift" data-to-day="Switch to day shift" data-to-night="Switch to night shift" aria-label="Switch to night shift"><svg class="i i-sun" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg><svg class="i i-moon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5z"/></svg><span class="shift-label">Day shift</span></button>
+    </div>
+  </div>
+  <div class="ticker" aria-label="Status">
+    <div class="ticker-track">
+      <p><span>Open to work</span><span>Stockholm &amp; remote</span><span>.NET 9 · C# · JavaScript</span><span>~100 daily users in production</span><span>450+ xUnit tests</span><span>9 languages in the field app</span><span>~90 API controllers</span><span>Driving licence B</span></p>
+      <p aria-hidden="true"><span>Open to work</span><span>Stockholm &amp; remote</span><span>.NET 9 · C# · JavaScript</span><span>~100 daily users in production</span><span>450+ xUnit tests</span><span>9 languages in the field app</span><span>~90 API controllers</span><span>Driving licence B</span></p>
+    </div>
+  </div>
+</header>
+<main id="main">
+<section class="demo-hero" aria-labelledby="demo-title">
+  <div class="wrap">
+    <p class="dock">Dock 07 — Live demo</p>
+    <h1 id="demo-title" class="display">Dispatch, simulated.</h1>
+    <p class="lede">A small version of the kind of dispatch screen I built at LAPX, written from scratch for this site. Trucks, jobs and drivers are simulated in your browser with made-up data. Nothing is sent anywhere.</p>
+    <p class="try">Try this: let it run, then press “Cut connection”, wait, and reconnect.</p>
+  </div>
+</section>
+<section class="demo-app" aria-label="Dispatch, simulated.">
+  <div class="wrap">
+    <div class="dispatch">
+      <div class="d-bar" role="toolbar" aria-label="Controls">
+        <button class="d-btn d-run" type="button" aria-pressed="true" data-run="Run" data-pause="Pause">Pause</button>
+        <div class="d-speed" role="group" aria-label="Speed">
+          <span class="mono-label">Speed</span>
+          <button class="d-btn d-seg" type="button" data-speed="1" aria-pressed="false">1×</button><button class="d-btn d-seg" type="button" data-speed="4" aria-pressed="true">4×</button><button class="d-btn d-seg" type="button" data-speed="16" aria-pressed="false">16×</button>
+        </div>
+        <label class="d-switch"><input type="checkbox" class="d-auto" checked><span>Auto-dispatch</span></label>
+        <button class="d-btn d-new" type="button">+ New job</button>
+        <button class="d-btn d-net" type="button" aria-pressed="false" data-cut="Cut connection" data-reconnect="Reconnect">Cut connection</button>
+        <button class="d-btn d-reset" type="button">Reset</button>
+        <span class="d-clock mono" aria-hidden="true">07:00</span>
+      </div>
+      <p class="d-hint" role="status" aria-live="polite"></p>
+      <div class="d-grid">
+        <div class="d-map">
+          <svg class="d-svg" viewBox="0 0 1000 640" role="img" aria-labelledby="d-map-t">
+      <title id="d-map-t">Simulated map of Stockholm with trucks, depot and jobs</title>
+      <g class="water"><path d="M-20 382 C120 368 210 394 300 386 S430 368 482 378" stroke-width="58"/><path d="M258 384 C246 322 264 262 238 186" stroke-width="30"/><path d="M522 374 C600 386 664 364 760 356 S900 334 1020 322" stroke-width="72"/><path d="M722 40 C742 132 748 222 772 348" stroke-width="32"/><path d="M420 492 C520 500 610 506 720 478 S800 472 900 500" stroke-width="26"/></g>
+      <path class="roads-casing" d="M245 120L390 95M245 120L150 265M390 95L425 185M150 265L340 300M340 300L425 185M340 300L490 265M425 185L490 265M490 265L615 230M615 230L865 180M615 230L690 300M490 265L500 345M500 345L505 440M505 440L665 440M665 440L845 450M505 440L345 470M340 300L345 470M345 470L215 525M215 525L360 585M345 470L360 585M360 585L485 555M485 555L610 560M610 560L665 440M485 555L505 440M610 560L845 450M390 95L615 230"/>
+      <path class="roads" d="M245 120L390 95M245 120L150 265M390 95L425 185M150 265L340 300M340 300L425 185M340 300L490 265M425 185L490 265M490 265L615 230M615 230L865 180M615 230L690 300M490 265L500 345M500 345L505 440M505 440L665 440M665 440L845 450M505 440L345 470M340 300L345 470M345 470L215 525M215 525L360 585M345 470L360 585M360 585L485 555M485 555L610 560M610 560L665 440M485 555L505 440M610 560L845 450M390 95L615 230"/>
+      <path class="d-route" d=""/>
+      <g class="places">
+      <g class="place depot">
+        <rect x="347" y="572" width="26" height="26" rx="4"/>
+        <text x="360" y="617">Västberga · Depot</text>
+      </g>
+      <g class="place">
+        <circle cx="345" cy="470" r="5"/>
+        <text x="345" y="451">Liljeholmen</text>
+      </g>
+      <g class="place">
+        <circle cx="215" cy="525" r="5"/>
+        <text x="215" y="557">Hägersten</text>
+      </g>
+      <g class="place">
+        <circle cx="485" cy="555" r="5"/>
+        <text x="485" y="587">Årsta</text>
+      </g>
+      <g class="place">
+        <circle cx="610" cy="560" r="5"/>
+        <text x="610" y="592">Globen</text>
+      </g>
+      <g class="place">
+        <circle cx="665" cy="440" r="5"/>
+        <text x="665" y="421">Hammarby</text>
+      </g>
+      <g class="place">
+        <circle cx="845" cy="450" r="5"/>
+        <text x="845" y="431">Nacka</text>
+      </g>
+      <g class="place">
+        <circle cx="505" cy="440" r="5"/>
+        <text x="505" y="421">Södermalm</text>
+      </g>
+      <g class="place">
+        <circle cx="500" cy="345" r="5"/>
+        <text x="558" y="350" text-anchor="start">Gamla stan</text>
+      </g>
+      <g class="place">
+        <circle cx="490" cy="265" r="5"/>
+        <text x="490" y="246">Norrmalm</text>
+      </g>
+      <g class="place">
+        <circle cx="425" cy="185" r="5"/>
+        <text x="425" y="166">Vasastan</text>
+      </g>
+      <g class="place">
+        <circle cx="615" cy="230" r="5"/>
+        <text x="615" y="211">Östermalm</text>
+      </g>
+      <g class="place">
+        <circle cx="690" cy="300" r="5"/>
+        <text x="690" y="332">Djurgården</text>
+      </g>
+      <g class="place">
+        <circle cx="865" cy="180" r="5"/>
+        <text x="865" y="161">Lidingö</text>
+      </g>
+      <g class="place">
+        <circle cx="340" cy="300" r="5"/>
+        <text x="340" y="281">Kungsholmen</text>
+      </g>
+      <g class="place">
+        <circle cx="150" cy="265" r="5"/>
+        <text x="150" y="246">Bromma</text>
+      </g>
+      <g class="place">
+        <circle cx="245" cy="120" r="5"/>
+        <text x="245" y="101">Sundbyberg</text>
+      </g>
+      <g class="place">
+        <circle cx="390" cy="95" r="5"/>
+        <text x="390" y="76">Solna</text>
+      </g>
+      </g>
+      <g class="d-jobs"></g>
+      <g class="d-trucks"></g>
+    </svg>
+          <p class="d-offline" hidden><span class="d-offline-dot"></span><span class="d-offline-text"></span></p>
+          <ul class="d-legend" aria-hidden="true">
+            <li><i class="lg-depot"></i>Depot</li>
+            <li><i class="lg-pickup"></i>Pickup</li>
+            <li><i class="lg-drop"></i>Drop-off</li>
+            <li><i class="lg-truck"></i>Truck</li>
+          </ul>
+        </div>
+        <aside class="d-side">
+          <dl class="d-kpis">
+            <div><dt>Waiting</dt><dd class="k-waiting">0</dd></div>
+            <div><dt>On the road</dt><dd class="k-active">0</dd></div>
+            <div><dt>Delivered</dt><dd class="k-delivered">0</dd></div>
+            <div><dt>Avg. wait</dt><dd class="k-wait">–</dd></div>
+          </dl>
+          <section class="d-panel">
+            <h2 class="mono-label">Job queue <span class="d-count q-count">0</span></h2>
+            <ul class="d-queue"><li class="d-empty">No jobs waiting.</li></ul>
+          </section>
+          <section class="d-panel">
+            <h2 class="mono-label">Fleet</h2>
+            <ul class="d-fleet"><li><button type="button" class="d-truck" data-truck="T-01"><b>T-01</b><span class="d-driver">Sara</span><span class="d-state">Free</span></button></li><li><button type="button" class="d-truck" data-truck="T-02"><b>T-02</b><span class="d-driver">Ali</span><span class="d-state">Free</span></button></li><li><button type="button" class="d-truck" data-truck="T-03"><b>T-03</b><span class="d-driver">Johan</span><span class="d-state">Free</span></button></li><li><button type="button" class="d-truck" data-truck="T-04"><b>T-04</b><span class="d-driver">Emma</span><span class="d-state">Free</span></button></li><li><button type="button" class="d-truck" data-truck="T-05"><b>T-05</b><span class="d-driver">Mohammed</span><span class="d-state">Off shift</span></button></li><li><button type="button" class="d-truck" data-truck="T-06"><b>T-06</b><span class="d-driver">Linnea</span><span class="d-state">Off shift</span></button></li></ul>
+          </section>
+        </aside>
+        <section class="d-panel d-feed-panel">
+          <h2 class="mono-label">Event feed <span class="d-outbox" hidden></span></h2>
+          <div role="log" aria-live="off" aria-label="Event feed"><ol class="d-feed"></ol></div>
+        </section>
+      </div>
+    </div>
+    <script type="application/json" id="d-data">{"nodes":[{"id":"vas","name":"Västberga","x":360,"y":585,"depot":true,"dy":32},{"id":"lil","name":"Liljeholmen","x":345,"y":470,"dy":-19},{"id":"hag","name":"Hägersten","x":215,"y":525,"dy":32},{"id":"ars","name":"Årsta","x":485,"y":555,"dy":32},{"id":"glo","name":"Globen","x":610,"y":560,"dy":32},{"id":"ham","name":"Hammarby","x":665,"y":440,"dy":-19},{"id":"nac","name":"Nacka","x":845,"y":450,"dy":-19},{"id":"sod","name":"Södermalm","x":505,"y":440,"dy":-19},{"id":"gst","name":"Gamla stan","x":500,"y":345,"dy":5,"dx":58},{"id":"nor","name":"Norrmalm","x":490,"y":265,"dy":-19},{"id":"vst","name":"Vasastan","x":425,"y":185,"dy":-19},{"id":"ost","name":"Östermalm","x":615,"y":230,"dy":-19},{"id":"djg","name":"Djurgården","x":690,"y":300,"dy":32},{"id":"lid","name":"Lidingö","x":865,"y":180,"dy":-19},{"id":"kun","name":"Kungsholmen","x":340,"y":300,"dy":-19},{"id":"bro","name":"Bromma","x":150,"y":265,"dy":-19},{"id":"sun","name":"Sundbyberg","x":245,"y":120,"dy":-19},{"id":"sol","name":"Solna","x":390,"y":95,"dy":-19}],"edges":[["sun","sol"],["sun","bro"],["sol","vst"],["bro","kun"],["kun","vst"],["kun","nor"],["vst","nor"],["nor","ost"],["ost","lid"],["ost","djg"],["nor","gst"],["gst","sod"],["sod","ham"],["ham","nac"],["sod","lil"],["kun","lil"],["lil","hag"],["hag","vas"],["lil","vas"],["vas","ars"],["ars","glo"],["glo","ham"],["ars","sod"],["glo","nac"],["sol","ost"]],"trucks":[{"id":"T-01","driver":"Sara","online":true},{"id":"T-02","driver":"Ali","online":true},{"id":"T-03","driver":"Johan","online":true},{"id":"T-04","driver":"Emma","online":true},{"id":"T-05","driver":"Mohammed","online":false},{"id":"T-06","driver":"Linnea","online":false}],"t":{"title":"Dispatch demo — Mark Walusimbi","description":"A live, simulated dispatch board: trucks, jobs and routing across Stockholm, with an offline outbox. Built from scratch in plain JavaScript.","dock":"Dock 07 — Live demo","h1":"Dispatch, simulated.","lede":"A small version of the kind of dispatch screen I built at LAPX, written from scratch for this site. Trucks, jobs and drivers are simulated in your browser with made-up data. Nothing is sent anywhere.","tryIt":"Try this: let it run, then press “Cut connection”, wait, and reconnect.","controls":"Controls","run":"Run","pause":"Pause","speed":"Speed","auto":"Auto-dispatch","newJob":"New job","reset":"Reset","cut":"Cut connection","reconnect":"Reconnect","kpi":{"waiting":"Waiting","active":"On the road","delivered":"Delivered","avgWait":"Avg. wait"},"queue":"Job queue","fleet":"Fleet","feed":"Event feed","empty":"No jobs waiting.","minutes":"min","pickJob":"Pick a job, then a free truck.","pickTruck":"Now pick a free truck for {job}.","busy":"{truck} is not free.","offlineNoAssign":"Offline: trucks can’t be reached, so nothing is assigned.","status":{"idle":"Free","toPickup":"To pickup","loading":"Loading","toDrop":"Delivering","unloading":"Unloading","off":"Off shift"},"types":{"delivery":"Delivery","move":"Moving","assembly":"Assembly"},"ev":{"created":"New job {job}: {type}, {from} → {to}","assigned":"{job} assigned to {truck} ({driver})","pickedUp":"{truck} picked up {job} at {place}","delivered":"{truck} delivered {job} at {place}","shiftOn":"{driver} started a shift on {truck}","shiftOff":"{driver} ended the shift on {truck}","offline":"Connection lost. Truck events go to the outbox.","online":"Reconnected. Replaying {n} queued events."},"outbox":"Outbox: {n} queued","synced":"synced","lastSeen":"Last known positions","mapLabel":"Simulated map of Stockholm with trucks, depot and jobs","legend":{"depot":"Depot","pickup":"Pickup","drop":"Drop-off","truck":"Truck"},"how":"How it works","howItems":[["Event-driven state","Every change is an event, like the SignalR messages in a real dispatch system. The map, lists and figures all update from the same stream."],["Routing","Trucks follow the shortest path over a road graph (Dijkstra). Auto-dispatch picks the nearest free truck by driving distance, not straight-line distance."],["Offline outbox","Cut the connection and truck events go into an outbox in IndexedDB, while the map freezes at the last known positions. On reconnect the events replay in order, so nothing is lost. The field app I built at LAPX worked the same way."],["No libraries","Plain JavaScript and SVG, generated and served as a static page. Seeded randomness, so every run starts the same. Works on a phone."]],"note":"Inspired by the dispatch and live map I built at LAPX. Names, places and jobs are made up, and none of this is LAPX code.","back":"Back to the terminal","seeTracker":"Track my other work"}}</script>
+  </div>
+</section>
+<section class="demo-how sec" aria-labelledby="how-title">
+  <div class="wrap">
+    <h2 id="how-title" class="mono-label how-title">How it works</h2>
+    <div class="how-grid">
+      <article><span class="mono-label">01</span><h3>Event-driven state</h3><p>Every change is an event, like the SignalR messages in a real dispatch system. The map, lists and figures all update from the same stream.</p></article>
+      <article><span class="mono-label">02</span><h3>Routing</h3><p>Trucks follow the shortest path over a road graph (Dijkstra). Auto-dispatch picks the nearest free truck by driving distance, not straight-line distance.</p></article>
+      <article><span class="mono-label">03</span><h3>Offline outbox</h3><p>Cut the connection and truck events go into an outbox in IndexedDB, while the map freezes at the last known positions. On reconnect the events replay in order, so nothing is lost. The field app I built at LAPX worked the same way.</p></article>
+      <article><span class="mono-label">04</span><h3>No libraries</h3><p>Plain JavaScript and SVG, generated and served as a static page. Seeded randomness, so every run starts the same. Works on a phone.</p></article>
+    </div>
+    <p class="note"><svg class="i" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg><span>Inspired by the dispatch and live map I built at LAPX. Names, places and jobs are made up, and none of this is LAPX code.</span></p>
+    <div class="ctas demo-ctas">
+      <a class="btn btn-accent" href="../#MW-DEMO">Back to the terminal <svg class="i" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+      <a class="btn btn-line" href="../#track">Track my other work</a>
+    </div>
+  </div>
+</section>
+</main>
+<footer class="label-foot">
+  <div class="wrap">
+    <div class="ship-label">
+      <div class="sl-grid">
+        <div><span class="mono-label">From</span><p>Mark Walusimbi<br>Stockholm, SE</p></div>
+        <div><span class="mono-label">To</span><p>You, hopefully</p></div>
+        <div><span class="mono-label">Service</span><p>Fullstack · Express</p></div>
+      </div>
+      <svg class="barcode foot-barcode" viewBox="0 0 414.39999999999975 40" preserveAspectRatio="none" aria-hidden="true" focusable="false"><rect x="0" width="1" height="40"/><rect x="2" width="1" height="40"/><rect x="4" width="1" height="40"/><rect x="6.8" width="1" height="40"/><rect x="8.8" width="1" height="40"/><rect x="11.600000000000001" width="2.4" height="40"/><rect x="15.000000000000002" width="1" height="40"/><rect x="17" width="2.4" height="40"/><rect x="20.4" width="1" height="40"/><rect x="22.4" width="1" height="40"/><rect x="25.2" width="2.4" height="40"/><rect x="28.599999999999998" width="1" height="40"/><rect x="31.4" width="2.4" height="40"/><rect x="35.6" width="1" height="40"/><rect x="37.6" width="2.4" height="40"/><rect x="41.800000000000004" width="2.4" height="40"/><rect x="45.2" width="1" height="40"/><rect x="47.2" width="2.4" height="40"/><rect x="51.400000000000006" width="1" height="40"/><rect x="53.400000000000006" width="1" height="40"/><rect x="56.2" width="1" height="40"/><rect x="59" width="2.4" height="40"/><rect x="63.2" width="1" height="40"/><rect x="65.2" width="2.4" height="40"/><rect x="68.60000000000001" width="2.4" height="40"/><rect x="72.00000000000001" width="1" height="40"/><rect x="74.00000000000001" width="1" height="40"/><rect x="76.00000000000001" width="1" height="40"/><rect x="78.80000000000001" width="2.4" height="40"/><rect x="82.20000000000002" width="1" height="40"/><rect x="85.00000000000001" width="2.4" height="40"/><rect x="89.20000000000002" width="1" height="40"/><rect x="91.20000000000002" width="2.4" height="40"/><rect x="95.40000000000002" width="2.4" height="40"/><rect x="98.80000000000003" width="1" height="40"/><rect x="100.80000000000003" width="2.4" height="40"/><rect x="105.00000000000003" width="1" height="40"/><rect x="107.00000000000003" width="1" height="40"/><rect x="109.80000000000003" width="2.4" height="40"/><rect x="114.00000000000003" width="2.4" height="40"/><rect x="117.40000000000003" width="2.4" height="40"/><rect x="121.60000000000004" width="2.4" height="40"/><rect x="125.00000000000004" width="1" height="40"/><rect x="127.00000000000004" width="2.4" height="40"/><rect x="131.20000000000005" width="1" height="40"/><rect x="133.20000000000005" width="2.4" height="40"/><rect x="137.40000000000003" width="2.4" height="40"/><rect x="141.60000000000002" width="1" height="40"/><rect x="143.60000000000002" width="2.4" height="40"/><rect x="147.00000000000003" width="2.4" height="40"/><rect x="150.40000000000003" width="2.4" height="40"/><rect x="153.80000000000004" width="1" height="40"/><rect x="155.80000000000004" width="1" height="40"/><rect x="158.60000000000005" width="1" height="40"/><rect x="160.60000000000005" width="1" height="40"/><rect x="162.60000000000005" width="2.4" height="40"/><rect x="166.80000000000004" width="2.4" height="40"/><rect x="171.00000000000003" width="1" height="40"/><rect x="173.00000000000003" width="1" height="40"/><rect x="175.80000000000004" width="2.4" height="40"/><rect x="180.00000000000003" width="1" height="40"/><rect x="182.80000000000004" width="2.4" height="40"/><rect x="187.00000000000003" width="2.4" height="40"/><rect x="191.20000000000002" width="1" height="40"/><rect x="194.00000000000003" width="2.4" height="40"/><rect x="197.40000000000003" width="2.4" height="40"/><rect x="201.60000000000002" width="2.4" height="40"/><rect x="205.00000000000003" width="1" height="40"/><rect x="207.80000000000004" width="1" height="40"/><rect x="209.80000000000004" width="2.4" height="40"/><rect x="214.00000000000003" width="1" height="40"/><rect x="216.80000000000004" width="1" height="40"/><rect x="219.60000000000005" width="2.4" height="40"/><rect x="223.00000000000006" width="2.4" height="40"/><rect x="226.40000000000006" width="2.4" height="40"/><rect x="230.60000000000005" width="2.4" height="40"/><rect x="234.00000000000006" width="2.4" height="40"/><rect x="237.40000000000006" width="2.4" height="40"/><rect x="241.60000000000005" width="1" height="40"/><rect x="243.60000000000005" width="1" height="40"/><rect x="246.40000000000006" width="1" height="40"/><rect x="249.20000000000007" width="2.4" height="40"/><rect x="253.40000000000006" width="2.4" height="40"/><rect x="257.6000000000001" width="2.4" height="40"/><rect x="261.80000000000007" width="2.4" height="40"/><rect x="266.00000000000006" width="2.4" height="40"/><rect x="269.40000000000003" width="1" height="40"/><rect x="272.20000000000005" width="1" height="40"/><rect x="274.20000000000005" width="2.4" height="40"/><rect x="277.6" width="2.4" height="40"/><rect x="281" width="1" height="40"/><rect x="283" width="1" height="40"/><rect x="285" width="2.4" height="40"/><rect x="289.2" width="1" height="40"/><rect x="292" width="1" height="40"/><rect x="294" width="2.4" height="40"/><rect x="298.2" width="2.4" height="40"/><rect x="301.59999999999997" width="1" height="40"/><rect x="304.4" width="2.4" height="40"/><rect x="307.79999999999995" width="1" height="40"/><rect x="309.79999999999995" width="2.4" height="40"/><rect x="313.19999999999993" width="1" height="40"/><rect x="315.19999999999993" width="1" height="40"/><rect x="317.19999999999993" width="1" height="40"/><rect x="319.99999999999994" width="1" height="40"/><rect x="321.99999999999994" width="1" height="40"/><rect x="323.99999999999994" width="1" height="40"/><rect x="326.79999999999995" width="1" height="40"/><rect x="329.59999999999997" width="1" height="40"/><rect x="331.59999999999997" width="2.4" height="40"/><rect x="334.99999999999994" width="2.4" height="40"/><rect x="339.19999999999993" width="2.4" height="40"/><rect x="343.3999999999999" width="1" height="40"/><rect x="345.3999999999999" width="2.4" height="40"/><rect x="349.5999999999999" width="2.4" height="40"/><rect x="353.7999999999999" width="1" height="40"/><rect x="356.5999999999999" width="2.4" height="40"/><rect x="360.7999999999999" width="2.4" height="40"/><rect x="364.1999999999999" width="2.4" height="40"/><rect x="367.59999999999985" width="2.4" height="40"/><rect x="371.79999999999984" width="1" height="40"/><rect x="373.79999999999984" width="1" height="40"/><rect x="376.59999999999985" width="1" height="40"/><rect x="379.39999999999986" width="1" height="40"/><rect x="381.39999999999986" width="2.4" height="40"/><rect x="384.79999999999984" width="2.4" height="40"/><rect x="388.1999999999998" width="1" height="40"/><rect x="390.1999999999998" width="1" height="40"/><rect x="392.1999999999998" width="1" height="40"/><rect x="394.1999999999998" width="2.4" height="40"/><rect x="398.3999999999998" width="2.4" height="40"/><rect x="402.5999999999998" width="1" height="40"/><rect x="404.5999999999998" width="2.4" height="40"/><rect x="407.9999999999998" width="2.4" height="40"/><rect x="411.39999999999975" width="1" height="40"/><rect x="413.39999999999975" width="1" height="40"/></svg>
+      <p class="mono-label sl-no">MW-2026-PORTFOLIO · © <span class="js-year">2026</span> MARK WALUSIMBI</p>
+    </div>
+    <p class="built">Hand-built with HTML, CSS and JavaScript. No cookies, no trackers.</p>
+  </div>
+</footer>
+<div class="toast" role="status" aria-live="polite" data-offline="Connection lost. Running from the offline cache." data-online="Back online."></div>
+<script src="../assets/site.js" defer></script>
+<script src="../assets/dispatch.js" defer></script>
+</body>
+</html>

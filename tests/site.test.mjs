@@ -27,7 +27,7 @@ async function open(path, { viewport = VIEWPORTS.desktop, ...opts } = {}) {
 const shownParcel = page => page.evaluate(() => [...document.querySelectorAll('.parcel')].filter(p => !p.hidden).map(p => p.dataset.code).join());
 
 for (const [name, viewport] of Object.entries(VIEWPORTS)) {
-  for (const path of ['', 'sv/', 'does-not-exist']) {
+  for (const path of ['', 'sv/', 'dispatch/', 'sv/dispatch/', 'does-not-exist']) {
     test(`${path || 'home'} renders cleanly (${name})`, async () => {
       const { page, context, problems } = await open(path, { viewport });
       await page.waitForTimeout(500);
@@ -126,7 +126,7 @@ test('each language offers its own CV', async () => {
 test('content is readable without JavaScript', async () => {
   const { page, context } = await open('', { javaScriptEnabled: false });
   const visible = await page.evaluate(() => [...document.querySelectorAll('.parcel')].filter(p => p.offsetHeight > 0).length);
-  assert.equal(visible, 6, 'all shipments visible');
+  assert.equal(visible, 7, 'all shipments visible');
   await context.close();
 });
 

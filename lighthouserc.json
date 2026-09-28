@@ -3,7 +3,7 @@
     "collect": {
       "startServerCommand": "node tests/server.mjs 4321",
       "startServerReadyPattern": "listening",
-      "url": ["http://127.0.0.1:4321/", "http://127.0.0.1:4321/sv/"],
+      "url": ["http://127.0.0.1:4321/", "http://127.0.0.1:4321/sv/", "http://127.0.0.1:4321/dispatch/"],
       "numberOfRuns": 1,
       "settings": { "chromeFlags": "--no-sandbox --headless=new" }
     },

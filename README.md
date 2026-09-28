@@ -4,6 +4,8 @@
 
 Portfolio of Mark Walusimbi, built as a freight terminal: a split-flap departures board, projects you track like parcels, a route map of the career, skills packed in crates, the degree as customs papers, and contact as "book a pickup". English at `/`, Swedish at `/sv/`.
 
+**Dispatch demo** at [`/dispatch/`](https://markarnold03.github.io/dispatch/): a simulated fleet on a schematic Stockholm, with shortest-path routing, auto and manual dispatch, a live event feed, and an offline outbox in IndexedDB that replays on reconnect.
+
 Plain HTML, CSS and JavaScript. No framework, no cookies, no trackers, fonts self-hosted. Installable and works offline (service worker).
 
 ## Editing
@@ -20,7 +22,7 @@ Other scripts (need `npm install` once):
 
 | Command | What it does |
 | --- | --- |
-| `npm test` | Browser tests with Playwright (rendering, CSP, tracker, language switch, offline mode, …) |
+| `npm test` | Browser tests with Playwright (rendering, CSP, tracker, language switch, offline mode, dispatch demo, …) |
 | `npm run images` | Renders the social preview cards and app icons into `assets/img/` |
 | `npm run cv` | Prints the English CV from `tools/cv-en.html` to `assets/docs/CV_Mark_Walusimbi_EN.pdf` |
 
@@ -35,8 +37,10 @@ Every push runs [`.github/workflows/ci.yml`](.github/workflows/ci.yml): it check
 | `src/content.mjs` | All copy, projects ("shipments"), route stops, skills, degree courses |
 | `src/page.mjs` | HTML template |
 | `src/sw.js` | Service worker template |
+| `src/dispatch.mjs`, `src/dispatch-data.mjs` | Dispatch demo page and its map data (roads, water, trucks) |
 | `assets/site.css` | Styles, day and night shift themes |
 | `assets/site.js` | Board animation, tracker, clock, theme, booking email, offline notice |
+| `assets/dispatch.js` | Dispatch simulation: routing, events, outbox, rendering |
 | `assets/docs/` | CV in Swedish and English (PDF) |
 | `assets/img/` | Social preview cards and app icons |
 | `assets/fonts/` | Archivo and JetBrains Mono (SIL Open Font License) |

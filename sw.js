@@ -1,7 +1,7 @@
 // Service worker template. build.mjs fills in the version and precache list.
-const VERSION = 'dd4942792c0c';
+const VERSION = 'e79423e9e7ac';
 const CACHE = `mw-terminal-${VERSION}`;
-const PRECACHE = ["/","/sv/","/404.html","/assets/site.css","/assets/site.js","/assets/fonts/archivo.woff2","/assets/fonts/jetbrains-mono-400.woff2","/assets/fonts/jetbrains-mono-700.woff2","/assets/img/icon-192.png","/assets/docs/CV_Mark_Walusimbi_EN.pdf","/assets/docs/CV_Mark_Walusimbi.pdf"];
+const PRECACHE = ["/","/sv/","/404.html","/assets/site.css","/assets/site.js","/assets/fonts/archivo.woff2","/assets/fonts/jetbrains-mono-400.woff2","/assets/fonts/jetbrains-mono-700.woff2","/assets/img/icon-192.png","/assets/docs/CV_Mark_Walusimbi_EN.pdf","/assets/docs/CV_Mark_Walusimbi.pdf","/dispatch/","/sv/dispatch/","/assets/dispatch.js"];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(c => c.addAll(PRECACHE)).then(() => self.skipWaiting()));

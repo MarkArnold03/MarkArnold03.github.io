@@ -21,7 +21,7 @@ export function barcode(str, cls = 'barcode') {
   return `<svg class="${cls}" viewBox="0 0 ${x} 40" preserveAspectRatio="none" aria-hidden="true" focusable="false">${bars}</svg>`;
 }
 
-const icon = {
+export const icon = {
   arrow: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
   down: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 4v14M6 12l6 6 6-6M5 21h14"/></svg>',
   ext: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 5h5v5M19 5l-8 8M18 14v5H5V6h5"/></svg>',
@@ -52,8 +52,8 @@ function personJson(L) {
   return JSON.stringify(data).replace(/</g, '\\u003c');
 }
 
-function head(L, base, csp) {
-  const url = site.url + L.path;
+export function head(L, base, csp, { sub = '', title = L.title, description = L.description, person = true } = {}) {
+  const url = site.url + L.path + sub;
   return `<!doctype html>
 <html lang="${L.lang}">
 <head>
@@ -61,11 +61,11 @@ function head(L, base, csp) {
 <meta http-equiv="Content-Security-Policy" content="${csp}">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>${esc(L.title)}</title>
-<meta name="description" content="${esc(L.description)}">
+<title>${esc(title)}</title>
+<meta name="description" content="${esc(description)}">
 <meta property="og:type" content="website">
-<meta property="og:title" content="${esc(L.title)}">
-<meta property="og:description" content="${esc(L.description)}">
+<meta property="og:title" content="${esc(title)}">
+<meta property="og:description" content="${esc(description)}">
 <meta property="og:url" content="${url}">
 <meta property="og:site_name" content="${esc(site.name)}">
 <meta property="og:locale" content="${L.lang === 'sv' ? 'sv_SE' : 'en_GB'}">
@@ -76,14 +76,13 @@ function head(L, base, csp) {
 <meta name="twitter:card" content="summary_large_image">
 <link rel="manifest" href="${base}manifest.webmanifest">
 <link rel="apple-touch-icon" href="${base}assets/img/apple-touch-icon.png">
-<script type="application/ld+json">${personJson(L)}</script>
-<meta name="theme-color" content="#efebe3" media="(prefers-color-scheme: light)">
+${person ? `<script type="application/ld+json">${personJson(L)}</script>\n` : ''}<meta name="theme-color" content="#efebe3" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0e0f0c" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23ff5a1f'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='26' font-weight='700' fill='%2316150f' text-anchor='middle'%3EMW%3C/text%3E%3C/svg%3E">
 <link rel="canonical" href="${url}">
-<link rel="alternate" hreflang="en" href="${site.url}">
-<link rel="alternate" hreflang="sv" href="${site.url}sv/">
-<link rel="alternate" hreflang="x-default" href="${site.url}">
+<link rel="alternate" hreflang="en" href="${site.url}${sub}">
+<link rel="alternate" hreflang="sv" href="${site.url}sv/${sub}">
+<link rel="alternate" hreflang="x-default" href="${site.url}${sub}">
 <link rel="preload" href="${base}assets/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="${base}assets/fonts/jetbrains-mono-400.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="${base}assets/site.css">
@@ -94,17 +93,20 @@ function head(L, base, csp) {
 // Runs before first paint: applies the saved shift (theme) and marks JS as available.
 export const INIT = "(function(d){d.classList.add('js');try{var s=localStorage.getItem('mw-shift');if(s==='day'||s==='night')d.setAttribute('data-shift',s)}catch(e){}})(document.documentElement)";
 
-function topbar(L, base) {
+// where: '' on the home page, or the sub-page path (e.g. 'dispatch/') elsewhere.
+export function topbar(L, base, where = '') {
+  const home = where ? '../'.repeat(where.split('/').filter(Boolean).length) : '';
   return `<a class="skip" href="#main">${esc(L.skip)}</a>
 <header class="top">
   <div class="top-in">
-    <a class="logo" href="#board"><span class="logo-mark" aria-hidden="true">MW</span><span class="logo-text">${esc(site.name)}<small>${esc(L.logoSub)}</small></span></a>
+    <a class="logo" href="${home}#board"><span class="logo-mark" aria-hidden="true">MW</span><span class="logo-text">${esc(site.name)}<small>${esc(L.logoSub)}</small></span></a>
     <nav class="nav" aria-label="${esc(L.navLabel)}">
-      ${L.nav.map(([id, label], i) => `<a href="#${id}"><span aria-hidden="true">0${i + 1}</span>${esc(label)}</a>`).join('\n      ')}
+      ${L.nav.map(([id, label], i) => `<a href="${home}#${id}"><span aria-hidden="true">0${i + 1}</span>${esc(label)}</a>`).join('\n      ')}
+      <a href="${home}dispatch/"${where === 'dispatch/' ? ' aria-current="page" class="on"' : ''}><span aria-hidden="true">0${L.nav.length + 1}</span>${esc(L.navDemo)}</a>
     </nav>
     <div class="tools">
       <span class="clock" title="${esc(L.clockLabel)}"><span class="clock-tz" aria-hidden="true">STO</span> <time class="js-clock">--:--</time></span>
-      <a class="lang" href="${base}${L.otherPath}" hreflang="${L.other}" lang="${L.other}" aria-label="${esc(L.otherName)}">${L.otherLabel}</a>
+      <a class="lang" href="${base}${L.otherPath}${where}" hreflang="${L.other}" lang="${L.other}" aria-label="${esc(L.otherName)}">${L.otherLabel}</a>
       <button class="shift" type="button" data-day="${esc(L.shift.day)}" data-night="${esc(L.shift.night)}" data-to-day="${esc(L.shift.toDay)}" data-to-night="${esc(L.shift.toNight)}" aria-label="${esc(L.shift.toNight)}">${icon.sun}${icon.moon}<span class="shift-label">${esc(L.shift.day)}</span></button>
     </div>
   </div>
@@ -117,7 +119,7 @@ function topbar(L, base) {
 </header>`;
 }
 
-function sectionHead(dock, title, lede, id) {
+export function sectionHead(dock, title, lede, id) {
   return `<div class="sec-head">
     <p class="dock">${esc(dock)}</p>
     <h2 id="${id}-title">${esc(title)}</h2>
@@ -376,7 +378,7 @@ function pickup(L) {
 </section>`;
 }
 
-function footer(L) {
+export function footer(L) {
   const F = L.footer;
   return `<footer class="label-foot">
   <div class="wrap">

@@ -10,4 +10,14 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://markarnold03.github.io/"/>
     <xhtml:link rel="alternate" hreflang="sv" href="https://markarnold03.github.io/sv/"/>
   </url>
+  <url>
+    <loc>https://markarnold03.github.io/dispatch/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://markarnold03.github.io/dispatch/"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://markarnold03.github.io/sv/dispatch/"/>
+  </url>
+  <url>
+    <loc>https://markarnold03.github.io/sv/dispatch/</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://markarnold03.github.io/dispatch/"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://markarnold03.github.io/sv/dispatch/"/>
+  </url>
 </urlset>
