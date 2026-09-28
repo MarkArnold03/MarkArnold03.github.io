@@ -297,12 +297,6 @@ kbd{font-family:var(--mono);font-size:11px;padding:1px 7px;color:var(--ink);bord
 .courses .num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .courses .small{margin:12px 16px 16px}
 .vg{display:inline-block;padding:2px 9px;font-family:var(--mono);font-size:12px;font-weight:700;white-space:nowrap;color:var(--ok);background:var(--ok-bg);border-radius:999px}
-.cert-pages{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0 18px}
-.cert-pages figure{margin:0}
-.cert-pages a{display:block;overflow:hidden;background:#fff;border:1px solid var(--line-2);border-radius:4px;transition:transform .25s}
-.cert-pages a:hover{transform:translateY(-3px) rotate(-.8deg)}
-.cert-pages img{display:block;width:100%;height:auto}
-.cert-pages figcaption{margin-top:6px;font-family:var(--mono);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
 .doc-cv{position:sticky;top:120px}
 .doc-cv .doc-fields{margin-bottom:22px}
 .doc-cv .doc-fields div{grid-template-columns:100px minmax(0,1fr)}

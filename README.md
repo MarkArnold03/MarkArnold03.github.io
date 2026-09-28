@@ -20,5 +20,5 @@ This writes `index.html`, `sv/index.html`, `404.html` and redirect pages for the
 | `src/page.mjs` | HTML template |
 | `assets/site.css` | Styles, day and night shift themes |
 | `assets/site.js` | Board animation, tracker, clock, theme, booking email |
-| `assets/docs/`, `assets/img/` | CV and redacted degree certificate |
+| `assets/docs/` | CV (PDF) |
 | `assets/fonts/` | Archivo and JetBrains Mono (SIL Open Font License) |

@@ -8,7 +8,6 @@ export const site = {
   linkedin: 'https://linkedin.com/in/mark-walusimbi',
   github: 'https://github.com/MarkArnold03',
   cv: 'assets/docs/CV_Mark_Walusimbi.pdf',
-  certPages: ['assets/img/exam-1.png', 'assets/img/exam-2.png'],
 };
 
 // Degree courses: [swedish name, english name, credits, grade]
@@ -108,7 +107,7 @@ const en = {
         ['08/2022', 'Picked up', 'Started the two-year .NET developer programme at KYH in Stockholm.'],
       ],
       contents: ['C#', '.NET', 'ASP.NET Core', 'SQL', 'HTML5', 'CSS3', 'JavaScript', 'Testing', 'Agile'],
-      links: [['#docs', 'Certificate and all grades']],
+      links: [['#docs', 'Degree and all grades']],
     },
     {
       code: 'MW-RDRV-24', board: ['2024', 'REDRIVER', '.NET · ANGULAR'], title: 'RedRiver internship', status: 'delivered',
@@ -210,9 +209,7 @@ const en = {
     courses: 'All 14 courses and grades', courseCols: ['Course', 'Credits', 'Grade'], total: 'Total',
     grade: { G: 'Pass', VG: 'Distinction' },
     gradeNote: 'Graded Fail, Pass (G) or Pass with distinction (VG). Five YH credits equal one week of full-time study.',
-    pages: 'The certificate', pageAlt: ['KYH degree certificate, page 1: Yrkeshögskoleexamen .NET Developer, 430 YH credits, awarded to Mark Walusimbi, completed with a pass on 1 August 2024.', 'Certificate page 2: courses with credits, grades and dates.'],
-    pageCap: ['Page 1', 'Page 2'],
-    redacted: "Personal identity number and verification details are hidden. I'm happy to show employers the original, digitally signed certificate.",
+    onRequest: 'The original, digitally signed certificate is available on request.',
     cvHead: 'Cargo manifest', cvKind: 'Curriculum vitae',
     cvFields: [['Format', 'PDF, 2 pages'], ['Language', 'Swedish'], ['Contents', 'Profile, skills, experience, education, projects']],
     cvButton: 'Download CV',
@@ -305,7 +302,7 @@ const sv = {
         ['08/2022', 'Upphämtad', 'Började den tvååriga utbildningen till .NET-utvecklare på KYH i Stockholm.'],
       ],
       contents: ['C#', '.NET', 'ASP.NET Core', 'SQL', 'HTML5', 'CSS3', 'JavaScript', 'Testning', 'Agilt'],
-      links: [['#docs', 'Examensbevis och alla betyg']],
+      links: [['#docs', 'Examen och alla betyg']],
     },
     {
       code: 'MW-RDRV-24', board: ['2024', 'REDRIVER', '.NET · ANGULAR'], title: 'Praktik på RedRiver', status: 'delivered',
@@ -407,9 +404,7 @@ const sv = {
     courses: 'Alla 14 kurser och betyg', courseCols: ['Kurs', 'YH-poäng', 'Betyg'], total: 'Summa',
     grade: { G: 'Godkänt', VG: 'Väl godkänt' },
     gradeNote: 'Betygen är Icke godkänt, Godkänt (G) eller Väl godkänt (VG). Fem YH-poäng motsvarar en veckas heltidsstudier.',
-    pages: 'Examensbeviset', pageAlt: ['Examensbevis från KYH, sida 1: Yrkeshögskoleexamen .NET Developer, 430 YH-poäng, utfärdat till Mark Walusimbi, slutförd med godkänt resultat 2024-08-01.', 'Examensbevis, sida 2: kurser med YH-poäng, betyg och datum.'],
-    pageCap: ['Sida 1', 'Sida 2'],
-    redacted: 'Personnummer och verifieringsuppgifter är dolda. Arbetsgivare får gärna se originalet, som är digitalt signerat.',
+    onRequest: 'Det digitalt signerade examensbeviset visas gärna på begäran.',
     cvHead: 'Fraktsedel', cvKind: 'Curriculum vitae',
     cvFields: [['Format', 'PDF, 2 sidor'], ['Språk', 'Svenska'], ['Innehåll', 'Profil, kompetens, erfarenhet, utbildning, projekt']],
     cvButton: 'Ladda ner CV',

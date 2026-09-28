@@ -297,9 +297,7 @@ function docs(L, base) {
           </table>
           <p class="small">${esc(D.gradeNote)}</p>
         </details>
-        <h4 class="mono-label">${esc(D.pages)}</h4>
-        <div class="cert-pages">${site.certPages.map((src, i) => `<figure><a href="${base}${src}" target="_blank" rel="noopener"><img src="${base}${src}" width="1241" height="1754" loading="lazy" decoding="async" alt="${esc(D.pageAlt[i])}"></a><figcaption>${esc(D.pageCap[i])}</figcaption></figure>`).join('')}</div>
-        <p class="note">${icon.lock}<span>${esc(D.redacted)}</span></p>
+        <p class="note">${icon.lock}<span>${esc(D.onRequest)}</span></p>
       </article>
       <article class="doc doc-cv">
         <header class="doc-head"><span class="mono-label">${esc(D.cvKind)}</span><h3>${esc(D.cvHead)}</h3></header>
