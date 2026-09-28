@@ -7,7 +7,7 @@ export const site = {
   email: 'markanorld0@gmail.com',
   linkedin: 'https://linkedin.com/in/mark-walusimbi',
   github: 'https://github.com/MarkArnold03',
-  cv: 'assets/docs/CV_Mark_Walusimbi.pdf',
+  cv: { sv: 'assets/docs/CV_Mark_Walusimbi.pdf', en: 'assets/docs/CV_Mark_Walusimbi_EN.pdf' },
 };
 
 // Degree courses: [swedish name, english name, credits, grade]
@@ -44,6 +44,8 @@ const en = {
   lang: 'en', other: 'sv', path: '', otherPath: 'sv/', otherLabel: 'SV', otherName: 'Svenska',
   title: 'Mark Walusimbi — fullstack developer, Stockholm',
   description: 'Fullstack .NET and JavaScript developer in Stockholm. From the warehouse floor to production: projects, route, skills and degree.',
+  jobTitle: 'Fullstack developer',
+  ogAlt: 'Mark Walusimbi, fullstack developer in Stockholm: from the warehouse floor to production.',
   skip: 'Skip to content',
   logoSub: 'Fullstack · .NET · JS',
   navLabel: 'Sections',
@@ -211,8 +213,8 @@ const en = {
     gradeNote: 'Graded Fail, Pass (G) or Pass with distinction (VG). Five YH credits equal one week of full-time study.',
     onRequest: 'The original, digitally signed certificate is available on request.',
     cvHead: 'Cargo manifest', cvKind: 'Curriculum vitae',
-    cvFields: [['Format', 'PDF, 2 pages'], ['Language', 'Swedish'], ['Contents', 'Profile, skills, experience, education, projects']],
-    cvButton: 'Download CV',
+    cvFields: [['Format', 'PDF, 2 pages'], ['Language', 'English'], ['Contents', 'Profile, skills, experience, education, projects']],
+    cvButton: 'Download CV', cvAlt: 'Swedish version (PDF)',
   },
 
   pickup: {
@@ -232,6 +234,8 @@ const en = {
     built: 'Hand-built with HTML, CSS and JavaScript. No cookies, no trackers.',
   },
 
+  net: { offline: 'Connection lost. Running from the offline cache.', online: 'Back online.' },
+
   notFound: { title: 'Return to sender.', text: 'Parcel 404: there is no delivery point at this address.', home: 'Back to the terminal' },
 };
 
@@ -239,6 +243,8 @@ const sv = {
   lang: 'sv', other: 'en', path: 'sv/', otherPath: '', otherLabel: 'EN', otherName: 'English',
   title: 'Mark Walusimbi — fullstack-utvecklare, Stockholm',
   description: 'Fullstack-utvecklare inom .NET och JavaScript i Stockholm. Från lagergolvet till produktion: projekt, rutt, kompetens och examen.',
+  jobTitle: 'Fullstack-utvecklare',
+  ogAlt: 'Mark Walusimbi, fullstack-utvecklare i Stockholm: från lagergolvet till produktion.',
   skip: 'Hoppa till innehållet',
   logoSub: 'Fullstack · .NET · JS',
   navLabel: 'Sektioner',
@@ -407,7 +413,7 @@ const sv = {
     onRequest: 'Det digitalt signerade examensbeviset visas gärna på begäran.',
     cvHead: 'Fraktsedel', cvKind: 'Curriculum vitae',
     cvFields: [['Format', 'PDF, 2 sidor'], ['Språk', 'Svenska'], ['Innehåll', 'Profil, kompetens, erfarenhet, utbildning, projekt']],
-    cvButton: 'Ladda ner CV',
+    cvButton: 'Ladda ner CV', cvAlt: 'Engelsk version (PDF)',
   },
 
   pickup: {
@@ -426,6 +432,8 @@ const sv = {
     from: 'Från', fromVal: 'Mark Walusimbi\nStockholm, SE', to: 'Till', toVal: 'Du, förhoppningsvis', service: 'Tjänst', serviceVal: 'Fullstack · Express',
     built: 'Handbyggd med HTML, CSS och JavaScript. Inga cookies, inga spårare.',
   },
+
+  net: { offline: 'Anslutningen bröts. Sajten körs från offline-cachen.', online: 'Online igen.' },
 
   notFound: { title: 'Åter till avsändaren.', text: 'Paket 404: det finns ingen leveranspunkt på den här adressen.', home: 'Tillbaka till terminalen' },
 };

@@ -1,8 +1,10 @@
 # MarkArnold03.github.io
 
+[![CI](https://github.com/MarkArnold03/MarkArnold03.github.io/actions/workflows/ci.yml/badge.svg)](https://github.com/MarkArnold03/MarkArnold03.github.io/actions/workflows/ci.yml)
+
 Portfolio of Mark Walusimbi, built as a freight terminal: a split-flap departures board, projects you track like parcels, a route map of the career, skills packed in crates, the degree as customs papers, and contact as "book a pickup". English at `/`, Swedish at `/sv/`.
 
-Plain HTML, CSS and JavaScript. No framework, no cookies, no trackers, fonts self-hosted.
+Plain HTML, CSS and JavaScript. No framework, no cookies, no trackers, fonts self-hosted. Installable and works offline (service worker).
 
 ## Editing
 
@@ -12,13 +14,31 @@ All text lives in one file, in both languages: `src/content.mjs`. After editing,
 node build.mjs
 ```
 
-This writes `index.html`, `sv/index.html`, `404.html` and redirect pages for the old URLs. It also recomputes the Content-Security-Policy hash for the small inline script.
+This writes `index.html`, `sv/index.html`, `404.html`, redirect pages for the old URLs, `sitemap.xml`, `robots.txt`, the web app manifest and the service worker (`sw.js`, versioned by a hash of the files it caches). It also recomputes the Content-Security-Policy hash for the small inline script.
+
+Other scripts (need `npm install` once):
+
+| Command | What it does |
+| --- | --- |
+| `npm test` | Browser tests with Playwright (rendering, CSP, tracker, language switch, offline mode, …) |
+| `npm run images` | Renders the social preview cards and app icons into `assets/img/` |
+| `npm run cv` | Prints the English CV from `tools/cv-en.html` to `assets/docs/CV_Mark_Walusimbi_EN.pdf` |
+
+## CI
+
+Every push runs [`.github/workflows/ci.yml`](.github/workflows/ci.yml): it checks that the committed build output matches `src/`, runs the browser tests, and runs Lighthouse (accessibility, best practices and SEO must score at least 95).
+
+## Layout
 
 | Path | What it is |
 | --- | --- |
 | `src/content.mjs` | All copy, projects ("shipments"), route stops, skills, degree courses |
 | `src/page.mjs` | HTML template |
+| `src/sw.js` | Service worker template |
 | `assets/site.css` | Styles, day and night shift themes |
-| `assets/site.js` | Board animation, tracker, clock, theme, booking email |
-| `assets/docs/` | CV (PDF) |
+| `assets/site.js` | Board animation, tracker, clock, theme, booking email, offline notice |
+| `assets/docs/` | CV in Swedish and English (PDF) |
+| `assets/img/` | Social preview cards and app icons |
 | `assets/fonts/` | Archivo and JetBrains Mono (SIL Open Font License) |
+| `tests/` | Browser tests and the local test server |
+| `tools/` | Image and CV renderers |

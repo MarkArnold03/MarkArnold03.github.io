@@ -206,6 +206,13 @@
     location.href = `mailto:${booking.dataset.email}?subject=${encodeURIComponent(fill(booking.dataset.subject))}&body=${encodeURIComponent(fill(booking.dataset.body))}`;
   });
 
+  /* ---------- offline support: installable app + cache (see sw.js) ---------- */
+  if ('serviceWorker' in navigator) {
+    addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {}));
+  }
+  addEventListener('offline', () => say(toast.dataset.offline));
+  addEventListener('online', () => say(toast.dataset.online));
+
   /* ---------- keep the selected shipment when switching language ---------- */
   $('.lang').addEventListener('click', e => {
     if (location.hash) e.currentTarget.href = e.currentTarget.getAttribute('href').split('#')[0] + location.hash;

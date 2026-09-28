@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /tests/
+Disallow: /tools/
+
+Sitemap: https://markarnold03.github.io/sitemap.xml

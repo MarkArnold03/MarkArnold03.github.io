@@ -33,6 +33,25 @@ const icon = {
 
 const BOARD_W = [4, 14, 14, 10];
 
+// Structured data so search engines understand who the site is about.
+function personJson(L) {
+  const data = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: site.name,
+    url: site.url + L.path,
+    image: `${site.url}assets/img/og-${L.lang}.png`,
+    jobTitle: L.jobTitle,
+    email: `mailto:${site.email}`,
+    address: { '@type': 'PostalAddress', addressLocality: 'Stockholm', addressCountry: 'SE' },
+    alumniOf: { '@type': 'EducationalOrganization', name: 'KYH' },
+    knowsAbout: ['C#', '.NET', 'ASP.NET Core', 'Entity Framework Core', 'SQL Server', 'JavaScript', 'TypeScript', 'PWA', 'SignalR'],
+    knowsLanguage: ['en', 'sv', 'lg'],
+    sameAs: [site.linkedin, site.github],
+  };
+  return JSON.stringify(data).replace(/</g, '\\u003c');
+}
+
 function head(L, base, csp) {
   const url = site.url + L.path;
   return `<!doctype html>
@@ -48,6 +67,16 @@ function head(L, base, csp) {
 <meta property="og:title" content="${esc(L.title)}">
 <meta property="og:description" content="${esc(L.description)}">
 <meta property="og:url" content="${url}">
+<meta property="og:site_name" content="${esc(site.name)}">
+<meta property="og:locale" content="${L.lang === 'sv' ? 'sv_SE' : 'en_GB'}">
+<meta property="og:image" content="${site.url}assets/img/og-${L.lang}.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="${esc(L.ogAlt)}">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="manifest" href="${base}manifest.webmanifest">
+<link rel="apple-touch-icon" href="${base}assets/img/apple-touch-icon.png">
+<script type="application/ld+json">${personJson(L)}</script>
 <meta name="theme-color" content="#efebe3" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0e0f0c" media="(prefers-color-scheme: dark)">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='8' fill='%23ff5a1f'/%3E%3Ctext x='32' y='42' font-family='monospace' font-size='26' font-weight='700' fill='%2316150f' text-anchor='middle'%3EMW%3C/text%3E%3C/svg%3E">
@@ -124,7 +153,7 @@ function hero(L, base) {
       <div class="ctas">
         <a class="btn btn-accent" href="#track">${esc(L.hero.ctaTrack)} ${icon.arrow}</a>
         <a class="btn btn-line" href="#pickup">${esc(L.hero.ctaPickup)}</a>
-        <a class="btn btn-ghost" href="${base}${site.cv}" download>${icon.down} ${esc(L.hero.ctaCv)}</a>
+        <a class="btn btn-ghost" href="${base}${site.cv[L.lang]}" download>${icon.down} ${esc(L.hero.ctaCv)}</a>
       </div>
     </div>
     ${board(L)}
@@ -302,7 +331,8 @@ function docs(L, base) {
       <article class="doc doc-cv">
         <header class="doc-head"><span class="mono-label">${esc(D.cvKind)}</span><h3>${esc(D.cvHead)}</h3></header>
         <dl class="doc-fields">${D.cvFields.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>
-        <a class="btn btn-accent btn-block" href="${base}${site.cv}" download>${icon.down} ${esc(D.cvButton)}</a>
+        <a class="btn btn-accent btn-block" href="${base}${site.cv[L.lang]}" download>${icon.down} ${esc(D.cvButton)}</a>
+        <a class="cv-alt" href="${base}${site.cv[L.other]}" hreflang="${L.other}" download>${esc(D.cvAlt)}</a>
         ${barcode('MW-CV-2026', 'barcode doc-barcode')}
         <p class="mono-label doc-no">MW-CV-2026 · ${esc(site.name.toUpperCase())}</p>
       </article>
@@ -334,7 +364,7 @@ function pickup(L) {
         </div>
       </div>
       <form class="booking" data-email="${site.email}" data-subject="${esc(P.subject)}" data-body="${esc(P.body)}" data-role="${esc(P.fallbackRole)}" data-company="${esc(P.fallbackCompany)}">
-        <h3 class="mono-label">${esc(P.form)} · MW-${new Date().getFullYear()}</h3>
+        <h3 class="mono-label">${esc(P.form)} · MW-<span class="js-year">2026</span></h3>
         <label>${esc(P.company)}<input name="company" type="text" autocomplete="organization" placeholder="${esc(P.companyPh)}"></label>
         <label>${esc(P.role)}<input name="role" type="text" placeholder="${esc(P.rolePh)}"></label>
         <label>${esc(P.message)}<textarea name="message" rows="4" placeholder="${esc(P.messagePh)}"></textarea></label>
@@ -378,7 +408,7 @@ ${docs(L, base)}
 ${pickup(L)}
 </main>
 ${footer(L)}
-<div class="toast" role="status" aria-live="polite"></div>
+<div class="toast" role="status" aria-live="polite" data-offline="${esc(L.net.offline)}" data-online="${esc(L.net.online)}"></div>
 <script src="${base}assets/site.js" defer></script>
 </body>
 </html>

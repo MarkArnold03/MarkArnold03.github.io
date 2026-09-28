@@ -7,7 +7,7 @@
 /* ---------- tokens: day shift ---------- */
 :root{
   --bg:#efebe3; --bg-2:#e6e0d4; --panel:#f8f5ef; --grid:rgba(22,21,15,.045);
-  --ink:#16150f; --ink-2:#48443a; --muted:#6b6558; --line:#d6cebf; --line-2:#bdb3a0;
+  --ink:#16150f; --ink-2:#48443a; --muted:#625c50; --line:#d6cebf; --line-2:#bdb3a0;
   --accent:#ff5a1f; --accent-ink:#b23a0c; --on-accent:#16150f;
   --code:#2f55e4; --on-code:#fff; --floor:#ff5a1f;
   --ok:#157a46; --ok-bg:rgba(21,122,70,.12); --live:#2f55e4; --live-bg:rgba(47,85,228,.12); --warn:#b23a0c; --warn-bg:rgba(255,90,31,.15);
@@ -300,6 +300,8 @@ kbd{font-family:var(--mono);font-size:11px;padding:1px 7px;color:var(--ink);bord
 .doc-cv{position:sticky;top:120px}
 .doc-cv .doc-fields{margin-bottom:22px}
 .doc-cv .doc-fields div{grid-template-columns:100px minmax(0,1fr)}
+.cv-alt{display:block;margin-top:12px;text-align:center;font-family:var(--mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
+.cv-alt:hover{color:var(--accent-ink)}
 .doc-barcode{height:58px;margin-top:24px}
 .doc-no{margin-top:8px;text-align:center}
 
