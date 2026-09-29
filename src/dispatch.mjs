@@ -1,6 +1,5 @@
 // The dispatch demo page (/dispatch/ and /sv/dispatch/).
-import { site } from './content.mjs';
-import { esc, icon, head, topbar, footer } from './page.mjs';
+import { esc, icon, layout } from './page.mjs';
 import { nodes, edges, water, trucks } from './dispatch-data.mjs';
 
 const byId = Object.fromEntries(nodes.map(n => [n.id, n]));
@@ -27,14 +26,11 @@ function staticMap(D) {
 
 export function dispatchPage(L, csp) {
   const D = L.demo;
-  const base = L.path ? '../../' : '../';
   // Everything the script needs: the road graph, trucks and interface text.
   const data = JSON.stringify({ nodes, edges, trucks, t: D }).replace(/</g, '\\u003c');
-  return `${head(L, base, csp, { sub: 'dispatch/', title: D.title, description: D.description, person: false })}
-<body class="demo-page">
-${topbar(L, base, 'dispatch/')}
-<main id="main">
-<section class="demo-hero" aria-labelledby="demo-title">
+  return layout(L, csp, 'dispatch/', {
+    title: D.title, description: D.description, bodyClass: 'demo-page', scripts: ['assets/dispatch.js'],
+    main: c => `<section class="demo-hero" aria-labelledby="demo-title">
   <div class="wrap">
     <p class="dock">${esc(D.dock)}</p>
     <h1 id="demo-title" class="display">${esc(D.h1)}</h1>
@@ -102,17 +98,10 @@ ${topbar(L, base, 'dispatch/')}
     </div>
     <p class="note">${icon.lock}<span>${esc(D.note)}</span></p>
     <div class="ctas demo-ctas">
-      <a class="btn btn-accent" href="../#MW-DEMO">${esc(D.back)} ${icon.arrow}</a>
-      <a class="btn btn-line" href="../#track">${esc(D.seeTracker)}</a>
+      <a class="btn btn-accent" href="${c.root}work/">${esc(D.seeTracker)} ${icon.arrow}</a>
+      <a class="btn btn-line" href="${c.root}contact/">${esc(L.pages.home.ctaButton)}</a>
     </div>
   </div>
-</section>
-</main>
-${footer(L)}
-<div class="toast" role="status" aria-live="polite" data-offline="${esc(L.net.offline)}" data-online="${esc(L.net.online)}"></div>
-<script src="${base}assets/site.js" defer></script>
-<script src="${base}assets/dispatch.js" defer></script>
-</body>
-</html>
-`;
+</section>`,
+  });
 }

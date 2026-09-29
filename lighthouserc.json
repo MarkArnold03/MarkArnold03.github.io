@@ -3,18 +3,51 @@
     "collect": {
       "startServerCommand": "node tests/server.mjs 4321",
       "startServerReadyPattern": "listening",
-      "url": ["http://127.0.0.1:4321/", "http://127.0.0.1:4321/sv/", "http://127.0.0.1:4321/dispatch/"],
+      "url": [
+        "http://127.0.0.1:4321/",
+        "http://127.0.0.1:4321/work/",
+        "http://127.0.0.1:4321/work/lapx/",
+        "http://127.0.0.1:4321/about/",
+        "http://127.0.0.1:4321/contact/",
+        "http://127.0.0.1:4321/dispatch/",
+        "http://127.0.0.1:4321/sv/"
+      ],
       "numberOfRuns": 1,
-      "settings": { "chromeFlags": "--no-sandbox --headless=new" }
+      "settings": {
+        "chromeFlags": "--no-sandbox --headless=new"
+      }
     },
     "assert": {
       "assertions": {
-        "categories:performance": ["warn", { "minScore": 0.85 }],
-        "categories:accessibility": ["error", { "minScore": 0.95 }],
-        "categories:best-practices": ["error", { "minScore": 0.95 }],
-        "categories:seo": ["error", { "minScore": 0.95 }]
+        "categories:performance": [
+          "warn",
+          {
+            "minScore": 0.85
+          }
+        ],
+        "categories:accessibility": [
+          "error",
+          {
+            "minScore": 0.95
+          }
+        ],
+        "categories:best-practices": [
+          "error",
+          {
+            "minScore": 0.95
+          }
+        ],
+        "categories:seo": [
+          "error",
+          {
+            "minScore": 0.95
+          }
+        ]
       }
     },
-    "upload": { "target": "filesystem", "outputDir": ".lighthouseci" }
+    "upload": {
+      "target": "filesystem",
+      "outputDir": ".lighthouseci"
+    }
   }
 }

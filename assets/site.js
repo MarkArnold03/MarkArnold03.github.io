@@ -83,13 +83,12 @@
     });
   }
 
-  /* ---------- parcel tracking ---------- */
-  const parcels = $$('.parcel');
-  const codes = parcels.map(p => p.dataset.code);
-  const chips = $$('.chip');
-  const form = $('.track-form');
+  /* ---------- tracking-number search (work page) ---------- */
+  const form = $('.track-bar');
   const input = $('#track-q');
   const msg = $('.track-msg');
+  const linkFor = code => $(`.ship-card[data-code="${code}"] .sc-link`) || $(`.row[data-code="${code}"]`);
+  const codes = [...new Set($$('[data-code]').map(e => e.dataset.code))];
   const aliases = {
     'MW-LAPX-25': ['LAPX', 'PLATFORM', 'PLATTFORM', 'PWA', 'FIELD', 'FÄLT'],
     'MW-KYH-24': ['KYH', 'DEGREE', 'EXAM', 'EXAMEN', 'YH', 'SCHOOL', 'SKOLA', 'UTBILDNING'],
@@ -108,51 +107,43 @@
     for (const [code, words] of Object.entries(aliases)) if (words.some(w => q.includes(w))) return code;
     return null;
   };
-  const select = (code, { scroll = false, focus = false } = {}) => {
-    const target = parcels.find(p => p.dataset.code === code);
-    if (!target) return false;
-    parcels.forEach(p => { p.hidden = p !== target; });
-    chips.forEach(c => c.setAttribute('aria-current', String(c.dataset.code === code)));
-    const leg = $('.leg', target);
-    if (leg && !reduce) { leg.classList.remove('go'); void leg.offsetWidth; leg.classList.add('go'); }
-    if (scroll) $('#track').scrollIntoView({ behavior: smooth });
-    if (focus) target.focus({ preventScroll: true });
-    return true;
-  };
-  const go = (code, opts) => {
-    if (select(code, opts)) history.replaceState(null, '', '#' + code);
-  };
-  const fromHash = () => {
-    const code = decodeURIComponent(location.hash.slice(1)).toUpperCase();
-    return codes.includes(code) ? code : null;
-  };
-  const initial = fromHash();
-  if (parcels.length) select(initial || codes[0], { scroll: !!initial });
-
-  chips.forEach(c => c.addEventListener('click', e => { e.preventDefault(); go(c.dataset.code, { focus: true }); }));
-  $$('.board .row').forEach(r => r.addEventListener('click', e => { e.preventDefault(); go(r.dataset.code, { scroll: true, focus: true }); }));
-  addEventListener('hashchange', () => { const c = fromHash(); if (c) select(c, { scroll: true }); });
   form?.addEventListener('submit', e => {
     e.preventDefault();
     const code = find(input.value);
-    if (code) {
+    const link = code && linkFor(code);
+    if (link) {
       msg.textContent = '';
       input.value = code;
-      go(code);
+      location.href = link.href;
     } else {
       msg.textContent = form.dataset.notfound.replace('{q}', input.value.trim());
     }
   });
+  // "/" jumps to the tracking search.
   addEventListener('keydown', e => {
     if (!input || e.key !== '/' || e.ctrlKey || e.metaKey || e.altKey) return;
     if (e.target.closest('input, textarea, select, [contenteditable="true"]')) return;
     e.preventDefault();
-    $('#track').scrollIntoView({ behavior: smooth });
+    input.scrollIntoView({ block: 'center', behavior: smooth });
     input.focus({ preventScroll: true });
   });
+  // Older versions of the site linked to shipments as /#MW-XXXX: forward those to the project page.
+  const legacy = decodeURIComponent(location.hash.slice(1)).toUpperCase();
+  if (/^MW-/.test(legacy)) {
+    const link = linkFor(legacy);
+    if (link) location.replace(link.href);
+  }
 
-  /* ---------- active section in nav ---------- */
-  const links = new Map($$('.nav a[href^="#"]').map(a => [a.getAttribute('href').slice(1), a]));
+  /* ---------- keep the about page's sub-menu docked right under the header ---------- */
+  const top = $('.top');
+  if (top && $('.subnav')) {
+    const setTop = () => root.style.setProperty('--top-h', top.offsetHeight + 'px');
+    setTop();
+    new ResizeObserver(setTop).observe(top);
+  }
+
+  /* ---------- highlight the current section in the about page's sub-menu ---------- */
+  const links = new Map($$('.subnav a[href^="#"]').map(a => [a.getAttribute('href').slice(1), a]));
   const spy = new IntersectionObserver(entries => entries.forEach(en => {
     if (!en.isIntersecting) return;
     links.forEach(a => a.classList.remove('on'));

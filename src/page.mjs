@@ -23,6 +23,7 @@ export function barcode(str, cls = 'barcode') {
 
 export const icon = {
   arrow: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14M13 6l6 6-6 6"/></svg>',
+  back: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>',
   down: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 4v14M6 12l6 6 6-6M5 21h14"/></svg>',
   ext: '<svg class="i" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M14 5h5v5M19 5l-8 8M18 14v5H5V6h5"/></svg>',
   truck: '<svg class="truck" viewBox="0 0 32 20" aria-hidden="true" focusable="false"><path d="M1 3h18v11H1zM19 7h6l5 5v2h-11z"/><circle cx="7" cy="16" r="3"/><circle cx="24" cy="16" r="3"/></svg>',
@@ -32,6 +33,16 @@ export const icon = {
 };
 
 const BOARD_W = [4, 14, 14, 10];
+
+// Paths for a page: `sub` is the page path inside a language ('' for home, 'work/lapx/' …).
+// base = relative path to the site root, root = relative path to this language's home.
+export function ctx(L, sub = '') {
+  const depth = (L.path + sub).split('/').filter(Boolean).length;
+  const base = '../'.repeat(depth);
+  return { sub, base, root: base + L.path };
+}
+const shipmentHref = (c, s) => s.slug ? `${c.root}work/${s.slug}/` : `${c.root}${s.href}`;
+const resolve = (c, href) => /^(https?:|mailto:|#)/.test(href) ? href : c.root + href;
 
 // Structured data so search engines understand who the site is about.
 function personJson(L) {
@@ -52,7 +63,7 @@ function personJson(L) {
   return JSON.stringify(data).replace(/</g, '\\u003c');
 }
 
-export function head(L, base, csp, { sub = '', title = L.title, description = L.description, person = true } = {}) {
+export function head(L, base, csp, { sub = '', title = L.title, description = L.description, person = false } = {}) {
   const url = site.url + L.path + sub;
   return `<!doctype html>
 <html lang="${L.lang}">
@@ -93,51 +104,117 @@ ${person ? `<script type="application/ld+json">${personJson(L)}</script>\n` : ''
 // Runs before first paint: applies the saved shift (theme) and marks JS as available.
 export const INIT = "(function(d){d.classList.add('js');try{var s=localStorage.getItem('mw-shift');if(s==='day'||s==='night')d.setAttribute('data-shift',s)}catch(e){}})(document.documentElement)";
 
-// where: '' on the home page, or the sub-page path (e.g. 'dispatch/') elsewhere.
-export function topbar(L, base, where = '') {
-  const home = where ? '../'.repeat(where.split('/').filter(Boolean).length) : '';
+export function topbar(L, c, { ticker = false } = {}) {
+  const current = p => c.sub === p || (p === 'work/' && c.sub.startsWith('work/'));
   return `<a class="skip" href="#main">${esc(L.skip)}</a>
 <header class="top">
   <div class="top-in">
-    <a class="logo" href="${home}#board"><span class="logo-mark" aria-hidden="true">MW</span><span class="logo-text">${esc(site.name)}<small>${esc(L.logoSub)}</small></span></a>
+    <a class="logo" href="${c.root || './'}"${c.sub === '' ? ' aria-current="page"' : ''}><span class="logo-mark" aria-hidden="true">MW</span><span class="logo-text">${esc(site.name)}<small>${esc(L.logoSub)}</small></span></a>
     <nav class="nav" aria-label="${esc(L.navLabel)}">
-      ${L.nav.map(([id, label], i) => `<a href="${home}#${id}"><span aria-hidden="true">0${i + 1}</span>${esc(label)}</a>`).join('\n      ')}
-      <a href="${home}dispatch/"${where === 'dispatch/' ? ' aria-current="page" class="on"' : ''}><span aria-hidden="true">0${L.nav.length + 1}</span>${esc(L.navDemo)}</a>
+      ${L.nav.map(([p, label], i) => `<a href="${c.root}${p}"${current(p) ? ' aria-current="page"' : ''}><span aria-hidden="true">0${i + 1}</span>${esc(label)}</a>`).join('\n      ')}
     </nav>
     <div class="tools">
       <span class="clock" title="${esc(L.clockLabel)}"><span class="clock-tz" aria-hidden="true">STO</span> <time class="js-clock">--:--</time></span>
-      <a class="lang" href="${base}${L.otherPath}${where}" hreflang="${L.other}" lang="${L.other}" aria-label="${esc(L.otherName)}">${L.otherLabel}</a>
+      <a class="lang" href="${c.base}${L.otherPath}${c.sub}" hreflang="${L.other}" lang="${L.other}" aria-label="${esc(L.otherName)}">${L.otherLabel}</a>
       <button class="shift" type="button" data-day="${esc(L.shift.day)}" data-night="${esc(L.shift.night)}" data-to-day="${esc(L.shift.toDay)}" data-to-night="${esc(L.shift.toNight)}" aria-label="${esc(L.shift.toNight)}">${icon.sun}${icon.moon}<span class="shift-label">${esc(L.shift.day)}</span></button>
+      <a class="btn-cv" href="${c.base}${site.cv[L.lang]}" download aria-label="${esc(L.cvAria)}">${icon.down}<span>${esc(L.cvShort)}</span></a>
     </div>
-  </div>
+  </div>${ticker ? `
   <div class="ticker" aria-label="${esc(L.tickerLabel)}">
     <div class="ticker-track">
       <p>${L.ticker.map(t => `<span>${esc(t)}</span>`).join('')}</p>
       <p aria-hidden="true">${L.ticker.map(t => `<span>${esc(t)}</span>`).join('')}</p>
     </div>
-  </div>
+  </div>` : ''}
 </header>`;
 }
 
-export function sectionHead(dock, title, lede, id) {
+export function footer(L, c) {
+  const F = L.footer, P = L.pages;
+  return `<footer class="site-foot">
+  <div class="wrap foot-grid">
+    <div class="ship-label">
+      <div class="sl-grid">
+        <div><span class="mono-label">${esc(F.from)}</span><p>${nl2br(F.fromVal)}</p></div>
+        <div><span class="mono-label">${esc(F.to)}</span><p>${esc(F.toVal)}</p></div>
+        <div><span class="mono-label">${esc(F.service)}</span><p>${esc(F.serviceVal)}</p></div>
+      </div>
+      ${barcode('MARKARNOLD03.GITHUB.IO', 'barcode foot-barcode')}
+      <p class="mono-label sl-no">MW-2026-PORTFOLIO · © <span class="js-year">2026</span> ${esc(site.name.toUpperCase())}</p>
+    </div>
+    <nav class="foot-nav" aria-label="${esc(P.footerNav)}">
+      <div><h2 class="mono-label">${esc(P.footerNav)}</h2><ul>
+        <li><a href="${c.root || './'}">${esc(L.homeLabel)}</a></li>
+        ${L.nav.map(([p, label]) => `<li><a href="${c.root}${p}">${esc(label)}</a></li>`).join('\n        ')}
+      </ul></div>
+      <div><h2 class="mono-label">${esc(P.footerDocs)}</h2><ul>
+        <li><a href="${c.base}${site.cv.en}" download hreflang="en">${esc(P.cvEn)}</a></li>
+        <li><a href="${c.base}${site.cv.sv}" download hreflang="sv">${esc(P.cvSv)}</a></li>
+      </ul></div>
+      <div><h2 class="mono-label">${esc(P.footerElsewhere)}</h2><ul>
+        <li><a href="${site.linkedin}" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+        <li><a href="${site.github}" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+        <li><a href="mailto:${site.email}">${esc(L.pickup.email)}</a></li>
+      </ul></div>
+    </nav>
+  </div>
+  <p class="built wrap">${esc(F.built)}</p>
+</footer>`;
+}
+
+// Full page: head, header, main, footer and scripts.
+export function layout(L, csp, sub, { title, description, person = false, ticker = false, bodyClass = '', main, scripts = [] }) {
+  const c = ctx(L, sub);
+  return `${head(L, c.base, csp, { sub, title, description, person })}
+<body${bodyClass ? ` class="${bodyClass}"` : ''}>
+${topbar(L, c, { ticker })}
+<main id="main">
+${main(c)}
+</main>
+${footer(L, c)}
+<div class="toast" role="status" aria-live="polite" data-offline="${esc(L.net.offline)}" data-online="${esc(L.net.online)}"></div>
+<script src="${c.base}assets/site.js" defer></script>
+${scripts.map(s => `<script src="${c.base}${s}" defer></script>`).join('\n')}
+</body>
+</html>
+`;
+}
+
+export function sectionHead(dock, title, lede, id, level = 2) {
   return `<div class="sec-head">
     <p class="dock">${esc(dock)}</p>
-    <h2 id="${id}-title">${esc(title)}</h2>
+    <h${level} id="${id}-title">${esc(title)}</h${level}>
     ${lede ? `<p class="lede">${esc(lede)}</p>` : ''}
   </div>`;
 }
 
-function board(L) {
+function pageHead(L, c, { dock, h1, lede, crumbs = [] }) {
+  return `<header class="page-head">
+  <div class="wrap">
+    ${crumbs.length ? `<nav class="crumbs" aria-label="${esc(L.crumbsLabel)}"><ol>
+      <li><a href="${c.root || './'}">${esc(L.homeLabel)}</a></li>
+      ${crumbs.map(([label, href]) => href ? `<li><a href="${href}">${esc(label)}</a></li>` : `<li><span aria-current="page">${esc(label)}</span></li>`).join('\n      ')}
+    </ol></nav>` : ''}
+    <p class="dock">${esc(dock)}</p>
+    <h1 class="page-title">${esc(h1)}</h1>
+    ${lede ? `<p class="lede">${esc(lede)}</p>` : ''}
+  </div>
+</header>`;
+}
+
+/* ---------- components ---------- */
+
+function board(L, c) {
   const cell = (text, w, cls) => `<span class="cell ${cls}" data-w="${w}">${esc(text)}</span>`;
   const rows = L.shipments.map(s => {
     const st = L.status[s.status];
     const alt = s.status === 'boarding' ? ` data-alt="${esc(L.statusAlt.toUpperCase())}"` : '';
     const sr = `${s.board[0]}, ${s.title}, ${s.board[2]}, ${st}`;
-    return `<li><a class="row s-${s.status}" href="#${s.code}" data-code="${s.code}"><span class="sr">${esc(sr)}</span><span class="cells" aria-hidden="true">${cell(s.board[0], BOARD_W[0], 'c-year')}${cell(s.board[1], BOARD_W[1], 'c-dest')}${cell(s.board[2], BOARD_W[2], 'c-via')}<span class="cell c-status" data-w="${BOARD_W[3]}"${alt}>${esc(st.toUpperCase())}</span></span></a></li>`;
+    return `<li><a class="row s-${s.status}" href="${shipmentHref(c, s)}" data-code="${s.code}"><span class="sr">${esc(sr)}</span><span class="cells" aria-hidden="true">${cell(s.board[0], BOARD_W[0], 'c-year')}${cell(s.board[1], BOARD_W[1], 'c-dest')}${cell(s.board[2], BOARD_W[2], 'c-via')}<span class="cell c-status" data-w="${BOARD_W[3]}"${alt}>${esc(st.toUpperCase())}</span></span></a></li>`;
   }).join('\n      ');
   return `<div class="board" role="group" aria-label="${esc(L.board.label)}">
     <div class="board-top"><span class="board-title">${esc(L.board.head)}</span><span class="board-sub" aria-hidden="true">STOCKHOLM · <time class="js-clock">--:--</time></span></div>
-    <div class="board-cols" aria-hidden="true">${L.board.cols.map((c, i) => `<span class="col-${i}">${esc(c)}</span>`).join('')}</div>
+    <div class="board-cols" aria-hidden="true">${L.board.cols.map((t, i) => `<span class="col-${i}">${esc(t)}</span>`).join('')}</div>
     <ol class="board-rows">
       ${rows}
     </ol>
@@ -145,41 +222,39 @@ function board(L) {
   </div>`;
 }
 
-function hero(L, base) {
-  return `<section id="board" class="hero" aria-labelledby="board-title">
-  <div class="wrap">
-    <p class="dock">${esc(L.hero.dock)}</p>
-    <h1 id="board-title" class="display">${L.hero.title.map((t, i) => `<span class="ln ln-${i}">${esc(t)}</span>`).join(' ')}</h1>
-    <div class="hero-grid">
-      <p class="lede">${esc(L.hero.lede)}</p>
-      <div class="ctas">
-        <a class="btn btn-accent" href="#track">${esc(L.hero.ctaTrack)} ${icon.arrow}</a>
-        <a class="btn btn-line" href="#pickup">${esc(L.hero.ctaPickup)}</a>
-        <a class="btn btn-ghost" href="${base}${site.cv[L.lang]}" download>${icon.down} ${esc(L.hero.ctaCv)}</a>
-      </div>
-    </div>
-    ${board(L)}
-  </div>
-</section>`;
+// A shipment as a card: the whole card is clickable through the title link.
+function card(L, c, s) {
+  const W = L.pages.work;
+  const cta = s.slug ? W.open : s.href.startsWith('dispatch') ? W.openDemo : s.href.startsWith('about') ? W.openAbout : W.openContact;
+  const period = s.meta.find(([, v]) => /\d{2}\/\d{4}/.test(v))?.[1];
+  const meta = [s.meta[0][1], period].filter(Boolean).join(' · ');
+  return `<article class="ship-card s-${s.status}" data-code="${s.code}">
+        <div class="sc-top"><span class="sc-code">${s.code}</span><span class="status s-${s.status}">${esc(L.status[s.status])}</span></div>
+        <h3><a class="sc-link" href="${shipmentHref(c, s)}">${esc(s.title)}</a></h3>
+        <p class="sc-summary">${esc(s.summary)}</p>
+        <p class="sc-meta">${esc(meta)}</p>
+        <ul class="sc-tags">${s.contents.slice(0, 4).map(t => `<li>${esc(t)}</li>`).join('')}</ul>
+        <span class="sc-go" aria-hidden="true">${esc(cta)} ${icon.arrow}</span>
+      </article>`;
 }
 
-function parcel(L, s, base) {
+function parcel(L, c, s) {
   const T = L.track;
   const pct = s.status === 'boarding' ? 'p-start' : 'p-done';
   const link = ([href, label]) => {
     const ext = href.startsWith('http');
-    return `<a class="btn btn-line btn-sm" href="${esc(href)}"${ext ? ' target="_blank" rel="noopener noreferrer"' : ''}>${esc(label)} ${ext ? icon.ext : icon.arrow}</a>`;
+    return `<a class="btn btn-line btn-sm" href="${esc(resolve(c, href))}"${ext ? ' target="_blank" rel="noopener noreferrer"' : ''}>${esc(label)} ${ext ? icon.ext : icon.arrow}</a>`;
   };
-  return `<article class="parcel" id="${s.code}" data-code="${s.code}" tabindex="-1" aria-labelledby="${s.code}-t">
+  return `<article class="parcel parcel-page" data-code="${s.code}">
       <header class="parcel-head">
         <div>
-          <p class="mono-label">${esc(T.number)}</p>
-          <p class="parcel-code">${s.code}</p>
-          <h3 id="${s.code}-t">${esc(s.title)}</h3>
+          <p class="mono-label">${esc(T.number)} · <span class="parcel-code-sm">${s.code}</span></p>
+          <h1 class="parcel-title">${esc(s.title)}</h1>
+          <p class="lede parcel-summary">${esc(s.summary)}</p>
         </div>
         <span class="status s-${s.status}">${esc(L.status[s.status])}</span>
       </header>
-      <div class="leg ${pct}">
+      <div class="leg ${pct} go">
         <div class="leg-end"><span class="mono-label">${esc(T.from)}</span><strong>${esc(s.from)}</strong></div>
         <div class="leg-bar" aria-hidden="true"><i></i>${icon.truck}</div>
         <div class="leg-end leg-to"><span class="mono-label">${esc(T.to)}</span><strong>${esc(s.to)}</strong></div>
@@ -187,14 +262,14 @@ function parcel(L, s, base) {
       <dl class="parcel-meta">${s.meta.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>
       <div class="parcel-body">
         <div>
-          <h4 class="mono-label">${esc(T.events)}</h4>
+          <h2 class="mono-label">${esc(T.events)}</h2>
           <ol class="events">${s.events.map(([when, tag, text], i) => `
-            <li${i === 0 ? ' class="latest"' : ''}><span class="ev-when">${esc(when || '·')}</span><div><strong class="ev-tag">${esc(tag)}</strong><p>${esc(text)}</p></div></li>`).join('')}
+            <li class="${[i === 0 && 'latest', !when && 'no-date'].filter(Boolean).join(' ')}"><span class="ev-when">${esc(when)}</span><div><strong class="ev-tag">${esc(tag)}</strong><p>${esc(text)}</p></div></li>`).join('')}
           </ol>
         </div>
         <aside>
-          <h4 class="mono-label">${esc(T.contents)}</h4>
-          <ul class="tags">${s.contents.map(c => `<li>${esc(c)}</li>`).join('')}</ul>
+          <h2 class="mono-label">${esc(T.contents)}</h2>
+          <ul class="tags">${s.contents.map(t => `<li>${esc(t)}</li>`).join('')}</ul>
           ${s.note ? `<p class="note">${icon.lock}<span>${esc(s.note)}</span></p>` : ''}
           ${s.links ? `<div class="parcel-links">${s.links.map(link).join('')}</div>` : ''}
           ${barcode(s.code, 'barcode parcel-barcode')}
@@ -203,34 +278,21 @@ function parcel(L, s, base) {
     </article>`;
 }
 
-function track(L, base) {
-  const T = L.track;
-  return `<section id="track" class="sec" aria-labelledby="track-title">
-  <div class="wrap">
-    ${sectionHead(T.dock, T.title, T.lede, 'track')}
-    <div class="tracker">
-      <form class="track-form" role="search" data-notfound="${esc(T.notFound)}">
-        <label for="track-q" class="mono-label">${esc(T.field)}</label>
-        <div class="track-input">
-          <input id="track-q" name="q" type="text" autocomplete="off" spellcheck="false" autocapitalize="characters" placeholder="${esc(T.placeholder)}">
-          <button class="btn btn-accent" type="submit">${esc(T.button)} ${icon.arrow}</button>
-        </div>
-        <p class="track-key" aria-hidden="true"><kbd>/</kbd> ${esc(T.key)}</p>
-        <p class="track-msg" role="status" aria-live="polite"></p>
-      </form>
-      <nav class="chips" aria-label="${esc(T.chips)}">
-        ${L.shipments.map(s => `<a class="chip s-${s.status}" href="#${s.code}" data-code="${s.code}"><span>${s.code}</span>${esc(s.title)}</a>`).join('\n        ')}
-      </nav>
-    </div>
-    <div class="parcels">
-    ${L.shipments.map(s => parcel(L, s, base)).join('\n    ')}
-    </div>
-  </div>
-</section>`;
+function trackForm(L, c) {
+  const T = L.track, W = L.pages.work;
+  return `<form class="track-bar" role="search" data-notfound="${esc(T.notFound)}">
+      <label for="track-q">${esc(W.trackLabel)}</label>
+      <div class="track-input">
+        <input id="track-q" name="q" type="text" autocomplete="off" spellcheck="false" autocapitalize="characters" placeholder="${esc(T.placeholder)}">
+        <button class="btn btn-accent" type="submit">${esc(T.button)} ${icon.arrow}</button>
+      </div>
+      <p class="track-key" aria-hidden="true"><kbd>/</kbd> ${esc(T.key)}</p>
+      <p class="track-msg" role="status" aria-live="polite"></p>
+    </form>`;
 }
 
 function routeMap(L) {
-  const X = slot => 90 + slot * 170;
+  const X = s => 90 + s * 170;
   const Y = { code: 100, floor: 240, junction: 170 };
   const jx = X(5), nx = X(6);
   let marks = '';
@@ -261,10 +323,10 @@ function routeMap(L) {
     </svg>`;
 }
 
-function route(L) {
+function routeSection(L) {
   const R = L.route;
   const lineName = { code: R.code, floor: R.floor, junction: R.both };
-  return `<section id="route" class="sec sec-alt" aria-labelledby="route-title">
+  return `<section id="route" class="sec" aria-labelledby="route-title">
   <div class="wrap">
     ${sectionHead(R.dock, R.title, R.lede, 'route')}
     <ul class="legend">
@@ -279,7 +341,7 @@ function route(L) {
     <h3 class="mono-label timetable-title">${esc(R.timetable)}</h3>
     <div class="table-wrap">
       <table class="timetable">
-        <thead><tr>${R.cols.map(c => `<th scope="col">${esc(c)}</th>`).join('')}</tr></thead>
+        <thead><tr>${R.cols.map(t => `<th scope="col">${esc(t)}</th>`).join('')}</tr></thead>
         <tbody>${R.rows.map(([y, lane, stop, note]) => `
           <tr><td class="mono">${esc(y)}</td><td><span class="line-tag line-${lane}">${esc(lineName[lane])}</span></td><th scope="row">${esc(stop)}</th><td>${esc(note)}</td></tr>`).join('')}
         </tbody>
@@ -289,11 +351,11 @@ function route(L) {
 </section>`;
 }
 
-function manifest(L) {
+function skillsSection(L) {
   const M = L.manifest;
-  return `<section id="manifest" class="sec" aria-labelledby="manifest-title">
+  return `<section id="skills" class="sec sec-alt" aria-labelledby="skills-title">
   <div class="wrap">
-    ${sectionHead(M.dock, M.title, M.lede, 'manifest')}
+    ${sectionHead(M.dock, M.title, M.lede, 'skills')}
     <div class="crates">
       ${L.crates.map(([name, items], i) => `<article class="crate">
         <header><span class="mono-label">${esc(M.crate)} ${String(i + 1).padStart(2, '0')}</span><span class="mono-label">${esc(M.qty)} ${String(items.length).padStart(2, '0')}</span></header>
@@ -306,12 +368,12 @@ function manifest(L) {
 </section>`;
 }
 
-function docs(L, base) {
+function educationSection(L, c) {
   const D = L.docs;
   const en = L.lang === 'en';
-  return `<section id="docs" class="sec sec-alt" aria-labelledby="docs-title">
+  return `<section id="education" class="sec" aria-labelledby="education-title">
   <div class="wrap">
-    ${sectionHead(D.dock, D.title, D.lede, 'docs')}
+    ${sectionHead(D.dock, D.title, D.lede, 'education')}
     <div class="docs">
       <article class="doc doc-cert">
         <header class="doc-head"><span class="mono-label">${esc(D.certKind)}</span><h3>${esc(D.certHead)}</h3></header>
@@ -324,7 +386,7 @@ function docs(L, base) {
             <tbody>${courses.map(([svName, enName, pts, g]) => `
               <tr><th scope="row">${esc(en ? enName : svName)}</th><td class="num">${pts}</td><td>${g === 'VG' ? `<span class="vg">${esc(D.grade.VG)}</span>` : esc(D.grade.G)}</td></tr>`).join('')}
             </tbody>
-            <tfoot><tr><th scope="row">${esc(D.total)}</th><td class="num">${courses.reduce((a, c) => a + c[2], 0)}</td><td></td></tr></tfoot>
+            <tfoot><tr><th scope="row">${esc(D.total)}</th><td class="num">${courses.reduce((a, x) => a + x[2], 0)}</td><td></td></tr></tfoot>
           </table>
           <p class="small">${esc(D.gradeNote)}</p>
         </details>
@@ -333,8 +395,8 @@ function docs(L, base) {
       <article class="doc doc-cv">
         <header class="doc-head"><span class="mono-label">${esc(D.cvKind)}</span><h3>${esc(D.cvHead)}</h3></header>
         <dl class="doc-fields">${D.cvFields.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>
-        <a class="btn btn-accent btn-block" href="${base}${site.cv[L.lang]}" download>${icon.down} ${esc(D.cvButton)}</a>
-        <a class="cv-alt" href="${base}${site.cv[L.other]}" hreflang="${L.other}" download>${esc(D.cvAlt)}</a>
+        <a class="btn btn-accent btn-block" href="${c.base}${site.cv[L.lang]}" download>${icon.down} ${esc(D.cvButton)}</a>
+        <a class="cv-alt" href="${c.base}${site.cv[L.other]}" hreflang="${L.other}" download>${esc(D.cvAlt)}</a>
         ${barcode('MW-CV-2026', 'barcode doc-barcode')}
         <p class="mono-label doc-no">MW-CV-2026 · ${esc(site.name.toUpperCase())}</p>
       </article>
@@ -343,14 +405,11 @@ function docs(L, base) {
 </section>`;
 }
 
-function pickup(L) {
+function contactBody(L) {
   const P = L.pickup;
-  return `<section id="pickup" class="sec" aria-labelledby="pickup-title">
-  <div class="wrap">
-    ${sectionHead(P.dock, P.title, P.lede, 'pickup')}
-    <div class="pickup">
+  return `<div class="pickup">
       <div class="lines">
-        <h3 class="mono-label">${esc(P.lines)}</h3>
+        <h2 class="mono-label">${esc(P.lines)}</h2>
         <div class="line-item">
           <span class="mono-label">${esc(P.email)}</span>
           <a class="big-link" href="mailto:${site.email}">${esc(site.email)}</a>
@@ -366,55 +425,158 @@ function pickup(L) {
         </div>
       </div>
       <form class="booking" data-email="${site.email}" data-subject="${esc(P.subject)}" data-body="${esc(P.body)}" data-role="${esc(P.fallbackRole)}" data-company="${esc(P.fallbackCompany)}">
-        <h3 class="mono-label">${esc(P.form)} · MW-<span class="js-year">2026</span></h3>
+        <h2 class="mono-label">${esc(P.form)} · MW-<span class="js-year">2026</span></h2>
         <label>${esc(P.company)}<input name="company" type="text" autocomplete="organization" placeholder="${esc(P.companyPh)}"></label>
         <label>${esc(P.role)}<input name="role" type="text" placeholder="${esc(P.rolePh)}"></label>
         <label>${esc(P.message)}<textarea name="message" rows="4" placeholder="${esc(P.messagePh)}"></textarea></label>
         <button class="btn btn-accent btn-block" type="submit">${esc(P.submit)} ${icon.arrow}</button>
         <p class="small">${esc(P.formNote)}</p>
       </form>
-    </div>
-  </div>
-</section>`;
+    </div>`;
 }
 
-export function footer(L) {
-  const F = L.footer;
-  return `<footer class="label-foot">
+// Small two-lines-merging illustration for the home page.
+const miniRoute = `<svg class="mini-route" viewBox="0 0 420 200" aria-hidden="true" focusable="false">
+      <path class="ln ln-code" d="M20 50H250C285 50 285 95 320 95H400"/>
+      <path class="ln ln-floor" d="M70 150H250C285 150 285 105 320 105H400"/>
+      <circle class="stop" cx="20" cy="50" r="8"/><circle class="stop" cx="130" cy="50" r="8"/><circle class="stop" cx="210" cy="50" r="8"/>
+      <circle class="stop" cx="70" cy="150" r="8"/><circle class="stop" cx="150" cy="150" r="8"/><circle class="stop" cx="230" cy="150" r="8"/>
+      <rect class="stop stop-junction" x="306" y="76" width="28" height="48" rx="14"/>
+    </svg>`;
+
+/* ---------- pages ---------- */
+
+export function homePage(L, csp) {
+  const H = L.pages.home;
+  const featured = ['MW-LAPX-25', 'MW-DEMO', 'MW-BANK-23'].map(code => L.shipments.find(s => s.code === code));
+  return layout(L, csp, '', {
+    title: L.title, description: L.description, person: true, ticker: true,
+    main: c => `<section class="hero" aria-labelledby="hero-title">
   <div class="wrap">
-    <div class="ship-label">
-      <div class="sl-grid">
-        <div><span class="mono-label">${esc(F.from)}</span><p>${nl2br(F.fromVal)}</p></div>
-        <div><span class="mono-label">${esc(F.to)}</span><p>${esc(F.toVal)}</p></div>
-        <div><span class="mono-label">${esc(F.service)}</span><p>${esc(F.serviceVal)}</p></div>
+    <p class="dock">${esc(L.hero.dock)}</p>
+    <h1 id="hero-title" class="display">${L.hero.title.map((t, i) => `<span class="ln ln-${i}">${esc(t)}</span>`).join(' ')}</h1>
+    <div class="hero-grid">
+      <p class="lede">${esc(L.hero.lede)}</p>
+      <div class="ctas">
+        <a class="btn btn-accent" href="${c.root}work/">${esc(L.hero.ctaTrack)} ${icon.arrow}</a>
+        <a class="btn btn-line" href="${c.root}contact/">${esc(L.hero.ctaPickup)}</a>
       </div>
-      ${barcode('MARKARNOLD03.GITHUB.IO', 'barcode foot-barcode')}
-      <p class="mono-label sl-no">MW-2026-PORTFOLIO · © <span class="js-year">2026</span> ${esc(site.name.toUpperCase())}</p>
     </div>
-    <p class="built">${esc(F.built)}</p>
+    ${board(L, c)}
   </div>
-</footer>`;
+</section>
+<section class="facts-sec" aria-label="${esc(H.factsLabel)}">
+  <div class="wrap">
+    <ul class="facts">
+      ${H.facts.map(([n, t]) => `<li><strong>${esc(n)}</strong><span>${esc(t)}</span></li>`).join('\n      ')}
+    </ul>
+  </div>
+</section>
+<section class="sec" aria-labelledby="featured-title">
+  <div class="wrap">
+    <div class="sec-head sec-head-row">
+      <div><p class="dock">${esc(H.featuredKicker)}</p><h2 id="featured-title">${esc(H.featured)}</h2></div>
+      <a class="textlink" href="${c.root}work/">${esc(H.allWork)} ${icon.arrow}</a>
+    </div>
+    <div class="cards">
+      ${featured.map(s => card(L, c, s)).join('\n      ')}
+    </div>
+  </div>
+</section>
+<section class="sec sec-alt home-about" aria-labelledby="home-about-title">
+  <div class="wrap ha-grid">
+    <div>
+      <p class="dock">${esc(H.aboutKicker)}</p>
+      <h2 id="home-about-title">${esc(H.aboutTitle)}</h2>
+      <p class="lede">${esc(H.aboutText)}</p>
+      <a class="textlink" href="${c.root}about/">${esc(H.aboutLink)} ${icon.arrow}</a>
+    </div>
+    ${miniRoute}
+  </div>
+</section>
+<section class="cta-band" aria-labelledby="cta-title">
+  <div class="wrap">
+    <h2 id="cta-title">${esc(H.ctaTitle)}</h2>
+    <p>${esc(H.ctaText)}</p>
+    <div class="ctas">
+      <a class="btn btn-accent" href="${c.root}contact/">${esc(H.ctaButton)} ${icon.arrow}</a>
+      <a class="btn btn-ghost-dark" href="${c.base}${site.cv[L.lang]}" download>${icon.down} ${esc(L.hero.ctaCv)}</a>
+    </div>
+  </div>
+</section>`,
+  });
 }
 
-export function page(L, csp) {
-  const base = L.path ? '../' : '';
-  return `${head(L, base, csp)}
-<body>
-${topbar(L, base)}
-<main id="main">
-${hero(L, base)}
-${track(L, base)}
-${route(L)}
-${manifest(L)}
-${docs(L, base)}
-${pickup(L)}
-</main>
-${footer(L)}
-<div class="toast" role="status" aria-live="polite" data-offline="${esc(L.net.offline)}" data-online="${esc(L.net.online)}"></div>
-<script src="${base}assets/site.js" defer></script>
-</body>
-</html>
-`;
+export function workPage(L, csp) {
+  const W = L.pages.work;
+  return layout(L, csp, 'work/', {
+    title: W.title, description: W.description,
+    main: c => `${pageHead(L, c, { dock: W.dock, h1: W.h1, lede: W.lede })}
+<section class="sec sec-tight" aria-label="${esc(W.label)}">
+  <div class="wrap">
+    ${trackForm(L, c)}
+    <h2 class="sr">${esc(W.all)}</h2>
+    <div class="cards cards-all">
+      ${L.shipments.map(s => card(L, c, s)).join('\n      ')}
+    </div>
+  </div>
+</section>`,
+  });
+}
+
+export function projectPages(L, csp) {
+  const W = L.pages.work;
+  const pages = L.shipments.filter(s => s.slug);
+  return pages.map((s, i) => {
+    const prev = pages[(i - 1 + pages.length) % pages.length], next = pages[(i + 1) % pages.length];
+    const sub = `work/${s.slug}/`;
+    const html = layout(L, csp, sub, {
+      title: `${s.title} | ${L.pages.work.label} | Mark Walusimbi`, description: s.summary,
+      main: c => `<div class="wrap crumbs-wrap"><nav class="crumbs" aria-label="${esc(L.crumbsLabel)}"><ol>
+      <li><a href="${c.root || './'}">${esc(L.homeLabel)}</a></li>
+      <li><a href="${c.root}work/">${esc(W.label)}</a></li>
+      <li><span aria-current="page">${esc(s.title)}</span></li>
+    </ol></nav></div>
+<div class="wrap project">
+  ${parcel(L, c, s)}
+  <nav class="pn" aria-label="${esc(W.all)}">
+    <a class="pn-prev" href="${c.root}work/${prev.slug}/" rel="prev"><span class="mono-label">${icon.back} ${esc(W.prev)}</span><strong>${esc(prev.title)}</strong></a>
+    <a class="pn-all" href="${c.root}work/">${esc(W.all)}</a>
+    <a class="pn-next" href="${c.root}work/${next.slug}/" rel="next"><span class="mono-label">${esc(W.next)} ${icon.arrow}</span><strong>${esc(next.title)}</strong></a>
+  </nav>
+</div>`,
+    });
+    return [sub, html];
+  });
+}
+
+export function aboutPage(L, csp) {
+  const A = L.pages.about;
+  return layout(L, csp, 'about/', {
+    title: A.title, description: A.description, person: true,
+    main: c => `${pageHead(L, c, { dock: A.dock, h1: A.h1, lede: A.lede })}
+<nav class="subnav" aria-label="${esc(A.subnavLabel)}">
+  <div class="wrap">
+    ${A.subnav.map(([id, label]) => `<a href="#${id}">${esc(label)}</a>`).join('\n    ')}
+  </div>
+</nav>
+${routeSection(L)}
+${skillsSection(L)}
+${educationSection(L, c)}`,
+  });
+}
+
+export function contactPage(L, csp) {
+  const P = L.pickup, C = L.pages.contact;
+  return layout(L, csp, 'contact/', {
+    title: C.title, description: C.description,
+    main: c => `${pageHead(L, c, { dock: P.dock, h1: P.title, lede: P.lede })}
+<section class="sec sec-tight" aria-label="${esc(C.label)}">
+  <div class="wrap">
+    ${contactBody(L)}
+  </div>
+</section>`,
+  });
 }
 
 export function notFound(langs, csp) {
@@ -440,6 +602,7 @@ export function notFound(langs, csp) {
   <p class="lede" lang="sv">${esc(sv.notFound.text)}</p>
   <div class="ctas">
     <a class="btn btn-accent" href="/">${esc(en.notFound.home)} ${icon.arrow}</a>
+    <a class="btn btn-line" href="/work/">${esc(en.pages.work.all)}</a>
     <a class="btn btn-line" href="/sv/" lang="sv">${esc(sv.notFound.home)}</a>
   </div>
   ${barcode('RETURN-TO-SENDER-404', 'barcode nf-barcode')}

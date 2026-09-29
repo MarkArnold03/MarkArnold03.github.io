@@ -4,6 +4,17 @@
 
 Portfolio of Mark Walusimbi, built as a freight terminal: a split-flap departures board, projects you track like parcels, a route map of the career, skills packed in crates, the degree as customs papers, and contact as "book a pickup". English at `/`, Swedish at `/sv/`.
 
+Pages (same structure under `/sv/`):
+
+| URL | Page |
+| --- | --- |
+| `/` | Home: hero, departures board, key figures, featured work, contact prompt |
+| `/work/` | All projects as cards, plus tracking-number search |
+| `/work/lapx/`, `/work/redriver/`, `/work/bankwebapp/`, `/work/rising-rock/` | One page per project |
+| `/about/` | Career route map, skills, degree and CV |
+| `/dispatch/` | Live dispatch demo |
+| `/contact/` | Direct lines and booking form |
+
 **Dispatch demo** at [`/dispatch/`](https://markarnold03.github.io/dispatch/): a simulated fleet on a schematic Stockholm, with shortest-path routing, auto and manual dispatch, a live event feed, and an offline outbox in IndexedDB that replays on reconnect.
 
 Plain HTML, CSS and JavaScript. No framework, no cookies, no trackers, fonts self-hosted. Installable and works offline (service worker).
@@ -35,7 +46,7 @@ Every push runs [`.github/workflows/ci.yml`](.github/workflows/ci.yml): it check
 | Path | What it is |
 | --- | --- |
 | `src/content.mjs` | All copy, projects ("shipments"), route stops, skills, degree courses |
-| `src/page.mjs` | HTML template |
+| `src/page.mjs` | Layout (header, footer, breadcrumbs) and every page: home, work, project pages, about, contact |
 | `src/sw.js` | Service worker template |
 | `src/dispatch.mjs`, `src/dispatch-data.mjs` | Dispatch demo page and its map data (roads, water, trucks) |
 | `assets/site.css` | Styles, day and night shift themes |

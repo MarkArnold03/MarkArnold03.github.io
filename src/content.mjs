@@ -48,23 +48,24 @@ const en = {
   ogAlt: 'Mark Walusimbi, fullstack developer in Stockholm: from the warehouse floor to production.',
   skip: 'Skip to content',
   logoSub: 'Fullstack · .NET · JS',
-  navLabel: 'Sections',
-  navDemo: 'Demo',
-  nav: [['board', 'Board'], ['track', 'Track'], ['route', 'Route'], ['manifest', 'Manifest'], ['docs', 'Customs'], ['pickup', 'Pickup']],
+  navLabel: 'Main',
+  nav: [['work/', 'Work'], ['about/', 'About'], ['dispatch/', 'Demo'], ['contact/', 'Contact']],
+  cvShort: 'CV', cvAria: 'Download my CV (PDF)',
+  crumbsLabel: 'Breadcrumb', homeLabel: 'Home',
   clockLabel: 'Stockholm time',
   shift: { day: 'Day shift', night: 'Night shift', toDay: 'Switch to day shift', toNight: 'Switch to night shift' },
   ticker: ['Open to work', 'Stockholm & remote', '.NET 9 · C# · JavaScript', '~100 daily users in production', '450+ xUnit tests', '9 languages in the field app', '~90 API controllers', 'Driving licence B'],
   tickerLabel: 'Status',
 
   hero: {
-    dock: 'Dock 01 — Departures · Stockholm',
+    dock: 'Main hall — Departures · Stockholm',
     title: ['From the', 'warehouse floor', 'to production.'],
     lede: "I'm a fullstack .NET and JavaScript developer. I've worked the warehouse floor and driven the deliveries. Then I built the platform a logistics company runs on: backend, frontend, integrations and the app in the driver's pocket.",
-    ctaTrack: 'Track my work', ctaPickup: 'Book a pickup', ctaCv: 'Download CV',
+    ctaTrack: 'See my work', ctaPickup: 'Get in touch', ctaCv: 'Download CV',
   },
   board: {
     label: 'Departures board', head: 'Departures', cols: ['Year', 'Destination', 'Via', 'Status'],
-    hint: 'Select a departure to track it',
+    hint: 'Select a departure to open it',
   },
   status: { delivered: 'Delivered', live: 'Live', boarding: 'Boarding' },
   statusAlt: 'Available',
@@ -110,7 +111,7 @@ const en = {
         ['08/2022', 'Picked up', 'Started the two-year .NET developer programme at KYH in Stockholm.'],
       ],
       contents: ['C#', '.NET', 'ASP.NET Core', 'SQL', 'HTML5', 'CSS3', 'JavaScript', 'Testing', 'Agile'],
-      links: [['#docs', 'Degree and all grades']],
+      links: [['about/#education', 'Degree and all grades']],
     },
     {
       code: 'MW-RDRV-24', board: ['2024', 'REDRIVER', '.NET · ANGULAR'], title: 'RedRiver internship', status: 'delivered',
@@ -175,12 +176,12 @@ const en = {
         ['', 'Ready', 'Used to owning the whole chain, from data model and API to integrations, tests and deploys, and to working directly with the business.'],
       ],
       contents: ['Backend', 'Frontend', 'Integrations', 'Tests', 'Deploys', 'AI-assisted development'],
-      links: [['#pickup', 'Book a pickup']],
+      links: [['contact/', 'Book a pickup']],
     },
   ],
 
   route: {
-    dock: 'Dock 03 — Route map',
+    dock: 'Dock 02.1 — Route map',
     title: 'Two lines, one junction.',
     lede: 'For years I rode two lines at once: code, and the warehouse floor. At LAPX they met, and I built software for the kind of work I used to do by hand.',
     label: 'Career route map: the code line and the floor line meet at LAPX AB in 2025, and continue together towards your team.',
@@ -199,7 +200,7 @@ const en = {
   },
 
   manifest: {
-    dock: 'Dock 04 — Manifest',
+    dock: 'Dock 02.2 — Manifest',
     title: "What's in the load.",
     lede: 'Everything here is on my CV. Packed by crate, no fake skill bars.',
     crate: 'Crate', qty: 'Qty',
@@ -216,7 +217,7 @@ const en = {
   ],
 
   docs: {
-    dock: 'Dock 05 — Customs',
+    dock: 'Dock 02.3 — Customs',
     title: 'Papers in order.',
     lede: 'The degree and the CV, ready for inspection.',
     certHead: 'Certificate of origin', certKind: 'Higher vocational degree',
@@ -232,7 +233,7 @@ const en = {
   },
 
   pickup: {
-    dock: 'Dock 06 — Pickup',
+    dock: 'Dock 04 — Pickup',
     title: 'Book a pickup.',
     lede: "Open to developer roles in Stockholm and remote. Tell me what you're shipping.",
     lines: 'Direct lines', email: 'Email', copy: 'Copy', copied: 'Email address copied',
@@ -251,7 +252,7 @@ const en = {
   demo: {
     title: 'Dispatch demo — Mark Walusimbi',
     description: 'A live, simulated dispatch board: trucks, jobs and routing across Stockholm, with an offline outbox. Built from scratch in plain JavaScript.',
-    dock: 'Dock 07 — Live demo',
+    dock: 'Dock 03 — Live demo',
     h1: 'Dispatch, simulated.',
     lede: "A small version of the kind of dispatch screen I built at LAPX, written from scratch for this site. Trucks, jobs and drivers are simulated in your browser with made-up data. Nothing is sent anywhere.",
     tryIt: 'Try this: let it run, then press “Cut connection”, wait, and reconnect.',
@@ -299,23 +300,24 @@ const sv = {
   ogAlt: 'Mark Walusimbi, fullstack-utvecklare i Stockholm: från lagergolvet till produktion.',
   skip: 'Hoppa till innehållet',
   logoSub: 'Fullstack · .NET · JS',
-  navLabel: 'Sektioner',
-  navDemo: 'Demo',
-  nav: [['board', 'Tavla'], ['track', 'Spåra'], ['route', 'Rutt'], ['manifest', 'Last'], ['docs', 'Tull'], ['pickup', 'Hämtning']],
+  navLabel: 'Huvudmeny',
+  nav: [['work/', 'Projekt'], ['about/', 'Om mig'], ['dispatch/', 'Demo'], ['contact/', 'Kontakt']],
+  cvShort: 'CV', cvAria: 'Ladda ner mitt CV (PDF)',
+  crumbsLabel: 'Brödsmulor', homeLabel: 'Hem',
   clockLabel: 'Tid i Stockholm',
   shift: { day: 'Dagskift', night: 'Nattskift', toDay: 'Byt till dagskift', toNight: 'Byt till nattskift' },
   ticker: ['Öppen för jobb', 'Stockholm & distans', '.NET 9 · C# · JavaScript', '~100 dagliga användare i produktion', '450+ xUnit-tester', '9 språk i fältappen', '~90 API-controllers', 'B-körkort'],
   tickerLabel: 'Status',
 
   hero: {
-    dock: 'Docka 01 — Avgångar · Stockholm',
+    dock: 'Stora hallen — Avgångar · Stockholm',
     title: ['Från', 'lagergolvet', 'till produktion.'],
     lede: 'Jag är fullstack-utvecklare inom .NET och JavaScript. Jag har jobbat på lagergolvet och kört leveranserna. Sedan byggde jag plattformen som ett logistikföretag drivs på: backend, frontend, integrationer och appen i förarens ficka.',
-    ctaTrack: 'Spåra mitt arbete', ctaPickup: 'Boka upphämtning', ctaCv: 'Ladda ner CV',
+    ctaTrack: 'Se mina projekt', ctaPickup: 'Kontakta mig', ctaCv: 'Ladda ner CV',
   },
   board: {
     label: 'Avgångstavla', head: 'Avgångar', cols: ['År', 'Destination', 'Via', 'Status'],
-    hint: 'Välj en avgång för att spåra den',
+    hint: 'Välj en avgång för att öppna den',
   },
   status: { delivered: 'Levererad', live: 'Live', boarding: 'Påstigning' },
   statusAlt: 'Redo nu',
@@ -361,7 +363,7 @@ const sv = {
         ['08/2022', 'Upphämtad', 'Började den tvååriga utbildningen till .NET-utvecklare på KYH i Stockholm.'],
       ],
       contents: ['C#', '.NET', 'ASP.NET Core', 'SQL', 'HTML5', 'CSS3', 'JavaScript', 'Testning', 'Agilt'],
-      links: [['#docs', 'Examen och alla betyg']],
+      links: [['about/#education', 'Examen och alla betyg']],
     },
     {
       code: 'MW-RDRV-24', board: ['2024', 'REDRIVER', '.NET · ANGULAR'], title: 'Praktik på RedRiver', status: 'delivered',
@@ -426,12 +428,12 @@ const sv = {
         ['', 'Redo', 'Van att äga hela kedjan, från datamodell och API till integrationer, tester och deploy, och att kravställa direkt mot verksamheten.'],
       ],
       contents: ['Backend', 'Frontend', 'Integrationer', 'Tester', 'Deploy', 'AI-assisterad utveckling'],
-      links: [['#pickup', 'Boka upphämtning']],
+      links: [['contact/', 'Boka upphämtning']],
     },
   ],
 
   route: {
-    dock: 'Docka 03 — Linjekarta',
+    dock: 'Docka 02.1 — Linjekarta',
     title: 'Två linjer, en knutpunkt.',
     lede: 'I flera år åkte jag på två linjer samtidigt: kod och lagergolvet. På LAPX möttes de, och jag byggde mjukvara för den sortens jobb jag tidigare gjort för hand.',
     label: 'Linjekarta över min karriär: kodlinjen och golvlinjen möts på LAPX AB 2025 och fortsätter tillsammans mot ditt team.',
@@ -450,7 +452,7 @@ const sv = {
   },
 
   manifest: {
-    dock: 'Docka 04 — Lastlista',
+    dock: 'Docka 02.2 — Lastlista',
     title: 'Det här finns i lasten.',
     lede: 'Allt här står i mitt CV. Packat i lådor, utan påhittade kunskapsstaplar.',
     crate: 'Låda', qty: 'Ant',
@@ -467,7 +469,7 @@ const sv = {
   ],
 
   docs: {
-    dock: 'Docka 05 — Tull',
+    dock: 'Docka 02.3 — Tull',
     title: 'Papperen i ordning.',
     lede: 'Examen och CV, redo för granskning.',
     certHead: 'Ursprungsintyg', certKind: 'Yrkeshögskoleexamen',
@@ -483,7 +485,7 @@ const sv = {
   },
 
   pickup: {
-    dock: 'Docka 06 — Upphämtning',
+    dock: 'Docka 04 — Upphämtning',
     title: 'Boka en upphämtning.',
     lede: 'Öppen för utvecklarroller i Stockholm och på distans. Berätta vad ni ska skicka.',
     lines: 'Direktlinjer', email: 'E-post', copy: 'Kopiera', copied: 'E-postadressen kopierad',
@@ -502,7 +504,7 @@ const sv = {
   demo: {
     title: 'Dispatch-demo — Mark Walusimbi',
     description: 'En levande, simulerad dispatchtavla: bilar, jobb och ruttning i Stockholm, med en offline-utkorg. Byggd från grunden i ren JavaScript.',
-    dock: 'Docka 07 — Livedemo',
+    dock: 'Docka 03 — Livedemo',
     h1: 'Dispatch, simulerad.',
     lede: 'En liten version av den sortens dispatchvy jag byggde på LAPX, skriven från grunden för den här sajten. Bilar, jobb och förare simuleras i din webbläsare med påhittad data. Inget skickas någonstans.',
     tryIt: 'Prova: låt den gå, tryck på ”Bryt anslutning”, vänta och anslut igen.',
@@ -541,6 +543,101 @@ const sv = {
 
   notFound: { title: 'Åter till avsändaren.', text: 'Paket 404: det finns ingen leveranspunkt på den här adressen.', home: 'Tillbaka till terminalen' },
 };
+
+// Copy for the separate pages.
+en.pages = {
+  home: {
+    factsLabel: 'At a glance',
+    facts: [['~100', 'people use the LAPX platform every day'], ['450+', 'xUnit tests in the suite I grew'], ['9', 'languages in the field app I built'], ['430', 'YH credits, .NET degree from KYH']],
+    featured: 'Selected work.', featuredKicker: 'Dock 01 — Shipments', allWork: 'All work',
+    aboutKicker: 'Dock 02 — Route', aboutTitle: 'Two lines, one junction.',
+    aboutText: 'For years I rode two lines at once: code, and the warehouse floor. At LAPX they met, and I built software for the kind of work I used to do by hand.',
+    aboutLink: 'More about me',
+    ctaTitle: 'Open to developer roles.', ctaText: "Stockholm or remote. Tell me what you're shipping.", ctaButton: 'Book a pickup',
+  },
+  work: {
+    title: 'Work | Mark Walusimbi', description: 'Projects by Mark Walusimbi: a logistics platform in production, a live dispatch demo, internship work and school projects.',
+    dock: 'Dock 01 — Shipments', h1: 'Work.', label: 'Work',
+    lede: 'Professional work, school projects and a live demo. Every project is a shipment with its own tracking number.',
+    trackLabel: 'Have a tracking number?',
+    open: 'Open shipment', openDemo: 'Open the demo', openAbout: 'See the degree', openContact: 'Book a pickup',
+    prev: 'Previous', next: 'Next', all: 'All work',
+  },
+  about: {
+    title: 'About | Mark Walusimbi', description: 'Career route, skills and degree of Mark Walusimbi, fullstack .NET and JavaScript developer in Stockholm.',
+    dock: 'Dock 02 — About', h1: 'About.', label: 'About',
+    lede: "I'm a fullstack .NET and JavaScript developer in Stockholm. Before code I worked warehouses, deliveries, roofs and bars, so I build for the people who actually use the system.",
+    subnavLabel: 'On this page', subnav: [['route', 'Route'], ['skills', 'Skills'], ['education', 'Degree & CV']],
+  },
+  contact: {
+    title: 'Contact | Mark Walusimbi', description: 'Get in touch with Mark Walusimbi, fullstack developer in Stockholm. Open to developer roles in Stockholm and remote.',
+    label: 'Contact',
+  },
+  footerNav: 'Site', footerDocs: 'Documents', footerElsewhere: 'Elsewhere', cvEn: 'CV in English', cvSv: 'CV in Swedish',
+};
+
+sv.pages = {
+  home: {
+    factsLabel: 'I korthet',
+    facts: [['~100', 'personer använder LAPX-plattformen varje dag'], ['450+', 'xUnit-tester i sviten jag byggde ut'], ['9', 'språk i fältappen jag byggde'], ['430', 'YH-poäng, .NET-examen från KYH']],
+    featured: 'Utvalda projekt.', featuredKicker: 'Docka 01 — Försändelser', allWork: 'Alla projekt',
+    aboutKicker: 'Docka 02 — Rutt', aboutTitle: 'Två linjer, en knutpunkt.',
+    aboutText: 'I flera år åkte jag på två linjer samtidigt: kod och lagergolvet. På LAPX möttes de, och jag byggde mjukvara för den sortens jobb jag tidigare gjort för hand.',
+    aboutLink: 'Mer om mig',
+    ctaTitle: 'Öppen för utvecklarroller.', ctaText: 'Stockholm eller distans. Berätta vad ni ska skicka.', ctaButton: 'Boka upphämtning',
+  },
+  work: {
+    title: 'Projekt | Mark Walusimbi', description: 'Projekt av Mark Walusimbi: en logistikplattform i produktion, en livedemo av dispatch, praktikarbete och skolprojekt.',
+    dock: 'Docka 01 — Försändelser', h1: 'Projekt.', label: 'Projekt',
+    lede: 'Jobb, skolprojekt och en livedemo. Varje projekt är en försändelse med ett eget spårningsnummer.',
+    trackLabel: 'Har du ett spårningsnummer?',
+    open: 'Öppna försändelsen', openDemo: 'Öppna demon', openAbout: 'Se examen', openContact: 'Boka upphämtning',
+    prev: 'Föregående', next: 'Nästa', all: 'Alla projekt',
+  },
+  about: {
+    title: 'Om mig | Mark Walusimbi', description: 'Karriärväg, kompetens och examen för Mark Walusimbi, fullstack-utvecklare inom .NET och JavaScript i Stockholm.',
+    dock: 'Docka 02 — Om mig', h1: 'Om mig.', label: 'Om mig',
+    lede: 'Jag är fullstack-utvecklare inom .NET och JavaScript i Stockholm. Innan koden jobbade jag med lager, leveranser, tak och barer, så jag bygger för dem som faktiskt använder systemet.',
+    subnavLabel: 'På den här sidan', subnav: [['route', 'Rutt'], ['skills', 'Kompetens'], ['education', 'Examen & CV']],
+  },
+  contact: {
+    title: 'Kontakt | Mark Walusimbi', description: 'Kontakta Mark Walusimbi, fullstack-utvecklare i Stockholm. Öppen för utvecklarroller i Stockholm och på distans.',
+    label: 'Kontakt',
+  },
+  footerNav: 'Sajten', footerDocs: 'Dokument', footerElsewhere: 'På andra ställen', cvEn: 'CV på engelska', cvSv: 'CV på svenska',
+};
+
+// Where each shipment lives, plus a one-line summary for cards and page intros.
+// slug = its own page under work/; href = somewhere else on the site.
+const shipmentExtras = {
+  'MW-LAPX-25': { slug: 'lapx', summary: {
+    en: "I built and ran the backend of LAPX's logistics platform, plus the frontend and the field app on top of it. Around 100 people in transport, moving, warehouse and assembly use it every day.",
+    sv: 'Jag byggde och drev backend i LAPX logistikplattform, plus frontend och fältappen ovanpå den. Ett hundratal personer inom transport, flytt, lager och montering använder den varje dag.' } },
+  'MW-KYH-24': { href: 'about/#education', summary: {
+    en: 'A two-year higher vocational degree in .NET development from KYH. Every course passed, four with distinction.',
+    sv: 'En tvåårig yrkeshögskoleexamen i .NET-utveckling från KYH. Godkänd i alla kurser, fyra med väl godkänt.' } },
+  'MW-RDRV-24': { slug: 'redriver', summary: {
+    en: 'Six months as a backend/.NET intern: RESTful APIs, frontend work in Angular, and an AI project that matched candidates to job listings.',
+    sv: 'Sex månader som praktikant inom backend/.NET: RESTful API:er, frontend i Angular och ett AI-projekt som matchade kandidater mot platsannonser.' } },
+  'MW-BANK-23': { slug: 'bankwebapp', summary: {
+    en: "A school project: the core of a bank's internal system in ASP.NET Core MVC, from roles and login to customers and transactions.",
+    sv: 'Ett skolprojekt: kärnan i en banks interna system i ASP.NET Core MVC, från roller och inloggning till kunder och transaktioner.' } },
+  'MW-RROCK': { slug: 'rising-rock', summary: {
+    en: "The website for a friend's web design studio, designed and built from layout to launch.",
+    sv: 'Webbplatsen för en väns webbyrå, designad och byggd från layout till lansering.' } },
+  'MW-DEMO': { href: 'dispatch/', summary: {
+    en: 'A live, simulated dispatch board with routing, auto-dispatch and an offline outbox. Built for this site; runs in your browser.',
+    sv: 'En levande, simulerad dispatchtavla med ruttning, automatisk dispatch och en offline-utkorg. Byggd för sajten och körs i din webbläsare.' } },
+  'MW-NEXT-26': { href: 'contact/', summary: {
+    en: 'Open to developer roles in Stockholm and remote. Used to owning the whole chain, from data model to deploy.',
+    sv: 'Öppen för utvecklarroller i Stockholm och på distans. Van att äga hela kedjan, från datamodell till deploy.' } },
+};
+for (const L of [en, sv]) {
+  for (const s of L.shipments) {
+    const x = shipmentExtras[s.code];
+    Object.assign(s, { slug: x.slug, href: x.href, summary: x.summary[L.lang] });
+  }
+}
 
 export const langs = { en, sv };
 export { courses, stops };

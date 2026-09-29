@@ -1,7 +1,7 @@
 // Service worker template. build.mjs fills in the version and precache list.
-const VERSION = 'e79423e9e7ac';
+const VERSION = 'df1a5801bdcf';
 const CACHE = `mw-terminal-${VERSION}`;
-const PRECACHE = ["/","/sv/","/404.html","/assets/site.css","/assets/site.js","/assets/fonts/archivo.woff2","/assets/fonts/jetbrains-mono-400.woff2","/assets/fonts/jetbrains-mono-700.woff2","/assets/img/icon-192.png","/assets/docs/CV_Mark_Walusimbi_EN.pdf","/assets/docs/CV_Mark_Walusimbi.pdf","/dispatch/","/sv/dispatch/","/assets/dispatch.js"];
+const PRECACHE = ["/","/sv/","/work/","/sv/work/","/work/lapx/","/sv/work/lapx/","/work/redriver/","/sv/work/redriver/","/work/bankwebapp/","/sv/work/bankwebapp/","/work/rising-rock/","/sv/work/rising-rock/","/about/","/sv/about/","/contact/","/sv/contact/","/dispatch/","/sv/dispatch/","/404.html","/assets/site.css","/assets/site.js","/assets/dispatch.js","/assets/fonts/archivo.woff2","/assets/fonts/jetbrains-mono-400.woff2","/assets/fonts/jetbrains-mono-700.woff2","/assets/img/icon-192.png","/assets/docs/CV_Mark_Walusimbi_EN.pdf","/assets/docs/CV_Mark_Walusimbi.pdf"];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(c => c.addAll(PRECACHE)).then(() => self.skipWaiting()));
