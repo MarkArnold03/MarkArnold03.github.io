@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<title>Four months</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23ff6b5a' d='M16 28S3 20 3 11a7 7 0 0 1 13-3.6A7 7 0 0 1 29 11c0 9-13 17-13 17z'/%3E%3C/svg%3E">
+<link rel="preload" href="../assets/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="love.css">
+<script src="love.js" defer></script>
+</head>
+<body>
+
+<!--
+  EDIT HERE: everything in [square brackets] is a placeholder.
+  - Her name: search for [Her name]
+  - The day you got together: data-start on <main> below (YYYY-MM-DD)
+  - Moments, reasons, plans and the letter: replace the text in each section
+-->
+
+<main data-start="2026-05-30">
+
+  <header class="hero">
+    <p class="tag"><span class="dot"></span>Priority shipment · MW-♥-0004 · Handle with care</p>
+
+    <div class="board" aria-hidden="true">
+      <div class="brow"><span class="bk">TO</span><span class="flaps" data-text="[HER NAME]"></span></div>
+      <div class="brow"><span class="bk">FROM</span><span class="flaps" data-text="MARK"></span></div>
+      <div class="brow"><span class="bk">IN TRANSIT</span><span class="flaps" data-text="4 MONTHS" data-alt="NO END DATE"></span></div>
+      <div class="brow"><span class="bk">STATUS</span><span class="flaps ok" data-text="ON TIME ♥"></span></div>
+    </div>
+
+    <h1>Happy four months, <em>[Her name]</em>.</h1>
+    <p class="lede">I build tracking systems for a living, so I made one for us. Everything we have so far, where it happened and where it's going next.</p>
+
+    <a class="scroll" href="#counter">Start tracking <span aria-hidden="true">↓</span></a>
+  </header>
+
+  <section id="counter" class="counter" aria-labelledby="counter-title">
+    <h2 id="counter-title" class="kicker">Time in transit</h2>
+    <div class="clock" role="timer" aria-live="off">
+      <div><b class="js-d">—</b><span>days</span></div>
+      <div><b class="js-h">—</b><span>hours</span></div>
+      <div><b class="js-m">—</b><span>minutes</span></div>
+      <div><b class="js-s">—</b><span>seconds</span></div>
+    </div>
+    <p class="note">…and counting. Nothing delayed, nothing lost.</p>
+  </section>
+
+  <section class="track" aria-labelledby="track-title">
+    <p class="kicker">Tracking history</p>
+    <h2 id="track-title">How we got here</h2>
+    <ol class="events">
+      <li>
+        <time>[Date]</time>
+        <div><h3>Picked up</h3><p>[The first time we met or talked. Where it was and what you remember.]</p><span class="where">[Place]</span></div>
+      </li>
+      <li>
+        <time>[Date]</time>
+        <div><h3>First date</h3><p>[What we did, what you were wearing, what made you laugh.]</p><span class="where">[Place]</span></div>
+      </li>
+      <li>
+        <time>[Date]</time>
+        <div><h3>Scanned: "this is something"</h3><p>[The moment you knew this was different.]</p><span class="where">[Place]</span></div>
+      </li>
+      <li>
+        <time>[Date]</time>
+        <div><h3>[A favourite memory]</h3><p>[A trip, an inside joke, a late night, a small moment you still think about.]</p><span class="where">[Place]</span></div>
+      </li>
+      <li class="now">
+        <time class="js-today">Today</time>
+        <div><h3>Four months</h3><p>Still here. Still choosing you.</p><span class="where">Wherever you are</span></div>
+      </li>
+    </ol>
+  </section>
+
+  <section class="packing" aria-labelledby="pack-title">
+    <p class="kicker">Packing list · 8 items · Fragile</p>
+    <h2 id="pack-title">What's in the box</h2>
+    <p class="hint">Tap each one to open it.</p>
+    <ul class="crates">
+      <li><button type="button" aria-expanded="false"><span class="front">01</span><span class="back">[The way you laugh at my worst jokes]</span></button></li>
+      <li><button type="button" aria-expanded="false"><span class="front">02</span><span class="back">[How you make ordinary days feel like plans]</span></button></li>
+      <li><button type="button" aria-expanded="false"><span class="front">03</span><span class="back">[Something she does that nobody else notices]</span></button></li>
+      <li><button type="button" aria-expanded="false"><span class="front">04</span><span class="back">[Your voice when you've just woken up]</span></button></li>
+      <li><button type="button" aria-expanded="false"><span class="front">05</span><span class="back">[How kind you are, even when no one is watching]</span></button></li>
+      <li><button type="button" aria-expanded="false"><span class="front">06</span><span class="back">[An inside joke only she will get]</span></button></li>
+      <li><button type="button" aria-expanded="false"><span class="front">07</span><span class="back">[That you make me want to be better]</span></button></li>
+      <li><button type="button" aria-expanded="false"><span class="front">08</span><span class="back">Just… you. All of it.</span></button></li>
+    </ul>
+  </section>
+
+  <section class="next" aria-labelledby="next-title">
+    <p class="kicker">Next stops</p>
+    <h2 id="next-title">Scheduled departures</h2>
+    <ul class="deps">
+      <li><span class="code">[MONTH]</span><span class="dest">[Something we're doing next]</span><span class="st">Booked</span></li>
+      <li><span class="code">[SEASON]</span><span class="dest">[A trip or a place we want to go]</span><span class="st">Planning</span></li>
+      <li><span class="code">SOMEDAY</span><span class="dest">[A dream we've talked about]</span><span class="st">Boarding soon</span></li>
+      <li><span class="code">ALWAYS</span><span class="dest">You and me</span><span class="st">On time</span></li>
+    </ul>
+  </section>
+
+  <section class="letter" aria-labelledby="letter-title">
+    <p class="kicker">Proof of delivery</p>
+    <h2 id="letter-title">One more thing</h2>
+    <details class="envelope">
+      <summary><span class="seal" aria-hidden="true">♥</span><span class="open-label">Open your letter</span></summary>
+      <div class="paper">
+        <p>[Her name],</p>
+        <p>[Four months ago I didn't know you'd become the best part of my days. Write what she means to you here: something only you could say, a memory, what you're thankful for, what you're looking forward to.]</p>
+        <p>[Keep it honest and simple. It doesn't need to be long.]</p>
+        <p>Happy four months. Here's to every month after this one.</p>
+        <p class="sign">Yours,<br>Mark</p>
+      </div>
+    </details>
+  </section>
+
+  <footer class="foot">
+    <p>Signed, sealed, delivered · <span class="js-year">2026</span></p>
+  </footer>
+</main>
+
+<div class="hearts" aria-hidden="true"></div>
+</body>
+</html>
