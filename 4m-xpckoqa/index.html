@@ -6,121 +6,175 @@
 <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="no-referrer">
 <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
-<title>Four months</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23ff6b5a' d='M16 28S3 20 3 11a7 7 0 0 1 13-3.6A7 7 0 0 1 29 11c0 9-13 17-13 17z'/%3E%3C/svg%3E">
-<link rel="preload" href="../assets/fonts/archivo.woff2" as="font" type="font/woff2" crossorigin>
+<meta name="theme-color" content="#5a1240">
+<title>Four months of us</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%23e0244d' d='M16 28S3 20 3 11a7 7 0 0 1 13-3.6A7 7 0 0 1 29 11c0 9-13 17-13 17z'/%3E%3C/svg%3E">
+<link rel="preload" href="fonts/serif-italic.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="love.css">
 <script src="love.js" defer></script>
 </head>
 <body>
 
 <!--
-  EDIT HERE: everything in [square brackets] is a placeholder.
-  - Her name: search for [Her name]
-  - The day you got together: data-start on <main> below (YYYY-MM-DD)
-  - Moments, reasons, plans and the letter: replace the text in each section
+  EDIT HERE
+  - Everything in [square brackets] is a placeholder.
+  - The day you got together: data-start on <main> (YYYY-MM-DD).
+  - Photos: each <div class="ph" data-n="…"> becomes <img src="photos/NN.jpg" alt="…">.
 -->
 
 <main data-start="2026-05-30">
 
-  <header class="hero">
-    <p class="tag"><span class="dot"></span>Priority shipment · MW-♥-0004 · Handle with care</p>
-
-    <div class="board" aria-hidden="true">
-      <div class="brow"><span class="bk">TO</span><span class="flaps" data-text="[HER NAME]"></span></div>
-      <div class="brow"><span class="bk">FROM</span><span class="flaps" data-text="MARK"></span></div>
-      <div class="brow"><span class="bk">IN TRANSIT</span><span class="flaps" data-text="4 MONTHS" data-alt="NO END DATE"></span></div>
-      <div class="brow"><span class="bk">STATUS</span><span class="flaps ok" data-text="ON TIME ♥"></span></div>
+  <!-- ============ cover ============ -->
+  <header class="cover">
+    <div class="mesh" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="cover-in">
+      <div class="cover-text">
+        <p class="hand hello">for my favourite person</p>
+        <h1><span>Four months</span> <em>of us</em></h1>
+        <p class="to">[Her name] <span aria-hidden="true">♥</span> Mark</p>
+      </div>
+      <div class="stack" aria-label="Photos of us">
+        <figure class="pol p1"><div class="ph" data-n="1"></div><figcaption class="hand">[caption]</figcaption></figure>
+        <figure class="pol p2"><div class="ph" data-n="2"></div><figcaption class="hand">[caption]</figcaption></figure>
+        <figure class="pol p3"><div class="ph" data-n="3"></div><figcaption class="hand">[caption]</figcaption></figure>
+      </div>
     </div>
-
-    <h1>Happy four months, <em>[Her name]</em>.</h1>
-    <p class="lede">I build tracking systems for a living, so I made one for us. Everything we have so far, where it happened and where it's going next.</p>
-
-    <a class="scroll" href="#counter">Start tracking <span aria-hidden="true">↓</span></a>
+    <a class="down" href="#since"><span class="sr">Start reading</span><span aria-hidden="true">♥</span></a>
   </header>
 
-  <section id="counter" class="counter" aria-labelledby="counter-title">
-    <h2 id="counter-title" class="kicker">Time in transit</h2>
-    <div class="clock" role="timer" aria-live="off">
-      <div><b class="js-d">—</b><span>days</span></div>
-      <div><b class="js-h">—</b><span>hours</span></div>
-      <div><b class="js-m">—</b><span>minutes</span></div>
-      <div><b class="js-s">—</b><span>seconds</span></div>
-    </div>
-    <p class="note">…and counting. Nothing delayed, nothing lost.</p>
+  <!-- ============ counter ============ -->
+  <section id="since" class="since">
+    <p class="eyebrow">So far</p>
+    <p class="big">
+      We've been <em>us</em> for
+      <b class="js-d">—</b>&nbsp;days, <b class="js-h">—</b>&nbsp;hours,
+      <b class="js-m">—</b>&nbsp;minutes and <b class="js-s">—</b>&nbsp;seconds.
+    </p>
+    <p class="hand aside">and I'd do every one of them again ♡</p>
   </section>
 
-  <section class="track" aria-labelledby="track-title">
-    <p class="kicker">Tracking history</p>
-    <h2 id="track-title">How we got here</h2>
-    <ol class="events">
-      <li>
-        <time>[Date]</time>
-        <div><h3>Picked up</h3><p>[The first time we met or talked. Where it was and what you remember.]</p><span class="where">[Place]</span></div>
-      </li>
-      <li>
-        <time>[Date]</time>
-        <div><h3>First date</h3><p>[What we did, what you were wearing, what made you laugh.]</p><span class="where">[Place]</span></div>
-      </li>
-      <li>
-        <time>[Date]</time>
-        <div><h3>Scanned: "this is something"</h3><p>[The moment you knew this was different.]</p><span class="where">[Place]</span></div>
-      </li>
-      <li>
-        <time>[Date]</time>
-        <div><h3>[A favourite memory]</h3><p>[A trip, an inside joke, a late night, a small moment you still think about.]</p><span class="where">[Place]</span></div>
-      </li>
-      <li class="now">
-        <time class="js-today">Today</time>
-        <div><h3>Four months</h3><p>Still here. Still choosing you.</p><span class="where">Wherever you are</span></div>
-      </li>
-    </ol>
-  </section>
+  <!-- ============ our story ============ -->
+  <section class="story" aria-labelledby="story-title">
+    <p class="eyebrow">Our story</p>
+    <h2 id="story-title">How it <em>happened</em></h2>
 
-  <section class="packing" aria-labelledby="pack-title">
-    <p class="kicker">Packing list · 8 items · Fragile</p>
-    <h2 id="pack-title">What's in the box</h2>
-    <p class="hint">Tap each one to open it.</p>
-    <ul class="crates">
-      <li><button type="button" aria-expanded="false"><span class="front">01</span><span class="back">[The way you laugh at my worst jokes]</span></button></li>
-      <li><button type="button" aria-expanded="false"><span class="front">02</span><span class="back">[How you make ordinary days feel like plans]</span></button></li>
-      <li><button type="button" aria-expanded="false"><span class="front">03</span><span class="back">[Something she does that nobody else notices]</span></button></li>
-      <li><button type="button" aria-expanded="false"><span class="front">04</span><span class="back">[Your voice when you've just woken up]</span></button></li>
-      <li><button type="button" aria-expanded="false"><span class="front">05</span><span class="back">[How kind you are, even when no one is watching]</span></button></li>
-      <li><button type="button" aria-expanded="false"><span class="front">06</span><span class="back">[An inside joke only she will get]</span></button></li>
-      <li><button type="button" aria-expanded="false"><span class="front">07</span><span class="back">[That you make me want to be better]</span></button></li>
-      <li><button type="button" aria-expanded="false"><span class="front">08</span><span class="back">Just… you. All of it.</span></button></li>
-    </ul>
-  </section>
-
-  <section class="next" aria-labelledby="next-title">
-    <p class="kicker">Next stops</p>
-    <h2 id="next-title">Scheduled departures</h2>
-    <ul class="deps">
-      <li><span class="code">[MONTH]</span><span class="dest">[Something we're doing next]</span><span class="st">Booked</span></li>
-      <li><span class="code">[SEASON]</span><span class="dest">[A trip or a place we want to go]</span><span class="st">Planning</span></li>
-      <li><span class="code">SOMEDAY</span><span class="dest">[A dream we've talked about]</span><span class="st">Boarding soon</span></li>
-      <li><span class="code">ALWAYS</span><span class="dest">You and me</span><span class="st">On time</span></li>
-    </ul>
-  </section>
-
-  <section class="letter" aria-labelledby="letter-title">
-    <p class="kicker">Proof of delivery</p>
-    <h2 id="letter-title">One more thing</h2>
-    <details class="envelope">
-      <summary><span class="seal" aria-hidden="true">♥</span><span class="open-label">Open your letter</span></summary>
-      <div class="paper">
-        <p>[Her name],</p>
-        <p>[Four months ago I didn't know you'd become the best part of my days. Write what she means to you here: something only you could say, a memory, what you're thankful for, what you're looking forward to.]</p>
-        <p>[Keep it honest and simple. It doesn't need to be long.]</p>
-        <p>Happy four months. Here's to every month after this one.</p>
-        <p class="sign">Yours,<br>Mark</p>
+    <article class="chapter">
+      <figure class="pol tape"><div class="ph" data-n="4"></div><figcaption class="hand">[caption]</figcaption></figure>
+      <div class="ch-text">
+        <span class="num">i.</span>
+        <p class="date">[Date] · [Place]</p>
+        <h3>The first hello</h3>
+        <p>[How you met. What you noticed first about her, what you talked about, what you remember.]</p>
       </div>
-    </details>
+    </article>
+
+    <article class="chapter flip">
+      <figure class="pol tape"><div class="ph" data-n="5"></div><figcaption class="hand">[caption]</figcaption></figure>
+      <div class="ch-text">
+        <span class="num">ii.</span>
+        <p class="date">[Date] · [Place]</p>
+        <h3>Our first date</h3>
+        <p>[What you did, how nervous you were, the moment it got easy.]</p>
+      </div>
+    </article>
+
+    <article class="chapter">
+      <figure class="pol tape"><div class="ph" data-n="6"></div><figcaption class="hand">[caption]</figcaption></figure>
+      <div class="ch-text">
+        <span class="num">iii.</span>
+        <p class="date">[Date] · [Place]</p>
+        <h3>When I knew</h3>
+        <p>[The moment you realised this was something special.]</p>
+      </div>
+    </article>
+
+    <article class="chapter flip">
+      <figure class="pol tape"><div class="ph" data-n="7"></div><figcaption class="hand">[caption]</figcaption></figure>
+      <div class="ch-text">
+        <span class="num">iv.</span>
+        <p class="date">[Date] · [Place]</p>
+        <h3>[A favourite memory]</h3>
+        <p>[A trip, an inside joke, a late night, a small moment you still think about.]</p>
+      </div>
+    </article>
+  </section>
+
+  <!-- ============ reasons ============ -->
+  <section class="reasons" aria-labelledby="reasons-title">
+    <p class="eyebrow">Little things</p>
+    <h2 id="reasons-title">Why it's <em>you</em></h2>
+    <div class="deck" data-count="8">
+      <ol class="cards">
+        <li>[The way you laugh at my worst jokes]</li>
+        <li>[How you make ordinary days feel like plans]</li>
+        <li>[Something you do that nobody else notices]</li>
+        <li>[Your voice when you've just woken up]</li>
+        <li>[How kind you are, even when no one is watching]</li>
+        <li>[An inside joke only you will get]</li>
+        <li>[That you make me want to be better]</li>
+        <li>Just… you. All of it.</li>
+      </ol>
+      <div class="deck-nav">
+        <button type="button" class="next">Next reason <span aria-hidden="true">→</span></button>
+        <span class="count" aria-live="polite"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ film strip ============ -->
+  <section class="film" aria-labelledby="film-title">
+    <p class="eyebrow">Camera roll</p>
+    <h2 id="film-title">Us, being <em>us</em></h2>
+    <p class="hint hand">swipe →</p>
+    <ul class="strip">
+      <li><figure class="pol"><div class="ph" data-n="8"></div><figcaption class="hand">[caption]</figcaption></figure></li>
+      <li><figure class="pol"><div class="ph" data-n="9"></div><figcaption class="hand">[caption]</figcaption></figure></li>
+      <li><figure class="pol"><div class="ph" data-n="10"></div><figcaption class="hand">[caption]</figcaption></figure></li>
+      <li><figure class="pol"><div class="ph" data-n="11"></div><figcaption class="hand">[caption]</figcaption></figure></li>
+      <li><figure class="pol"><div class="ph" data-n="12"></div><figcaption class="hand">[caption]</figcaption></figure></li>
+    </ul>
+  </section>
+
+  <!-- ============ next ============ -->
+  <section class="soon" aria-labelledby="soon-title">
+    <p class="eyebrow">Coming up</p>
+    <h2 id="soon-title">Things I want to do <em>with you</em></h2>
+    <ul class="wishes">
+      <li><button type="button" aria-pressed="false"><span class="hb" aria-hidden="true"></span>[Something we're doing next]</button></li>
+      <li><button type="button" aria-pressed="false"><span class="hb" aria-hidden="true"></span>[A trip or a place we want to go]</button></li>
+      <li><button type="button" aria-pressed="false"><span class="hb" aria-hidden="true"></span>[Something small and silly]</button></li>
+      <li><button type="button" aria-pressed="false"><span class="hb" aria-hidden="true"></span>[A dream we've talked about]</button></li>
+      <li><button type="button" aria-pressed="false"><span class="hb" aria-hidden="true"></span>Month five. And six. And the rest.</button></li>
+    </ul>
+  </section>
+
+  <!-- ============ letter ============ -->
+  <section class="letter" aria-labelledby="letter-title">
+    <p class="eyebrow">Last thing</p>
+    <h2 id="letter-title">A letter <em>for you</em></h2>
+
+    <div class="hold-wrap">
+      <button type="button" class="hold" aria-controls="letter" aria-expanded="false">
+        <svg viewBox="0 0 120 120" aria-hidden="true">
+          <circle class="ring-bg" cx="60" cy="60" r="54"/>
+          <circle class="ring" cx="60" cy="60" r="54"/>
+          <path class="heart" d="M60 88S34 72 34 53a13 13 0 0 1 26-4 13 13 0 0 1 26 4c0 19-26 35-26 35z"/>
+        </svg>
+        <span class="hold-label">Hold the heart</span>
+      </button>
+    </div>
+
+    <div id="letter" class="paper">
+      <p>[Her name],</p>
+      <p>[Four months ago I didn't know you'd become the best part of my days. Write what she means to you here: something only you could say, a memory, what you're thankful for, what you're looking forward to.]</p>
+      <p>[Keep it honest and simple. It doesn't need to be long.]</p>
+      <p>Happy four months. Here's to every month after this one.</p>
+      <p class="sign hand">Yours, always —<br>Mark</p>
+    </div>
   </section>
 
   <footer class="foot">
-    <p>Signed, sealed, delivered · <span class="js-year">2026</span></p>
+    <p class="hand">made with love, by Mark · <span class="js-date">30 September 2026</span></p>
   </footer>
 </main>
 
